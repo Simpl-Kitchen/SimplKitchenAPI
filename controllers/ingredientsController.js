@@ -4,7 +4,6 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
 const searchIngredients = async (req,res) => {
-    //res.send("Here are your ingredient")
     const { search, foodGroup } = req.query
     
     console.log(req.query);
