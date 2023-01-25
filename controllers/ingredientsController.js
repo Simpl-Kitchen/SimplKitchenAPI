@@ -3,8 +3,8 @@
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
-const getIngredient = (req,res) => {
+const searchIngredients = (req,res) => {
     res.send("Here are your ingredient")
 }
 
-module.exports = getIngredient
+module.exports = searchIngredients

@@ -2,8 +2,8 @@
 const express = require('express')
 const router = express.Router()
 
-const getIngredient = require('../controllers/ingredientsController')
+const searchIngredients = require('../controllers/ingredientsController')
 
-router.get('/ingredients', getIngredient)
+router.get('/ingredients/search', searchIngredients)
 
 module.exports = router
