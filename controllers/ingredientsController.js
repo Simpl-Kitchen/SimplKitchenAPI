@@ -23,9 +23,6 @@ const searchIngredients = async (req,res) => {
 
 
     res.status(StatusCodes.OK).json({ingredients})
-
-    
-    
 }
 
 module.exports = searchIngredients
