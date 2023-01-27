@@ -35,7 +35,6 @@ app.get('/', (req, res) => {
 })
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
-
 // app.get('/', (req, res) => {
 //     res.send('Hello world')
 // })
