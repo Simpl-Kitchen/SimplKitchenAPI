@@ -10,7 +10,7 @@ const register = async (req, res) => {
 
     const user = await User.create({ ...req.body })
     console.log(user);
-    const pantry = await Pantry.create({ownedBy:user._id, ingredients:[1, 2, 3, 4, 5]})
+    const pantry = await Pantry.create({ ownedBy: user._id, ingredients: [] })
     const token = user.createJWT()
 
     res

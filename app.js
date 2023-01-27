@@ -21,7 +21,8 @@ const pantryRouter = require('./routes/pantryRouter')
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1', ingredientRouter)
-app.use('/api/v1/pantry', pantryRouter)
+app.use('/api/v1/pantry', authenticateUser, pantryRouter)
+//app.use('/api/v1/pantry', pantryRouter)
 
 //error handling middleware
 const errorHandlerMiddleware = require('./middleware/error-handler');
