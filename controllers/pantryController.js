@@ -32,6 +32,7 @@ const addIngredient = async (req, res) => {
   let result = Pantry.find({ ownedBy })
   let pantry = await result
 
+  // THIS DATA IS NOT PERSISTING
   console.log(pantry[0].ingredients)
   pantry[0].ingredients.push(req.body)
   console.log(pantry[0].ingredients)
