@@ -13,7 +13,6 @@ const {
 //router.route('/').get(getAllIngredients).post(addIngredient)
 //router.route('/ingredients/:id').get(getIngredient)
 
-router.route('/').get(getAllIngredients)
-router.route('/:id').patch(addIngredient)
+router.route('/').get(getAllIngredients).post(addIngredient)
 
 module.exports = router

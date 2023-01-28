@@ -26,18 +26,38 @@ const addIngredient = async (req, res) => {
   // Get User's pantry array (need to be authenticated)
   // Get the related ingredient from the Ingredient dataabse. Should be included in req.body
   // Push this ingredient onto the User's pantry array
+  const {
+    user: {userId}
 
-  const ownedBy = req.user.userId
+  } = req
 
-  let result = Pantry.find({ ownedBy })
-  let pantry = await result
+  const user = await User.findOne({
+    _id: userId
+  })
 
-  // THIS DATA IS NOT PERSISTING
-  console.log(pantry[0].ingredients)
-  pantry[0].ingredients.push(req.body)
-  console.log(pantry[0].ingredients)
+  req.body.pantryId = userId
 
-  res.send('createIngredient')
+  const ingredient = Ingredient.create(req.body)
+
+  //res.status(StatusCodes.OK).json(ingredient)
+
+  console.log(user)
+
+
+  res.send('addIngredient')
+
+
+  // const ownedBy = req.user.userId
+
+  // let result = Pantry.find({ ownedBy })
+  // let pantry = await result
+
+  // // THIS DATA IS NOT PERSISTING
+  // console.log(pantry[0].ingredients)
+  // pantry[0].ingredients.push(req.body)
+  // console.log(pantry[0].ingredients)
+
+  // res.send('createIngredient')
 }
 // module.exports = getAllIngredients
 module.exports = {

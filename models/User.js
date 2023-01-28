@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   pantryId : {
     type: String,
     index:true,
-    unique: true
+    unique:true
   }
 })
 
