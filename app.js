@@ -13,6 +13,9 @@ const authRouter = require('./routes/authRouter')
 const ingredientRouter = require('./routes/ingredientsRouter')
 const pantryRouter = require('./routes/pantryRouter')
 
+// error handling middleware imports
+const notFoundMiddleware = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1', ingredientRouter)
@@ -20,8 +23,8 @@ app.use('/api/v1/pantry', authenticateUser, pantryRouter)
 //app.use('/api/v1/pantry', pantryRouter)
 
 //error handling middleware
-const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware)
 
 // Database
 
