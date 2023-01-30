@@ -1,12 +1,6 @@
 require('dotenv').config()
 require('express-async-errors');
 
-
-// Swagger 
-const swaggerUI = require('swagger-ui-express')
-const YAML = require('yamljs')
-const swaggerDocument = YAML.load('./swagger.yaml')
-
 const express = require('express')
 app = express()
 const connectDB = require('./db/connect')
@@ -31,13 +25,8 @@ app.use(errorHandlerMiddleware);
 // Database
 
 app.get('/', (req, res) => {
-    res.send('<h1>SimplKitchenAPI</h1><a href="/api-docs">Documentation</a>')
+    res.send('<h1>SimplKitchenAPI</h1>')
 })
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
-
-// app.get('/', (req, res) => {
-//     res.send('Hello world')
-// })
 
 const port = process.env.PORT || 3000;
 
