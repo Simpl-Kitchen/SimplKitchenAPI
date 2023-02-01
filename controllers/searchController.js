@@ -4,11 +4,12 @@ const axios = require("axios");
 
 const searchIngredients = async (req, res) => {
 
-    const searchTerm = 'Cream Cheese'
+    const { search } = req.query
+
     const options = {
         method: 'GET',
         url: process.env.URL,
-        params: { ingr: searchTerm },
+        params: { ingr: search },
         headers: {
             'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
             'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
