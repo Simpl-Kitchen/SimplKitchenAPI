@@ -1,13 +1,22 @@
 require('dotenv').config()
 require('express-async-errors');
+
+// Security imports
 const helmet = require('helmet')
 const cors = require('cors')
+
+const morgan = require("morgan")
+
+// Express imports
 const express = require('express')
 app = express()
+
 const connectDB = require('./db/connect')
 const authenticateUser = require('./middleware/authentication');
 
 app.use(express.json());
+app.use(morgan('dev'))
+
 // router imports
 const authRouter = require('./routes/authRouter')
 const ingredientRouter = require('./routes/ingredientsRouter')
