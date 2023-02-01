@@ -20,7 +20,6 @@ app.use(morgan('dev'))
 // router imports
 const authRouter = require('./routes/authRouter')
 const ingredientRouter = require('./routes/ingredientsRouter')
-const pantryRouter = require('./routes/pantryRouter')
 const searchRouter = require('./routes/searchRouter')
 
 // error handling middleware imports
@@ -34,7 +33,6 @@ app.use(cors())
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1', ingredientRouter)
-app.use('/api/v1/pantry', authenticateUser, pantryRouter)
 app.use('/api/v1/search/', searchRouter)
 //app.use('/api/v1/pantry', pantryRouter)
 

@@ -1,7 +1,6 @@
 // Controller
 
 const User = require('../models/User')
-const Pantry = require('../models/Pantry')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
@@ -10,7 +9,6 @@ const register = async (req, res) => {
 
     const user = await User.create({ ...req.body })
     console.log(user);
-    const pantry = await Pantry.create({ ownedBy: user._id, ingredients: [] })
     const token = user.createJWT()
 
     res
