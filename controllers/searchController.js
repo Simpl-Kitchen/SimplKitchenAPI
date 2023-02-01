@@ -4,7 +4,17 @@ const axios = require("axios");
 
 const searchIngredients = async (req, res) => {
 
-    const { search } = req.query
+    const { search, upc } = req.query
+    const queryObject = {}
+
+
+    if (upc) {
+        queryObject.upc = upc
+    } else if (search) {
+        queryObject.ingr = search
+    }
+
+    console.log(queryObject);
 
     const options = {
         method: 'GET',
