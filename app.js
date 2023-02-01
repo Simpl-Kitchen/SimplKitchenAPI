@@ -17,6 +17,7 @@ const pantryRouter = require('./routes/pantryRouter')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+// Security
 app.use(helmet())
 app.use(cors())
 
@@ -26,15 +27,14 @@ app.use('/api/v1', ingredientRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
 //app.use('/api/v1/pantry', pantryRouter)
 
-//error handling middleware
-app.use(errorHandlerMiddleware);
-app.use(notFoundMiddleware)
-
-// Database
 
 app.get('/', (req, res) => {
     res.send('<h1>SimplKitchenAPI</h1>')
 })
+
+//error handling middleware
+app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware)
 
 const port = process.env.PORT || 3000;
 
