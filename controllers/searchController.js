@@ -30,11 +30,10 @@ const searchIngredients = async (req, res) => {
     const searchResults = axios.request(options).then(function (response) {
         const data = []
         foodData = response.data.hints
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < foodData.length; i++) {
             const { food } = response.data.hints[i]
             data.push(food)
         }
-        //console.log(data)
         return data
     }).catch(function (error) {
         console.error(error);
