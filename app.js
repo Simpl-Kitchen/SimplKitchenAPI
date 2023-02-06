@@ -1,33 +1,52 @@
 require('dotenv').config()
 require('express-async-errors');
 
+// Security imports
+const helmet = require('helmet')
+const cors = require('cors')
 
-// Swagger 
-const swaggerUI = require('swagger-ui-express')
-const YAML = require('yamljs')
-const swaggerDocument = YAML.load('./swagger.yaml')
+// Logging
+const morgan = require("morgan")
 
+// Express imports
 const express = require('express')
 app = express()
-const connectDB = require('./db/connect')
 
+// Database connection
+const connectDB = require('./db/connect')
+const authenticateUser = require('./middleware/authentication');
+
+// Express.json for access to req.body
 app.use(express.json());
-// routers
-const authRouter = require('./routes/auth')
+app.use(morgan('dev'))
+
+// router imports
+const authRouter = require('./routes/authRouter')
+const pantryRouter = require('./routes/pantryRouter')
+const searchRouter = require('./routes/searchRouter')
+
+// error handling middleware imports
+const notFoundMiddleware = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
+
+// Security
+app.use(helmet())
+app.use(cors())
 
 // routes
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/pantry', authenticateUser, pantryRouter)
+app.use('/api/v1/search', searchRouter)
+
+
+
+app.get('/', (req, res) => {
+    res.send('<h1>SimplKitchenAPI</h1>')
+})
 
 //error handling middleware
-const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(errorHandlerMiddleware);
-
-// Database
-app.get('/', (req, res) => {
-    res.send('<h1>SimplKitchenAPI</h1><a href="/api-docs">Documentation</a>')
-})
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
-
+app.use(notFoundMiddleware)
 
 const port = process.env.PORT || 3000;
 
