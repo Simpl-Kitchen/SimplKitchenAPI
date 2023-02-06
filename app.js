@@ -5,6 +5,7 @@ require('express-async-errors');
 const helmet = require('helmet')
 const cors = require('cors')
 
+// Logging
 const morgan = require("morgan")
 
 // Express imports
