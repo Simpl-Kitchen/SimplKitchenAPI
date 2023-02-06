@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes')
 const axios = require("axios");
 
 const searchIngredients = async (req, res) => {
-
+    
     const { search, upc } = req.query
     const queryObject = {}
 

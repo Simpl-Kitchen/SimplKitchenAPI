@@ -23,10 +23,10 @@ const IngredientSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['generic-foods', 'packaged-foods', 'generic-meals', 'fast-foods'],
+        enum: ['Generic foods', 'packaged-foods', 'generic-meals', 'fast-foods'],
     },
     categoryLabel: {
-        type: Number,
+        type: String,
         enum: ['food', 'meal'],
         default: 'food'
     },
