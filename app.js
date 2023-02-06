@@ -22,7 +22,6 @@ app.use(morgan('dev'))
 
 // router imports
 const authRouter = require('./routes/authRouter')
-const ingredientRouter = require('./routes/ingredientsRouter')
 const pantryRouter = require('./routes/pantryRouter')
 const searchRouter = require('./routes/searchRouter')
 
@@ -36,10 +35,9 @@ app.use(cors())
 
 // routes
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1', ingredientRouter) // Might be depricated at this point? 
 app.use('/api/v1/pantry', pantryRouter)
 app.use('/api/v1/search', searchRouter)
-//app.use('/api/v1/pantry', pantryRouter)
+
 
 
 app.get('/', (req, res) => {
