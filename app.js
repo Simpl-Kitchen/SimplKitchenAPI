@@ -12,9 +12,11 @@ const morgan = require("morgan")
 const express = require('express')
 app = express()
 
+// Database connection
 const connectDB = require('./db/connect')
 const authenticateUser = require('./middleware/authentication');
 
+// Express.json for access to req.body
 app.use(express.json());
 app.use(morgan('dev'))
 
