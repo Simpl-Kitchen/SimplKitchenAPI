@@ -10,4 +10,6 @@ const {
 } = require("../controllers/pantryController")
 
 router.route('/').post(addIngredient).get(getAllIngredients)
-ruter.route('/:id').get(getIngredient).delete(deleteIngredient).patch(updateIngredient)
+router.route('/:id').get(getIngredient).delete(deleteIngredient).patch(updateIngredient)
+
+module.exports = router
