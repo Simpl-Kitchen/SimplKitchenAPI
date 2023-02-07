@@ -44,6 +44,9 @@ const IngredientSchema = new mongoose.Schema({
         ref: 'User',
         required: [true, 'Please provide a user']
     }
-}, { strict: false }) // May need to change strict settings. Leaving as false for ease of testing. 
+},
+{timestamps: true}, 
+{ strict: false },
+) // May need to change strict settings. Leaving as false for ease of testing. 
 
 module.exports = mongoose.model('Ingredient', IngredientSchema)
