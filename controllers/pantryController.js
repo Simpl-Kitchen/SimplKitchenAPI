@@ -1,7 +1,7 @@
 const Ingredient = require('../models/Ingredient')
 const { StatusCodes } = require('http-status-codes')
-const { BadRequestError, UnauthenticatedError } = require('../errors')
-const { NotFoundError } = require('../../JS_Node_Tutorials/node-express-course/06.5-jobster-api/starter/errors')
+const { BadRequestError, NotFoundError } = require('../errors')
+//const { NotFoundError } = require('../../JS_Node_Tutorials/node-express-course/06.5-jobster-api/starter/errors')
 
 const getAllIngredients = async (req, res) => {
     queryObject = {
