@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const searchIngredients = require('../controllers/searchController')
+const {
+    searchIngredients,
+    searchRecipes,
+    } = require('../controllers/searchController')
 
 router.get('/ingredients', searchIngredients)
 
