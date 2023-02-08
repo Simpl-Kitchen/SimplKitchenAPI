@@ -7,5 +7,6 @@ const {
     } = require('../controllers/searchController')
 
 router.get('/ingredients', searchIngredients)
+router.get('./recipes', searchRecipes)
 
 module.exports = router

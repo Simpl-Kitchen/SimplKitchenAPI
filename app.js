@@ -28,6 +28,7 @@ const searchRouter = require('./routes/searchRouter')
 // error handling middleware imports
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
+const { searchRecipes } = require('./controllers/searchController');
 
 // Security
 app.use(helmet())
@@ -36,7 +37,7 @@ app.use(cors())
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
-app.use('/api/v1/search', searchRouter)
+app.use('/api/v1/search', searchRouter, searchRecipes)
 
 
 

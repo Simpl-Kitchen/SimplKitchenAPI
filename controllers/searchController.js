@@ -45,12 +45,14 @@ const searchIngredients = async (req, res) => {
 }
 
 const searchRecipes = async (req,res) => {
+    const { search, upc } = req.query
+    const queryObject = {}
     const options = {
         method: 'GET',
-        url: 'https://edamam-recipe-search.p.rapidapi.com/search',
+        url: process.env.RECIPE_URL,
         params: {q: 'chicken'},
         headers: {
-          'X-RapidAPI-Key': 'f5e8f88421msh08628268fb35cd4p1b9b22jsn7d5039579c42',
+          'X-RapidAPI-Key': process.env.RECIPE_URI,
           'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
         }
       };
