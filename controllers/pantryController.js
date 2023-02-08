@@ -15,7 +15,21 @@ const getAllIngredients = async (req, res) => {
     //res.send("Get all ingredients")
 }
 const getIngredient = async (req, res) => {
-    res.send("Get ingredient")
+    const {
+        user: {userId},
+        params: {id: ingredientId}
+    } = req
+
+    const ingredient = await Ingredient.findOne({
+        _id: ingredientId,
+        createdBy: userId,
+    })
+    if (!ingredient) {
+        throw new NotFoundError(`No ingredient with ${ingredientId}`)
+
+    }
+    res.status(StatusCodes.OK).json({ingredient})
+    //res.send("Get ingredient")
 }
 const addIngredient = async (req, res) => {
     console.log(req.body)
