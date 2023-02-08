@@ -42,13 +42,25 @@ const updateIngredient = async (req, res) => {
     )
     if (!ingredient) {
         throw new NotFoundError(`No ingredient with id ${ingredientId}`)
-
     }
     res.status(StatusCodes.OK).json({ingredient})
     //res.send("Update Ingredient")
 }
 const deleteIngredient = async (req, res) => {
-    res.send("Delete Ingredient")
+    const {
+        user: {userId},
+        params: {id: ingredientId}
+    } = req
+
+    const ingredient = await Ingredient.findByIdAndRemove({
+        _id: ingredientId,
+        createdBy: userId,
+    })
+    if (!ingredient) {
+        throw new NotFoundError(`No ingredient with id ${ingredientId}`)
+    }
+    res.status(StatusCodes.OK).send()
+    //res.send("Delete Ingredient")
 }
 
 module.exports = {
