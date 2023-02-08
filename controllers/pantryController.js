@@ -1,6 +1,7 @@
 const Ingredient = require('../models/Ingredient')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
+const { NotFoundError } = require('../../JS_Node_Tutorials/node-express-course/06.5-jobster-api/starter/errors')
 
 const getAllIngredients = async (req, res) => {
     queryObject = {
@@ -25,7 +26,26 @@ const addIngredient = async (req, res) => {
     //res.send("Add Ingredient")
 }
 const updateIngredient = async (req, res) => {
-    res.send("Update Ingredient")
+    const {
+        body: {amount},
+        user: {userId},
+        params: {id: ingredientId}
+    } = req
+
+    if (amount === '') {
+        throw new BadRequestError('Amount field cannot be empty')
+    }
+    const ingredient = await Ingredient.findByIdAndUpdate(
+        {_id: ingredientId, createdBy: userId},
+        req.body,
+        {new: true, runValidators: true}
+    )
+    if (!ingredient) {
+        throw new NotFoundError(`No ingredient with id ${ingredientId}`)
+
+    }
+    res.status(StatusCodes.OK).json({ingredient})
+    //res.send("Update Ingredient")
 }
 const deleteIngredient = async (req, res) => {
     res.send("Delete Ingredient")
