@@ -44,4 +44,25 @@ const searchIngredients = async (req, res) => {
     //console.log(foodData);
 }
 
-module.exports = searchIngredients
+const searchRecipes = async (req,res) => {
+    const options = {
+        method: 'GET',
+        url: 'https://edamam-recipe-search.p.rapidapi.com/search',
+        params: {q: 'chicken'},
+        headers: {
+          'X-RapidAPI-Key': 'f5e8f88421msh08628268fb35cd4p1b9b22jsn7d5039579c42',
+          'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
+        }
+      };
+      
+      axios.request(options).then(function (response) {
+          console.log(response.data);
+      }).catch(function (error) {
+          console.error(error);
+      });
+}
+
+module.exports = {
+    searchIngredients, 
+    searchRecipes,
+}
