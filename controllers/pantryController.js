@@ -11,7 +11,7 @@ const getAllIngredients = async (req, res) => {
     const ingredients = await result
 
     res.status(StatusCodes.OK).json({ingredients})
-    console.log(queryObject)
+    //console.log(queryObject)
     //res.send("Get all ingredients")
 }
 const getIngredient = async (req, res) => {
