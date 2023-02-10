@@ -69,6 +69,6 @@ const searchRecipes = async (req,res) => {
 }
 
 module.exports = {
-    searchIngredients, 
+    searchIngredients,
     searchRecipes,
 }
