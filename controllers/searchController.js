@@ -44,16 +44,20 @@ const searchIngredients = async (req, res) => {
     //console.log(foodData);
 }
 
+//Currently not working 
 const searchRecipes = async (req,res) => {
     const { search, upc } = req.query
     const queryObject = {}
+    //basic query for recipes with 'chicken' (rapid API test) Keys are expired I believe, using my own does not work, believe this is for V1
+    //However recipes API V2 is out
     const options = {
         method: 'GET',
         url: process.env.RECIPE_URL,
         params: {q: 'chicken'},
         headers: {
-          'X-RapidAPI-Key': process.env.RECIPE_URI,
-          'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com'
+            'app_id': process.env.RECIPE_ID,
+            'X-RapidAPI-Key': process.env.RECIPE_URI,
+            'X-RapidAPI-Host': 'https://api.edamam.com/api/recipes/v2'
         }
       };
       
