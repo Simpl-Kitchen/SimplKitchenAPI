@@ -44,28 +44,19 @@ const searchIngredients = async (req, res) => {
     //console.log(foodData);
 }
 
-//Currently not working 
+//Work in progress, currently searches API for chicken
 const searchRecipes = async (req,res) => {
-    const { search, upc } = req.query
-    const queryObject = {}
-    //basic query for recipes with 'chicken' (rapid API test) Keys are expired I believe, using my own does not work, believe this is for V1
-    //However recipes API V2 is out
-    const options = {
-        method: 'GET',
-        url: process.env.RECIPE_URL,
-        params: {q: 'chicken'},
-        headers: {
-            'app_id': process.env.RECIPE_ID,
-            'X-RapidAPI-Key': process.env.RECIPE_URI,
-            'X-RapidAPI-Host': 'https://api.edamam.com/api/recipes/v2'
-        }
-      };
-      
-      axios.request(options).then(function (response) {
-          console.log(response.data);
-      }).catch(function (error) {
-          console.error(error);
-      });
+    //define params for easier use
+    let APP_ID = req.params.RECIPE_ID
+    let APP_KEY = req.params.RECIPE_URI
+    //query API 
+    const response = await axios.get
+    (`https://api.edamam.com/search?
+    app_id=${APP_ID}
+    &app_key=${APP_KEY}
+    &q=chicken`)
+    //export query response into json file, return json file
+    res.json(response.data)
 }
 
 module.exports = {
