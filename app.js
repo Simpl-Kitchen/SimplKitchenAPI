@@ -37,7 +37,7 @@ app.use(cors())
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
-app.use('/api/v1/search', searchRouter, searchRecipes)
+app.use('/api/v1/search', searchRouter)
 
 
 
