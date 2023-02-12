@@ -7,6 +7,7 @@ const generateRecipes = async (user) => {
 
     // look up all ingredients by user ID
     // Call Recipe API using ingredient names
+    // Store Recipes
 }
 
 module.exports = generateRecipes
