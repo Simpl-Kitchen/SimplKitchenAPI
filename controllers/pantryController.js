@@ -1,7 +1,7 @@
 const Ingredient = require('../models/Ingredient')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
-//const { NotFoundError } = require('../../JS_Node_Tutorials/node-express-course/06.5-jobster-api/starter/errors')
+const generateRecipes = require('../utils/generateRecipes');
 
 const getAllIngredients = async (req, res) => {
     queryObject = {
@@ -40,6 +40,7 @@ const addIngredient = async (req, res) => {
 
 
     // Regenerate recipes
+    generateRecipes(req.user)
 }
 const updateIngredient = async (req, res) => {
     const {
