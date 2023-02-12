@@ -1,0 +1,1 @@
+// Regenerate new recipes every time a User adds a new ingredient.
