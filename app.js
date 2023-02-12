@@ -38,8 +38,6 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
 app.use('/api/v1/search', searchRouter)
 
-
-
 app.get('/', (req, res) => {
     res.send('<h1>SimplKitchenAPI</h1>')
 })
