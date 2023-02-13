@@ -7,7 +7,7 @@ const axios = require("axios");
 const searchIngredients = async (req, res) => {
     
     // Set up variables. Destructure req.query
-    const { search, upc } = req.query
+    const { search, upc, category } = req.query
     const queryObject = {}
 
     // Construct query object
@@ -18,6 +18,10 @@ const searchIngredients = async (req, res) => {
         queryObject.upc = upc
     } else if (search) {
         queryObject.ingr = search
+    }
+
+    if (category){
+        queryObject.category = category
     }
 
     // Call ingredient API
