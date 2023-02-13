@@ -30,8 +30,8 @@ const searchIngredients = async (req, res) => {
 //Work in progress, currently searches API for chicken
 const searchRecipes = async (req,res) => {
     //define params for easier use
-    let APP_ID = req.params.RECIPE_ID
-    let APP_KEY = req.params.RECIPE_URI
+    let APP_ID = req.params.RECIPE_APP_ID
+    let APP_KEY = req.params.RECIPE_APP_KEY
     //query API 
     const response = await axios.get
     (`https://api.edamam.com/search?
