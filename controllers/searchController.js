@@ -6,17 +6,21 @@ const axios = require("axios");
 
 const searchIngredients = async (req, res) => {
     
+    // Set up variables. Destructure req.query
     const { search, upc } = req.query
     const queryObject = {}
 
+    // Construct query obbject
     if (upc) {
         queryObject.upc = upc
     } else if (search) {
         queryObject.ingr = search
     }
 
+    // Call ingredient API
     foodData = await ingredientAPICAll(queryObject)
-    
+
+    // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
 }
 
