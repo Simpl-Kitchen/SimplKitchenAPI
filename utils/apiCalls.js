@@ -15,7 +15,6 @@ const ingredientAPICall = async (queryObject) => {
         }
     };
 
-
     const searchResults = axios.request(options).then(function (response) {
         const data = []
         foodData = response.data.hints
