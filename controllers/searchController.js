@@ -1,5 +1,5 @@
 require('dotenv').config()
-const ingredientAPICall = require('../utils/externalAPICalls')
+const {ingredientAPICall, recipeAPICall} = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const axios = require("axios");
 
