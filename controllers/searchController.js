@@ -10,16 +10,16 @@ const searchIngredients = async (req, res) => {
     const { search, upc } = req.query
     const queryObject = {}
 
+    // Construct query obbject
     queryObject.app_id = process.env.INGREDIENT_APP_ID
     queryObject.app_key = process.env.INGREDIENT_APP_KEY
-    // Construct query obbject
+    
     if (upc) {
         queryObject.upc = upc
     } else if (search) {
         queryObject.ingr = search
     }
 
-    console.log(queryObject);
     // Call ingredient API
     foodData = await ingredientAPICAll(queryObject)
 
