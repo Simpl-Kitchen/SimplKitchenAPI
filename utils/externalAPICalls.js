@@ -31,4 +31,7 @@ const recipeAPICall = async(queryObject) => {
 
 }
 
-module.exports = ingredientAPICall;
+module.exports = {
+    ingredientAPICall,
+    recipeAPICall,
+};
