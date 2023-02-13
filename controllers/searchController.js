@@ -9,14 +9,11 @@ const searchIngredients = async (req, res) => {
     const { search, upc } = req.query
     const queryObject = {}
 
-
     if (upc) {
         queryObject.upc = upc
     } else if (search) {
         queryObject.ingr = search
     }
-
-    console.log(queryObject);
 
     foodData = await ingredientAPICAll(queryObject)
     res.status(StatusCodes.OK).json({ foodData })
