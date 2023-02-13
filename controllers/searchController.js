@@ -16,6 +16,7 @@ const searchIngredients = async (req, res) => {
     }
 
     foodData = await ingredientAPICAll(queryObject)
+    
     res.status(StatusCodes.OK).json({ foodData })
 }
 
