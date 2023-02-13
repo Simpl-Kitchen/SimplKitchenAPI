@@ -1,6 +1,27 @@
 require('dotenv').config()
 require('express-async-errors');
 
+const swaggerUI = require('swagger-ui-express')
+const swaggerJSDoc = require('swagger-jsdoc')
+
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "SimpleKitchenAPI",
+            version: "1.0.0",
+            description: "The API used by the app SimpleKitchen "
+        },
+        servers: [
+            {
+                url: "http://localhost:3000"
+            }
+        ]
+    },
+    apis: ["./routes/*.js"]
+}
+
+const specs = swaggerJSDoc(options)
 // Security imports
 const helmet = require('helmet')
 const cors = require('cors')
@@ -37,6 +58,8 @@ app.use(cors())
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
 app.use('/api/v1/search', searchRouter)
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 app.get('/', (req, res) => {
     res.send('<h1>SimplKitchenAPI</h1>')
