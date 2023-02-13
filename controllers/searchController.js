@@ -19,7 +19,8 @@ const searchIngredients = async (req, res) => {
     const options = {
         method: 'GET',
         url: process.env.URL,
-        params: { ingr: search },
+        //params: { ingr: search },
+        params: queryObject,
         headers: {
             'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
             'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
