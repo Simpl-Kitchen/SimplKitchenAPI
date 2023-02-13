@@ -7,7 +7,7 @@ const axios = require("axios");
 const searchIngredients = async (req, res) => {
     
     // Set up variables. Destructure req.query
-    const { search, upc, category } = req.query
+    const { search, upc, brand, category } = req.query
     const queryObject = {}
 
     // Construct query object
@@ -16,8 +16,11 @@ const searchIngredients = async (req, res) => {
 
     if (upc) {
         queryObject.upc = upc
-    } else if (search) {
+    } else if (search || brand) {
         queryObject.ingr = search
+        queryObject.brand = brand
+    } else {
+        console.log("No search terms. Throw error prob");
     }
 
     if (category){
