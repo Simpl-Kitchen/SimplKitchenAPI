@@ -1,5 +1,5 @@
 require('dotenv').config()
-const ingredientAPICAll = require('../utils/apiCalls')
+const ingredientAPICall = require('../utils/apiCalls')
 const { StatusCodes } = require('http-status-codes')
 const axios = require("axios");
 
@@ -13,7 +13,7 @@ const searchIngredients = async (req, res) => {
     // Construct query obbject
     queryObject.app_id = process.env.INGREDIENT_APP_ID
     queryObject.app_key = process.env.INGREDIENT_APP_KEY
-    
+
     if (upc) {
         queryObject.upc = upc
     } else if (search) {
@@ -21,7 +21,7 @@ const searchIngredients = async (req, res) => {
     }
 
     // Call ingredient API
-    foodData = await ingredientAPICAll(queryObject)
+    foodData = await ingredientAPICall(queryObject)
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
