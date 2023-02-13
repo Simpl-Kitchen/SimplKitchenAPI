@@ -21,7 +21,7 @@ const searchIngredients = async (req, res) => {
         queryObject.ingr = search
         queryObject.brand = brand
     } else {
-        console.log("No search terms. Throw error prob");
+        throw new BadRequestError("No search terms provided")
     }
 
     if (category){
