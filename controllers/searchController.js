@@ -1,5 +1,5 @@
 require('dotenv').config()
-const ingredientAPICAll = require('../utils/ingredientAPICall')
+const ingredientAPICAll = require('../utils/apiCalls')
 const { StatusCodes } = require('http-status-codes')
 const axios = require("axios");
 
