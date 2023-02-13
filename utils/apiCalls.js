@@ -8,7 +8,6 @@ const ingredientAPICall = async (queryObject) => {
     const options = {
         method: 'GET',
         url: process.env.URL,
-        //params: { ingr: search },
         params: queryObject,
         headers: {
             'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
