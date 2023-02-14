@@ -15,18 +15,27 @@ const searchIngredients = async (req, res) => {
     queryObject.app_id = process.env.INGREDIENT_APP_ID
     queryObject.app_key = process.env.INGREDIENT_APP_KEY
 
+
+    if (!upc && !search && !brand) {
+        throw new BadRequestError("No search terms provided")
+    }
+
     if (upc) {
         queryObject.upc = upc
-    } else if (search || brand) {
-        queryObject.ingr = search
-        queryObject.brand = brand
     } else {
-        throw new BadRequestError("No search terms provided")
+        if (search) {
+            queryObject.ingr = search
+        }
+        if (brand) {
+            queryObject.brand = brand
+        }
     }
 
     if (category) {
         queryObject.category = category
     }
+
+    console.log(queryObject);
 
     // Call ingredient API
     foodData = await ingredientAPICall(queryObject)
