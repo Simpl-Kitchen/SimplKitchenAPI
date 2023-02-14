@@ -73,7 +73,7 @@ const searchRecipes = async (req, res) => {
     // Return data to frontend
     res.status(StatusCodes.OK).json({ recipeData })
 
-
+    //original code, for reference
     //query API 
     // const response = await axios.get
     //     (`https://api.edamam.com/search?

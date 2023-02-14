@@ -1,7 +1,10 @@
 const Ingredient = require('../models/Ingredient')
+const Recipe = require('../models/Recipe')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const generateRecipes = require('../utils/generateRecipes');
+
+//CRUD functionality for ingredients API and DB 
 
 const getAllIngredients = async (req, res) => {
     queryObject = {
@@ -78,6 +81,19 @@ const deleteIngredient = async (req, res) => {
     }
     res.status(StatusCodes.OK).send()
     //res.send("Delete Ingredient")
+}
+//CRUD functionality for Recipe API and DB
+
+const addRecipe = async (req, res) => {
+    console.log(req.body)
+    console.log(req.user)
+    req.body.createdBy = req.user.userId
+    const recipe = await Recipe.create(req.body)
+    res.status(StatusCodes.CREATED).json({ recipe })
+
+
+    // Regenerate recipes
+    generateRecipes(req.user)
 }
 
 module.exports = {
