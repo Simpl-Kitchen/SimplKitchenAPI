@@ -37,8 +37,8 @@ const trimmedIngredientsData = map(ingredientsData, trimObject)
 
 const start = async () => {
     try {
-        //await connectDB(process.env.MONGO_URI);
-        await connectDB('mongodb+srv://root:eBqYmkg3HodAAif@simplkitchen.zcyjgw3.mongodb.net/SimplKitchen-API?retryWrites=true&w=majority');
+        await connectDB('mongodb+srv://root:eBqYmkg3HodAAif@simplkitchen.zcyjgw3.mongodb.net/SimplKitchen-API-DEV?retryWrites=true&w=majority');
+        //await connectDB('mongodb+srv://root:eBqYmkg3HodAAif@simplkitchen.zcyjgw3.mongodb.net/SimplKitchen-API?retryWrites=true&w=majority');
         await Ingredient.create(trimmedIngredientsData);
         console.log('Success !!!');
         process.exit(0);
