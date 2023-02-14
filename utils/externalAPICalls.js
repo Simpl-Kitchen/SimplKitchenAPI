@@ -5,13 +5,13 @@ const axios = require("axios");
 
 // This version returns just the hints **
 // const ingredientAPICall = async (queryObject) => {
-    
+
 //     const options = {
 //                 method: 'GET',
 //                 url:  'https://api.edamam.com/api/food-database/v2/parser',
 //                 params: queryObject,
 //             };
-    
+
 
 //     const searchResults = axios.request(options).then(function (response) {
 //          const data = []
@@ -31,24 +31,37 @@ const axios = require("axios");
 
 // This returns all the data ** 
 const ingredientAPICall = async (queryObject) => {
-    
+
     const options = {
-                method: 'GET',
-                url:  'https://api.edamam.com/api/food-database/v2/parser',
-                params: queryObject,
-            };
-    
+        method: 'GET',
+        url: 'https://api.edamam.com/api/food-database/v2/parser',
+        params: queryObject,
+    };
+
     const searchResults = axios.request(options).then(function (response) {
-         return response.data
-     }).catch(function (error) {
-         console.error(error);
-     });
+        return response.data
+    }).catch(function (error) {
+        console.error(error);
+    });
 
     return searchResults
 }
 
-const recipeAPICall = async(queryObject) => {
+const recipeAPICall = async (queryObject) => {
 
+    const options = {
+        method: 'GET',
+        url: 'https://api.edamam.com/api/recipes/v2',
+        params: queryObject,
+    };
+
+    const searchResults = axios.request(options).then(function (response) {
+        return response.data
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    return searchResults
 }
 
 module.exports = {
