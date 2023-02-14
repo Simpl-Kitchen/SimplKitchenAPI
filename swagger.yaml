@@ -1,0 +1,392 @@
+openapi: 3.0.0
+info:
+  title: Dev API
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://simplkitchenapi.onrender.com/api/v1
+  variables: {}
+- url: http://localhost:3000/api/v1
+  description: ''
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterUserRequest'
+              - example:
+                  name: Demo User
+                  email: test@gmail.com
+                  password: secret
+            example:
+              name: Demo User
+              email: test@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login user
+      operationId: Loginuser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginuserRequest'
+              - example:
+                  email: test@gmail.com
+                  password: secret
+            example:
+              email: test@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /pantry:
+    get:
+      tags:
+      - Pantry
+      summary: Get All Ingredients
+      operationId: GetAllIngredients
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Pantry
+      summary: Add Ingredient
+      operationId: AddIngredient
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/AddIngredientRequest'
+              - example:
+                  foodId: food_bwrgmmqau78xrdazxx79obeezumz
+                  uri: http://www.edamam.com/ontologies/edamam.owl#Food_01001
+                  label: Butter, Salted
+                  nutrients:
+                    ENERC_KCAL: 717
+                    PROCNT: 0.85
+                    FAT: 81.11
+                    CHOCDF: 0.06
+                    FIBTG: 0
+                  category: Generic foods
+                  categoryLabel: food
+                  image: https://www.edamam.com/food-img/515/515af390107678fce1533a31ee4cc35b.jpeg
+                  amount: '2'
+            example:
+              foodId: food_bwrgmmqau78xrdazxx79obeezumz
+              uri: http://www.edamam.com/ontologies/edamam.owl#Food_01001
+              label: Butter, Salted
+              nutrients:
+                ENERC_KCAL: 717
+                PROCNT: 0.85
+                FAT: 81.11
+                CHOCDF: 0.06
+                FIBTG: 0
+              category: Generic foods
+              categoryLabel: food
+              image: https://www.edamam.com/food-img/515/515af390107678fce1533a31ee4cc35b.jpeg
+              amount: '2'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /pantry/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The pantry ID.
+    get:
+      tags:
+      - Pantry
+      summary: Get Ingredient
+      operationId: GetIngredient
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    patch:
+      tags:
+      - Pantry
+      summary: Update Ingredient
+      operationId: UpdateIngredient
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateIngredientRequest'
+              - example:
+                  amount: '6'
+            example:
+              amount: '6'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Pantry
+      summary: Delete Ingredient
+      operationId: DeleteIngredient
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /search/ingredients:
+    get:
+      tags:
+      - Search
+      summary: Search Ingredients API
+      operationId: SearchIngredientsAPI
+      parameters:
+      - name: search
+        in: query
+        description: Ingredient search term
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: butter
+      - name: upc
+        in: query
+        description: UPC code (Under barcode)
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: '020662004659'
+      - name: brand
+        in: query
+        description: Food brand
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: hershey
+      - name: category
+        in: query
+        description: generic-food, generic-meals, packaged-foods, or fast-foods
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: packaged-foods
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /search/recipes:
+    get:
+      tags:
+      - Search
+      summary: Search Recipes API
+      operationId: SearchRecipesAPI
+      parameters:
+      - name: type
+        in: query
+        description: Type of recipes to search for. Can be "any, public, or user"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: any
+      - name: q
+        in: query
+        description: Query text, for example "chicken".
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: chicken
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Demo User
+        email: test@gmail.com
+        password: 13881qwe
+    LoginuserRequest:
+      title: LoginuserRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: test@gmail.com
+        password: 13881qwe
+    AddIngredientRequest:
+      title: AddIngredientRequest
+      required:
+      - foodId
+      - uri
+      - label
+      - nutrients
+      - category
+      - categoryLabel
+      - image
+      - amount
+      type: object
+      properties:
+        foodId:
+          type: string
+        uri:
+          type: string
+        label:
+          type: string
+        nutrients:
+          allOf:
+          - $ref: '#/components/schemas/Nutrients'
+          - {}
+        category:
+          type: string
+        categoryLabel:
+          type: string
+        image:
+          type: string
+        amount:
+          type: string
+      example:
+        foodId: food_bwrgmmqau78xrdazxx79obeezumz
+        uri: http://www.edamam.com/ontologies/edamam.owl#Food_01001
+        label: Butter, Salted
+        nutrients:
+          ENERC_KCAL: 717
+          PROCNT: 0.85
+          FAT: 81.11
+          CHOCDF: 0.06
+          FIBTG: 0
+        category: Generic foods
+        categoryLabel: food
+        image: https://www.edamam.com/food-img/515/515af390107678fce1533a31ee4cc35b.jpeg
+        amount: '2'
+    Nutrients:
+      title: Nutrients
+      required:
+      - ENERC_KCAL
+      - PROCNT
+      - FAT
+      - CHOCDF
+      - FIBTG
+      type: object
+      properties:
+        ENERC_KCAL:
+          type: integer
+          format: int32
+        PROCNT:
+          type: number
+        FAT:
+          type: number
+        CHOCDF:
+          type: number
+        FIBTG:
+          type: integer
+          format: int32
+      example:
+        ENERC_KCAL: 717
+        PROCNT: 0.85
+        FAT: 81.11
+        CHOCDF: 0.06
+        FIBTG: 0
+    UpdateIngredientRequest:
+      title: UpdateIngredientRequest
+      required:
+      - amount
+      type: object
+      properties:
+        amount:
+          type: string
+      example:
+        amount: '6'
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+- name: Pantry
+- name: Search
