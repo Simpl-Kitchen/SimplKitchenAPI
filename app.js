@@ -1,11 +1,11 @@
 require('dotenv').config()
 require('express-async-errors');
 
-
 // Swagger
 const swaggerUI = require('swagger-ui-express')
 const YAML = require('yamljs')
 const swaggerDocument = YAML.load('./swagger.yaml')
+
 // Security imports
 const helmet = require('helmet')
 const cors = require('cors')
@@ -46,7 +46,7 @@ app.use('/api/v1/search', searchRouter)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.get('/', (req, res) => {
-    res.send('<h1>SimplKitchenAPI</h1><a href="/api-docs">Documentation<a>')
+    res.send('<h1>SimplKitchenAPI</h1><a href="/api-docs">Documentation</a>')
 })
 
 //error handling middleware
