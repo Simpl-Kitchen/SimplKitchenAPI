@@ -1,10 +1,13 @@
 openapi: 3.0.0
 info:
-  title: SimplKitchen API
+  title: Dev API
   contact: {}
   version: '1.0'
 servers:
 - url: https://simplkitchenapi.onrender.com/api/v1
+  variables: {}
+- url: http://localhost:3000/api/v1
+  description: ''
   variables: {}
 paths:
   /auth/register:
@@ -40,8 +43,8 @@ paths:
     post:
       tags:
       - Auth
-      summary: Login User
-      operationId: LoginUser
+      summary: Login user
+      operationId: Loginuser
       parameters: []
       requestBody:
         description: ''
@@ -49,7 +52,7 @@ paths:
           application/json:
             schema:
               allOf:
-              - $ref: '#/components/schemas/LoginUserRequest'
+              - $ref: '#/components/schemas/LoginuserRequest'
               - example:
                   email: test@gmail.com
                   password: secret
@@ -131,7 +134,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
+          type: integer
         required: true
         description: The pantry ID.
     get:
@@ -140,6 +143,31 @@ paths:
       summary: Get Ingredient
       operationId: GetIngredient
       parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    patch:
+      tags:
+      - Pantry
+      summary: Update Ingredient
+      operationId: UpdateIngredient
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateIngredientRequest'
+              - example:
+                  amount: '6'
+            example:
+              amount: '6'
+        required: true
       responses:
         '200':
           description: ''
@@ -160,31 +188,6 @@ paths:
       deprecated: false
       security:
       - bearer: []
-    patch:
-      tags:
-      - Pantry
-      summary: Update Ingriedent
-      operationId: UpdateIngriedent
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/UpdateIngriedentRequest'
-              - example:
-                  amount: '6'
-            example:
-              amount: '6'
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security:
-      - bearer: []
   /search/ingredients:
     get:
       tags:
@@ -194,13 +197,67 @@ paths:
       parameters:
       - name: search
         in: query
-        description: ''
+        description: Ingredient search term
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: butter
+      - name: upc
+        in: query
+        description: UPC code (Under barcode)
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: '020662004659'
+      - name: brand
+        in: query
+        description: Food brand
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: hershey
+      - name: category
+        in: query
+        description: generic-food, generic-meals, packaged-foods, or fast-foods
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: packaged-foods
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /search/recipes:
+    get:
+      tags:
+      - Search
+      summary: Search Recipes API
+      operationId: SearchRecipesAPI
+      parameters:
+      - name: type
+        in: query
+        description: Type of recipes to search for. Can be "any, public, or user"
         required: true
         style: form
         explode: true
         schema:
           type: string
-          example: lettuce
+          example: any
+      - name: q
+        in: query
+        description: Query text, for example "chicken".
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: chicken
       responses:
         '200':
           description: ''
@@ -227,8 +284,8 @@ components:
         name: Demo User
         email: test@gmail.com
         password: 13881qwe
-    LoginUserRequest:
-      title: LoginUserRequest
+    LoginuserRequest:
+      title: LoginuserRequest
       required:
       - email
       - password
@@ -314,8 +371,8 @@ components:
         FAT: 81.11
         CHOCDF: 0.06
         FIBTG: 0
-    UpdateIngriedentRequest:
-      title: UpdateIngriedentRequest
+    UpdateIngredientRequest:
+      title: UpdateIngredientRequest
       required:
       - amount
       type: object
