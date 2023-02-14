@@ -96,10 +96,30 @@ const addRecipe = async (req, res) => {
     generateRecipes(req.user)
 }
 
+const getRecipe = async (req, res) => {
+    const {
+        user: { userId },
+        params: { id: recipeID }
+    } = req
+
+    const recipe = await Recipe.findOne({
+        _id: recipeID,
+        createdBy: userId,
+    })
+    if (!recipe) {
+        throw new NotFoundError(`No ingredient with ${recipeID}`)
+
+    }
+    res.status(StatusCodes.OK).json({ recipe })
+    //res.send("Get ingredient")
+}
+
 module.exports = {
     getAllIngredients,
     getIngredient,
     addIngredient,
     updateIngredient,
-    deleteIngredient
+    deleteIngredient,
+    addRecipe,
+    getRecipe,
 }
