@@ -46,11 +46,6 @@ const searchIngredients = async (req, res) => {
 
 //Work in progress, currently searches API for chicken
 const searchRecipes = async (req, res) => {
-    // //define params for easier use
-    // let APP_ID = req.params.RECIPE_APP_ID
-    // let APP_KEY = req.params.RECIPE_APP_KEY
-
-    // Set up variables. Destructure req.query
     const { q, type } = req.query
     const queryObject = {}
 
