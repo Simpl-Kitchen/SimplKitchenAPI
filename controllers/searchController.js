@@ -35,7 +35,7 @@ const searchIngredients = async (req, res) => {
         queryObject.category = category
     }
 
-    console.log(queryObject);
+    //console.log(queryObject);
 
     // Call ingredient API
     foodData = await ingredientAPICall(queryObject)
