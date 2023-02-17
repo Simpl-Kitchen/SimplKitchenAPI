@@ -4,7 +4,7 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
 
-
+//search ingredients, work in progress
 const searchIngredients = async (req, res) => {
 
     // Set up variables. Destructure req.query
@@ -78,8 +78,25 @@ const searchRecipes = async (req, res) => {
     // //export query response into json file, return json file
     // res.json(response.data)
 }
+//search through pantry db of user
+const searchPantryIngredients = async (req, res) => {
+    queryObject = {
+        createdBy: req.user.userId,
+        params: { name : label }
+    }
+    const ingredient = await Ingredient.find({
+        name : label,
+        createdBy: userId,
+    })
+    if (!ingredient) {
+        throw new NotFoundError(`No ingredient with ${label}`)
+
+    }
+    res.status(StatusCodes.OK).json({ ingredient })
+}
 
 module.exports = {
     searchIngredients,
     searchRecipes,
+    searchPantryIngredients,
 }
