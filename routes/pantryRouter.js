@@ -18,7 +18,7 @@ const {
 
 router.route('/').post(addIngredient).get(getAllIngredients)
 router.route('/:id').get(getIngredient).delete(deleteIngredient).patch(updateIngredient)
-router.route('/').post(addRecipe).get(getAllRecipes)
-router.route('/:id').get(getRecipe).delete(deleteRecipe).patch(updateRecipe)
+router.route('/Recipe').post(addRecipe).get(getAllRecipes)
+router.route('/Recipe/:id').get(getRecipe).delete(deleteRecipe).patch(updateRecipe)
 
 module.exports = router
