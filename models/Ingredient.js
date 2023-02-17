@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const IngredientSchema = new mongoose.Schema({
     foodId: {
         type: String,
-        required: [true, 'please provide the food Id'],
+        //required: [true, 'please provide the food Id'],
     },
     uri: {
         type: String,
