@@ -23,11 +23,6 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide password'],
     minlength: 6,
   },
-  pantryId : {
-    type: String,
-    index:true,
-    unique:true
-  }
 })
 
 UserSchema.pre('save', async function () {
