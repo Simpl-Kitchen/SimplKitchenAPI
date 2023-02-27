@@ -48,8 +48,6 @@ const searchRecipes = async (req, res) => {
     const queryObject = {}
 
     // Construct query object
-    queryObject.app_id = process.env.RECIPE_APP_ID
-    queryObject.app_key = process.env.RECIPE_APP_KEY
 
     if (!q) {
         throw new BadRequestError("No search terms provided")
@@ -59,7 +57,7 @@ const searchRecipes = async (req, res) => {
         queryObject.q = q
         queryObject.type = type
     }
-
+    
     // Call ingredient API
     recipeData = await recipeAPICall(queryObject)
 
