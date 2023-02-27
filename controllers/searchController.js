@@ -40,6 +40,11 @@ const searchIngredients = async (req, res) => {
     // Call ingredient API
     foodData = await ingredientAPICall(queryObject)
 
+    // If no results throw error
+    if (!foodData) {
+        throw new NotFoundError(`No results found`)
+    }
+
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
 }
@@ -57,7 +62,7 @@ const searchRecipes = async (req, res) => {
         queryObject.q = q
         queryObject.type = type
     }
-    
+
     // Call ingredient API
     recipeData = await recipeAPICall(queryObject)
 
