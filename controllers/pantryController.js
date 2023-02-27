@@ -35,8 +35,8 @@ const getIngredient = async (req, res) => {
     //res.send("Get ingredient")
 }
 const addIngredient = async (req, res) => {
-    console.log(req.body)
-    console.log(req.user)
+    //console.log(req.body)
+    //console.log(req.user)
     req.body.createdBy = req.user.userId
     const ingredient = await Ingredient.create(req.body)
     res.status(StatusCodes.CREATED).json({ ingredient })
