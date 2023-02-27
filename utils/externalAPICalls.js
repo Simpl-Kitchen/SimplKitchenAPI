@@ -32,6 +32,8 @@ const axios = require("axios");
 // This returns all the data ** 
 const ingredientAPICall = async (queryObject) => {
 
+    //console.log(queryObject);
+
     const options = {
         method: 'GET',
         url: 'https://api.edamam.com/api/food-database/v2/parser',
@@ -48,6 +50,11 @@ const ingredientAPICall = async (queryObject) => {
 }
 
 const recipeAPICall = async (queryObject) => {
+
+    queryObject.app_id = process.env.RECIPE_APP_ID
+    queryObject.app_key = process.env.RECIPE_APP_KEY
+    
+    console.log(queryObject);
 
     const options = {
         method: 'GET',

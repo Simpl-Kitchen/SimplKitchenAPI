@@ -4,7 +4,7 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
 
-
+//search ingredients, work in progress
 const searchIngredients = async (req, res) => {
 
     // Set up variables. Destructure req.query
@@ -35,28 +35,24 @@ const searchIngredients = async (req, res) => {
         queryObject.category = category
     }
 
-    console.log(queryObject);
+    //console.log(queryObject);
 
     // Call ingredient API
     foodData = await ingredientAPICall(queryObject)
 
+    // If no results throw error
+    if (!foodData) {
+        throw new NotFoundError(`No results found`)
+    }
+
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
 }
-
-//Work in progress, currently searches API for chicken
 const searchRecipes = async (req, res) => {
-    // //define params for easier use
-    // let APP_ID = req.params.RECIPE_APP_ID
-    // let APP_KEY = req.params.RECIPE_APP_KEY
-
-    // Set up variables. Destructure req.query
     const { q, type } = req.query
     const queryObject = {}
 
     // Construct query object
-    queryObject.app_id = process.env.RECIPE_APP_ID
-    queryObject.app_key = process.env.RECIPE_APP_KEY
 
     if (!q) {
         throw new BadRequestError("No search terms provided")
@@ -73,7 +69,7 @@ const searchRecipes = async (req, res) => {
     // Return data to frontend
     res.status(StatusCodes.OK).json({ recipeData })
 
-
+    //original code, for reference
     //query API 
     // const response = await axios.get
     //     (`https://api.edamam.com/search?
@@ -83,6 +79,22 @@ const searchRecipes = async (req, res) => {
     // //export query response into json file, return json file
     // res.json(response.data)
 }
+//search through pantry db of user, I am unsure why this is here
+// const searchPantryIngredients = async (req, res) => {
+//     queryObject = {
+//         createdBy: req.user.userId,
+//         params: { name : label }
+//     }
+//     const ingredient = await Ingredient.find({
+//         name : label,
+//         createdBy: userId,
+//     })
+//     if (!ingredient) {
+//         throw new NotFoundError(`No ingredient with ${label}`)
+
+//     }
+//     res.status(StatusCodes.OK).json({ ingredient })
+// }
 
 module.exports = {
     searchIngredients,
