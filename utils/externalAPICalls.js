@@ -32,6 +32,9 @@ const axios = require("axios");
 // This returns all the data ** 
 const ingredientAPICall = async (queryObject) => {
 
+
+    queryObject.app_id = process.env.INGREDIENT_APP_ID
+    queryObject.app_key = process.env.INGREDIENT_APP_KEY
     //console.log(queryObject);
 
     const options = {
@@ -53,7 +56,7 @@ const recipeAPICall = async (queryObject) => {
 
     queryObject.app_id = process.env.RECIPE_APP_ID
     queryObject.app_key = process.env.RECIPE_APP_KEY
-    
+
     console.log(queryObject);
 
     const options = {
