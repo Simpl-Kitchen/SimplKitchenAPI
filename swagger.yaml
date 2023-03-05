@@ -221,7 +221,7 @@ paths:
           example: hershey
       - name: category
         in: query
-        description: generic-food, generic-meals, packaged-foods, or fast-foods
+        description: generic-foods, generic-meals, packaged-foods, or fast-foods
         style: form
         explode: true
         schema:
