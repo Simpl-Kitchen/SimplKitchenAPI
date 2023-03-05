@@ -9,7 +9,7 @@ const connectDB = require('../../db/connect')
 // name, name_scientific, wikipedia_id, picture_file_name, picture_content_type, picture_file_size
 
 function trimObject(object) {
-    const { uri, label, brand, category, categoryLabel, image, createdBy} = object
+    const { uri, label, brand, category, categoryLabel, image, createdBy } = object
     const newObject = {
         "uri": uri,
         "label": label,
@@ -38,7 +38,7 @@ const trimmedIngredientsData = map(ingredientsData, trimObject)
 const start = async () => {
     try {
         //await connectDB('mongodb+srv://root:eBqYmkg3HodAAif@simplkitchen.zcyjgw3.mongodb.net/SimplKitchen-API-DEV?retryWrites=true&w=majority');
-        await connectDB('mongodb+srv://root:eBqYmkg3HodAAif@simplkitchen.zcyjgw3.mongodb.net/SimplKitchen-API?retryWrites=true&w=majority');
+        await connectDB('mongodb+srv://root:eBqYmkg3HodAAif@simplkitchen.zcyjgw3.mongodb.net/SimplKitchen-API-DEV?retryWrites=true&w=majority');
         await Ingredient.create(trimmedIngredientsData);
         console.log('Success !!!');
         process.exit(0);
