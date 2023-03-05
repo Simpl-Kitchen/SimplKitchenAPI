@@ -1,4 +1,5 @@
 require('dotenv').config()
+const Ingredient = require('../models/Ingredient')
 const { ingredientAPICall, recipeAPICall } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
@@ -79,24 +80,29 @@ const searchRecipes = async (req, res) => {
     // //export query response into json file, return json file
     // res.json(response.data)
 }
-//search through pantry db of user, I am unsure why this is here
-// const searchPantryIngredients = async (req, res) => {
-//     queryObject = {
-//         createdBy: req.user.userId,
-//         params: { name : label }
-//     }
-//     const ingredient = await Ingredient.find({
-//         name : label,
-//         createdBy: userId,
-//     })
-//     if (!ingredient) {
-//         throw new NotFoundError(`No ingredient with ${label}`)
+const searchByPantry = async (req, res) => {
+    //retrieve users ingredients
+    queryObject = {
+        createdBy: req.userId
+    }
+    let result = Ingredient.find(queryObject)
+    const ingredients = await result
+    // check for bad queries
 
-//     }
-//     res.status(StatusCodes.OK).json({ ingredient })
-// }
+    if (!queryObject) {
+        throw new BadRequestError("No search terms provided")
+    } 
+
+    // Call ingredient API
+    recipeData = await recipeAPICall(ingredients.label)
+
+    // Return data to frontend
+    res.status(StatusCodes.OK).json({ recipeData })
+
+}
 
 module.exports = {
     searchIngredients,
     searchRecipes,
+    searchByPantry,
 }
