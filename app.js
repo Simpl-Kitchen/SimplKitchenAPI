@@ -21,6 +21,9 @@ app = express()
 const connectDB = require('./connections/connectDatabase')
 const authenticateUser = require('./middleware/authentication');
 
+// Spoonacular connection
+const connectSpoonacularApi = require('./connections/connectSpoonacular')
+
 // Express.json for access to req.body
 app.use(express.json());
 app.use(morgan('dev'))
@@ -59,6 +62,7 @@ const start = async () => {
     try {
         // Connect to Mongo with Mongo URI
         await connectDB(process.env.MONGO_URI)
+        //await connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
         app.listen(port, () => {
             console.log(`Server is listening on port ${port}`);
         })

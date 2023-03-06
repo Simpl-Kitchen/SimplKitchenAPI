@@ -16,3 +16,5 @@ const connectSpoonacularApi = (key) => {
 
     return apiInstance
 }
+
+module.exports = connectSpoonacularApi

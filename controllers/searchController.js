@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, recipeAPICall } = require('../utils/externalAPICalls')
+const { ingredientAPICall, recipeAPICall, searchIn, searchIngredientsAPI } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
@@ -36,10 +36,15 @@ const searchIngredients = async (req, res) => {
         queryObject.category = category
     }
 
-    //console.log(queryObject);
+    console.log("DEBUG 1:: ", queryObject);
 
     // Call ingredient API
-    foodData = await ingredientAPICall(queryObject)
+    //foodData = await ingredientAPICall(queryObject)
+
+    //await searchIngredientsAPI();
+
+    foodData = await searchIngredientsAPI(queryObject);
+    //console.log(foodData)
 
     // If no results throw error
     if (!foodData) {
