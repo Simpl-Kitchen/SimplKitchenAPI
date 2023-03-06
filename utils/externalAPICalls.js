@@ -33,9 +33,7 @@ const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 // }
 
 const searchIngredientsAPI = async (queryObject) => {
-
-
-    console.log("DEBUG 2 :: ", queryObject.ingr) 
+ 
     let opts = {
         'query': queryObject.ingr, // String | The (natural language) search query.
         //'query': "Burger", // String | The (natural language) search query.
