@@ -96,11 +96,11 @@ const ingredientInformationAPICall = async (queryObject) => {
 
       promise.then((data) => {
         //console.log('API called successfully. Returned data: ' + data);
-        console.log(data);
-        console.log('API called successfully.')
+        //console.log(data);
+        //console.log('API called successfully.')
       }).catch((error) => {
         console.error(error);
-        console.log("In error")
+        //console.log("In error")
       });
 
     const searchResults = await promise
