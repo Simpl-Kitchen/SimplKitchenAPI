@@ -36,13 +36,10 @@ const searchIngredients = async (req, res) => {
         queryObject.category = category
     }
 
-    console.log("DEBUG 1:: ", queryObject);
-
     // Call ingredient API
     //foodData = await ingredientAPICall(queryObject)
 
     foodData = await searchIngredientsAPI(queryObject);
-    //console.log(foodData)
 
     // If no results throw error
     if (!foodData) {
@@ -51,6 +48,12 @@ const searchIngredients = async (req, res) => {
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
+}
+const getIngredientInformation = async (req, res) => {
+    const { id } = req.query
+    const queryObject = {}
+
+    
 }
 const searchRecipes = async (req, res) => {
     const { q, type } = req.query

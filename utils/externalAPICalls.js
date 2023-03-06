@@ -62,7 +62,7 @@ const ingredientAPICall = async (queryObject) => {
 const searchIngredientsAPI = async (queryObject) => {
 
 
-    console.log("DEBUG 2 :: ", queryObject.ingr)
+    console.log("DEBUG 2 :: ", queryObject.ingr) 
     let opts = {
         'query': queryObject.ingr, // String | The (natural language) search query.
         //'query': "Burger", // String | The (natural language) search query.
@@ -82,34 +82,31 @@ const searchIngredientsAPI = async (queryObject) => {
         // 'language': "en" // String | The language of the input. Either 'en' or 'de'.
     };
 
-    //let searchResults = {}
 
-    // api.ingredientSearch(opts, (error, data, response) => {
+    let promise = new Promise((resolve, reject) => {
+        api.ingredientSearch(opts, function (error, data, response) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
 
-    //     // if (error) {
-    //     //     console.error(error);
-    //     // } else {
-    //     //     //console.log('API called successfully. Returned data: ' + data);
-    //     //     //searchResults = data
-    //     //     console.log(data)
-    //     // }
-    // });
+      promise.then((data) => {
+        //console.log('API called successfully. Returned data: ' + data);
+        //console.log(data);
+        console.log('API called successfully.')
+      }).catch((error) => {
+        console.error(error);
+      });
 
-    var callback = function (error, data, response) {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('API called successfully. Returned data: ' + data);
-        }
+    const searchResults = await promise
 
-        return data
-    };
-
-    api.ingredientSearch(opts, callback);
-
-    //const searchResults = await callback
-
-    //return searchResults
+    return searchResults
+}
+const ingredientInformationAPICall = async (queryObject) => {
+    
 }
 const recipeAPICall = async (queryObject) => {
 
