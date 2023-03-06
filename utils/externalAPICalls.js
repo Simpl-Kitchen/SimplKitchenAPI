@@ -106,7 +106,41 @@ const searchIngredientsAPI = async (queryObject) => {
     return searchResults
 }
 const ingredientInformationAPICall = async (queryObject) => {
-    
+    let id = 1001; // Number | The item's id.
+    let opts = {
+    //'amount': 150, // Number | The amount of this ingredient.
+    //'unit': "grams" // String | The unit for the given amount.
+    };
+    // apiInstance.getIngredientInformation(id, opts, (error, data, response) => {
+    //     if (error) {
+    //         console.error(error);
+    //     } else {
+    //         console.log('API called successfully. Returned data: ' + data);
+    //     }  
+    // });
+
+    let promise = new Promise((resolve, reject) => {
+        api.getIngredientInformation(id, opts, function (error, data, response) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+      promise.then((data) => {
+        //console.log('API called successfully. Returned data: ' + data);
+        console.log(data);
+        console.log('API called successfully.')
+      }).catch((error) => {
+        console.error(error);
+        console.log("In error")
+      });
+
+    const searchResults = await promise
+
+    return searchResults
 }
 const recipeAPICall = async (queryObject) => {
 
@@ -133,5 +167,6 @@ const recipeAPICall = async (queryObject) => {
 module.exports = {
     ingredientAPICall,
     recipeAPICall,
-    searchIngredientsAPI
+    searchIngredientsAPI,
+    ingredientInformationAPICall
 };
