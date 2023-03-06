@@ -50,10 +50,13 @@ const searchIngredients = async (req, res) => {
     res.status(StatusCodes.OK).json({ foodData })
 }
 const getIngredientInformation = async (req, res) => {
-    const { id } = req.query
+    //const { id } = req.query
     const queryObject = {}
 
-    ingredientData = await ingredientInformationAPICall()
+    const id = 1001
+    queryObject.id = id
+
+    ingredientData = await ingredientInformationAPICall(queryObject)
 
     if (!ingredientData) {
         throw new NotFoundError(`No results found`)
