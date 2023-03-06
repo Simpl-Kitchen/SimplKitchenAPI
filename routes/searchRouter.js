@@ -9,7 +9,7 @@ const {
 } = require('../controllers/searchController')
 
 router.get('/ingredients', searchIngredients)
-router.get('/ingredient', getIngredientInformation)
+router.get('/ingredient/properties/:id', getIngredientInformation)
 router.get('/recipes', searchRecipes)
 router.get('/pantryRecipe', searchByPantry)
 

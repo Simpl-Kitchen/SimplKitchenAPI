@@ -50,11 +50,14 @@ const searchIngredients = async (req, res) => {
     res.status(StatusCodes.OK).json({ foodData })
 }
 const getIngredientInformation = async (req, res) => {
-    //const { id } = req.query
+    
+    const {
+        params: { id: ingredientId }
+    } = req
     const queryObject = {}
 
-    const id = 1001
-    queryObject.id = id
+    //const id = 1001
+    queryObject.id = ingredientId
 
     ingredientData = await ingredientInformationAPICall(queryObject)
 
