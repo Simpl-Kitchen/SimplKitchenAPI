@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, recipeAPICall, searchIn, searchIngredientsAPI, ingredientInformationAPICall } = require('../utils/externalAPICalls')
+const { ingredientAPICall, recipeAPICall, searchIngredientsAPI, ingredientInformationAPICall } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
@@ -82,16 +82,6 @@ const searchRecipes = async (req, res) => {
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ recipeData })
-
-    //original code, for reference
-    //query API 
-    // const response = await axios.get
-    //     (`https://api.edamam.com/search?
-    // app_id=${APP_ID}
-    // &app_key=${APP_KEY}
-    // &q=chicken`)
-    // //export query response into json file, return json file
-    // res.json(response.data)
 }
 const searchByPantry = async (req, res) => {
     //retrieve users ingredients

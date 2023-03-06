@@ -37,27 +37,27 @@ const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 
 // This returns all the data ** 
 
-const ingredientAPICall = async (queryObject) => {
+// const ingredientAPICall = async (queryObject) => {
 
 
-    queryObject.app_id = process.env.INGREDIENT_APP_ID
-    queryObject.app_key = process.env.INGREDIENT_APP_KEY
-    //console.log(queryObject);
+//     queryObject.app_id = process.env.INGREDIENT_APP_ID
+//     queryObject.app_key = process.env.INGREDIENT_APP_KEY
+//     //console.log(queryObject);
 
-    const options = {
-        method: 'GET',
-        url: 'https://api.edamam.com/api/food-database/v2/parser',
-        params: queryObject,
-    };
+//     const options = {
+//         method: 'GET',
+//         url: 'https://api.edamam.com/api/food-database/v2/parser',
+//         params: queryObject,
+//     };
 
-    const searchResults = axios.request(options).then(function (response) {
-        return response.data
-    }).catch(function (error) {
-        console.error(error);
-    });
+//     const searchResults = axios.request(options).then(function (response) {
+//         return response.data
+//     }).catch(function (error) {
+//         console.error(error);
+//     });
 
-    return searchResults
-}
+//     return searchResults
+// }
 
 const searchIngredientsAPI = async (queryObject) => {
 
@@ -165,7 +165,7 @@ const recipeAPICall = async (queryObject) => {
 }
 
 module.exports = {
-    ingredientAPICall,
+    //ingredientAPICall,
     recipeAPICall,
     searchIngredientsAPI,
     ingredientInformationAPICall
