@@ -3,13 +3,13 @@ const router = express.Router()
 
 const {
     searchIngredients,
-    getIngredientInformation,
+    searchIngredientInformation,
     searchRecipes,
     searchByPantry,
 } = require('../controllers/searchController')
 
 router.get('/ingredients', searchIngredients)
-router.get('/ingredient/properties/:id', getIngredientInformation)
+router.get('/ingredient/properties/:id', searchIngredientInformation)
 router.get('/recipes', searchRecipes)
 router.get('/pantryRecipe', searchByPantry)
 

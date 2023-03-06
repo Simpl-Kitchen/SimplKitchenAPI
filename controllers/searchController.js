@@ -49,7 +49,7 @@ const searchIngredients = async (req, res) => {
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
 }
-const getIngredientInformation = async (req, res) => {
+const searchIngredientInformation = async (req, res) => {
     const queryObject = {}
     
     const {
@@ -118,5 +118,5 @@ module.exports = {
     searchIngredients,
     searchRecipes,
     searchByPantry,
-    getIngredientInformation
+    searchIngredientInformation
 }
