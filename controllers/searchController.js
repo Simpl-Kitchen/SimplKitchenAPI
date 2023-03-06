@@ -41,8 +41,6 @@ const searchIngredients = async (req, res) => {
     // Call ingredient API
     //foodData = await ingredientAPICall(queryObject)
 
-    //await searchIngredientsAPI();
-
     foodData = await searchIngredientsAPI(queryObject);
     //console.log(foodData)
 
