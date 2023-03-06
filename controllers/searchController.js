@@ -50,14 +50,18 @@ const searchIngredients = async (req, res) => {
     res.status(StatusCodes.OK).json({ foodData })
 }
 const getIngredientInformation = async (req, res) => {
+    const queryObject = {}
     
     const {
         params: { id: ingredientId }
     } = req
-    const queryObject = {}
 
-    //const id = 1001
     queryObject.id = ingredientId
+
+    if (isNaN(queryObject.id)) {
+
+        throw new BadRequestError("ID parameter is not a number")
+    }
 
     ingredientData = await ingredientInformationAPICall(queryObject)
 
