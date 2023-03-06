@@ -1,5 +1,6 @@
 require('dotenv').config()
-const { ingredientAPICall, recipeAPICall } = require('../utils/externalAPICalls')
+const Ingredient = require('../models/Ingredient')
+const { ingredientAPICall, recipeAPICall, searchIn, searchIngredientsAPI } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
@@ -12,8 +13,8 @@ const searchIngredients = async (req, res) => {
     const queryObject = {}
 
     // Construct query object
-    queryObject.app_id = process.env.INGREDIENT_APP_ID
-    queryObject.app_key = process.env.INGREDIENT_APP_KEY
+    // queryObject.app_id = process.env.INGREDIENT_APP_ID
+    // queryObject.app_key = process.env.INGREDIENT_APP_KEY
 
 
     if (!upc && !search && !brand) {
@@ -35,10 +36,10 @@ const searchIngredients = async (req, res) => {
         queryObject.category = category
     }
 
-    //console.log(queryObject);
-
     // Call ingredient API
-    foodData = await ingredientAPICall(queryObject)
+    //foodData = await ingredientAPICall(queryObject)
+
+    foodData = await searchIngredientsAPI(queryObject);
 
     // If no results throw error
     if (!foodData) {
@@ -47,6 +48,12 @@ const searchIngredients = async (req, res) => {
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
+}
+const getIngredientInformation = async (req, res) => {
+    const { id } = req.query
+    const queryObject = {}
+
+    
 }
 const searchRecipes = async (req, res) => {
     const { q, type } = req.query
@@ -79,24 +86,29 @@ const searchRecipes = async (req, res) => {
     // //export query response into json file, return json file
     // res.json(response.data)
 }
-//search through pantry db of user, I am unsure why this is here
-// const searchPantryIngredients = async (req, res) => {
-//     queryObject = {
-//         createdBy: req.user.userId,
-//         params: { name : label }
-//     }
-//     const ingredient = await Ingredient.find({
-//         name : label,
-//         createdBy: userId,
-//     })
-//     if (!ingredient) {
-//         throw new NotFoundError(`No ingredient with ${label}`)
+const searchByPantry = async (req, res) => {
+    //retrieve users ingredients
+    queryObject = {
+        createdBy: req.userId
+    }
+    let result = Ingredient.find(queryObject)
+    const ingredients = await result
+    // check for bad queries
 
-//     }
-//     res.status(StatusCodes.OK).json({ ingredient })
-// }
+    if (!queryObject) {
+        throw new BadRequestError("No search terms provided")
+    }
+
+    // Call ingredient API
+    recipeData = await recipeAPICall(ingredients.label)
+
+    // Return data to frontend
+    res.status(StatusCodes.OK).json({ recipeData })
+
+}
 
 module.exports = {
     searchIngredients,
     searchRecipes,
+    searchByPantry,
 }
