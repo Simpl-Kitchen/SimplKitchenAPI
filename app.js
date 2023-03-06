@@ -18,7 +18,7 @@ const express = require('express')
 app = express()
 
 // Database connection
-const connectDB = require('./db/connect')
+const connectDB = require('./connections/connectDatabase')
 const authenticateUser = require('./middleware/authentication');
 
 // Express.json for access to req.body

@@ -24,6 +24,7 @@
     "morgan": "^1.10.0",
     "package.json": "^0.0.0",
     "redis": "^4.6.4",
+    "spoonacular_api_simplkitchen": "^1.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0",
     "yamljs": "^0.3.0"
