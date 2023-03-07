@@ -131,12 +131,13 @@ const searchGroceryProductsAPICall = async (queryObject) => {
   }).catch(function (error) {
     console.error(error);
   });
-
+  console.log("Hello ")
   return searchResults
 }
 
 const groceryProductInformationAPICall = async (queryObject) => {
   // Documentation: https://spoonacular.com/food-api/docs#Get-Recipe-Information
+  console.log(queryObject)
   console.log("Hello world")
 
 }

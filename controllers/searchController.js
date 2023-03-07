@@ -100,8 +100,19 @@ const searchGroceryProducts = async (req, res) => {
     res.status(StatusCodes.OK).json({ productData })
 }
 const searchGroceryProductInformation = async (req, res) => {
-    queryObject = {}
-    productData = await searchGroceryProductsAPICall(queryObject)
+    const queryObject = {}
+
+    const {
+        params: { id: productId }
+    } = req
+
+    queryObject.id = productId
+
+    console.log("DEBUG 1", queryObject)
+    //productData = await searchGroceryProductInformation(queryObject)
+
+    await searchGroceryProductInformation(queryObject)
+    
     res.send("Hello world 1")
 }
 
