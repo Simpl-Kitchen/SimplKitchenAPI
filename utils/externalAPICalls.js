@@ -112,7 +112,7 @@ const searchGroceryProductsAPICall = async (queryObject) => {
     //'maxFat': 100, // Number | The maximum amount of fat in grams the product can have.
     //'addProductInformation': true, // Boolean | If set to true, you get more information about the products returned.
     //'offset': 56, // Number | The number of results to skip (between 0 and 900).
-    'number': 10 // Number | The maximum number of items to return (between 1 and 100). Defaults to 10.
+    'number': !queryObject.pages ? 10 : queryObject.pages // Number | The maximum number of items to return (between 1 and 100). Defaults to 10.
   };
 
   let requestHeaders = {
