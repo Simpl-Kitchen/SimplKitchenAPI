@@ -23,6 +23,8 @@ const searchIngredients = async (req, res) => {
 
     queryObject.ingr = search
 
+
+    //      Old one just in case
     // if (upc) {
     //     queryObject.upc = upc
     // } else {
@@ -74,6 +76,26 @@ const searchIngredientInformation = async (req, res) => {
     res.status(StatusCodes.OK).json({ ingredientData })
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const searchRecipes = async (req, res) => {
     const { q, type } = req.query
     const queryObject = {}
