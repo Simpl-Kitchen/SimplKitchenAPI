@@ -6,10 +6,12 @@ const { search } = require('superagent');
 
 // Spoonacular connection
 const connectSpoonacularApi = require('../connections/connectSpoonacular');
-const SpoonacularError = require('../errors/spoonacular');
 const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 
-// This returns all the data ** 
+// SpoonacularError handling
+const SpoonacularError = require('../errors/spoonacular');
+
+// This returns all the data **  (Edamam, old)
 
 // const ingredientAPICall = async (queryObject) => {
 
