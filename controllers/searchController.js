@@ -1,12 +1,12 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, 
-        recipeAPICall, 
-        searchIngredientsAPI, 
-        ingredientInformationAPICall, 
-        searchGroceryProductsAPICall,
-        groceryProductInformationAPICall
-    } = require('../utils/externalAPICalls')
+const { ingredientAPICall,
+    recipeAPICall,
+    searchIngredientsAPI,
+    ingredientInformationAPICall,
+    searchGroceryProductsAPICall,
+    groceryProductInformationAPICall
+} = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
@@ -108,12 +108,18 @@ const searchGroceryProductInformation = async (req, res) => {
 
     queryObject.id = productId
 
-    console.log("DEBUG 1", queryObject)
-    //productData = await searchGroceryProductInformation(queryObject)
+    if (isNaN(queryObject.id)) {
 
-    await searchGroceryProductInformation(queryObject)
-    
-    res.send("Hello world 1")
+        throw new BadRequestError("ID parameter is not a number")
+    }
+
+    productData = await groceryProductInformationAPICall(queryObject)
+
+    if (!productData) {
+        throw new NotFoundError(`No results found with id ${queryObject.id}`)
+    }
+
+    res.status(StatusCodes.OK).json({ productData })
 }
 
 
