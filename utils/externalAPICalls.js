@@ -1,14 +1,12 @@
-// Will move the API call here
 require('dotenv').config()
 const axios = require("axios");
-const { search } = require('superagent');
 
 
-// Spoonacular connection
+// Spoonacular connection, https://spoonacular.com/food-api/docs#Ingredient-Search
 const connectSpoonacularApi = require('../connections/connectSpoonacular');
 const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 
-// SpoonacularError handling
+// Spoonacular error handling
 const SpoonacularError = require('../errors/spoonacular');
 
 // This returns all the data **  (Edamam, old)
@@ -35,6 +33,7 @@ const SpoonacularError = require('../errors/spoonacular');
 //     return searchResults
 // }
 
+// Call to Spoonacular Ingredient Search endpoint
 const searchIngredientsAPI = async (queryObject) => {
 
   let opts = {
@@ -56,7 +55,6 @@ const searchIngredientsAPI = async (queryObject) => {
     // 'language': "en" // String | The language of the input. Either 'en' or 'de'.
   };
 
-
   let promise = new Promise((resolve, reject) => {
     api.ingredientSearch(opts, function (error, data, response) {
       if (error) {
@@ -70,9 +68,10 @@ const searchIngredientsAPI = async (queryObject) => {
   });
 
   const searchResults = await promise
-
   return searchResults
 }
+
+// Call to Spoonacular Get Ingredient Information endpoint
 const ingredientInformationAPICall = async (queryObject) => {
   let id = queryObject.id // Number | The item's id.
 
@@ -80,7 +79,6 @@ const ingredientInformationAPICall = async (queryObject) => {
     'amount': !queryObject.amount ? 1 : queryObject.amount, // Number | The amount of this ingredient.
     //'unit': "grams" // String | The unit for the given amount.
   };
-
 
   let promise = new Promise((resolve, reject) => {
     api.getIngredientInformation(id, opts, function (error, data, response) {
@@ -96,7 +94,6 @@ const ingredientInformationAPICall = async (queryObject) => {
   });
 
   const searchResults = await promise
-
   return searchResults
 }
 const recipeAPICall = async (queryObject) => {
