@@ -6,7 +6,6 @@ const { search } = require('superagent');
 
 // Spoonacular connection
 const connectSpoonacularApi = require('../connections/connectSpoonacular');
-const { NotFoundError } = require('../errors');
 const SpoonacularError = require('../errors/spoonacular');
 const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 
@@ -59,17 +58,11 @@ const searchIngredientsAPI = async (queryObject) => {
   let promise = new Promise((resolve, reject) => {
     api.ingredientSearch(opts, function (error, data, response) {
       if (error) {
-        reject(error);
+        reject(new SpoonacularError(error.message, error.status));
       } else {
         resolve(data);
       }
     });
-  });
-
-  promise.then((data) => {
-    //console.log('API called successfully. Returned data: ' + data);
-    //console.log(data);
-    //console.log('API called successfully.')
   }).catch((error) => {
     console.error(error);
   });
@@ -86,49 +79,6 @@ const ingredientInformationAPICall = async (queryObject) => {
     //'unit': "grams" // String | The unit for the given amount.
   };
 
-  // let promise = new Promise((resolve, reject) => {
-  //   api.getIngredientInformation(id, opts, function (error, data, response) {
-  //     if (error) {
-  //       //reject(error);
-  //       reject(new error);
-  //     } else {
-  //       resolve(data);
-  //     }
-  //   });
-  // });
-
-  // promise.then((data) => {
-  //   //console.log('API called successfully. Returned data: ' + data);
-  //   //console.log(data);
-  //   //console.log('API called successfully.')
-  // }).catch((error) => {
-  //   error.name = 'Spoonacular'
-  //   console.error(error.name);
-  //   //throw new SpoonacularError(error)
-  //   //console.log("In error")
-  // });
-
-  // let promise = new Promise((resolve, reject) => {
-  //   api.getIngredientInformation(id, opts, function (error, data, response) {
-  //     if (error) {
-  //       //reject(error);
-  //       reject(new SpoonacularError(error.message, error.status));
-  //     } else {
-  //       resolve(data);
-  //     }
-  //   });
-  // });
-
-  // promise.then((data) => {
-  //   //console.log('API called successfully. Returned data: ' + data);
-  //   //console.log(data);
-  //   //console.log('API called successfully.')
-  // }).catch((error) => {
-  //   //error.name = 'Spoonacular'
-  //   console.error(error);
-  //   //throw new SpoonacularError(error)
-  //   //console.log("In error")
-  // });
 
   let promise = new Promise((resolve, reject) => {
     api.getIngredientInformation(id, opts, function (error, data, response) {
