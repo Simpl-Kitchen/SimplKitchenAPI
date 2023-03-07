@@ -5,7 +5,8 @@ const { ingredientAPICall,
     searchIngredientsAPI,
     ingredientInformationAPICall,
     searchGroceryProductsAPICall,
-    groceryProductInformationAPICall
+    groceryProductInformationAPICall,
+    searchByUpcAPICall
 } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
@@ -121,6 +122,30 @@ const searchGroceryProductInformation = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ productData })
 }
+const searchGroceryProductByUPC = async (req, res) => {
+    const queryObject = {}
+
+    console.log(req.params)
+    const {
+        params: { upc: productUpc }
+    } = req
+
+    queryObject.upc = productUpc
+
+    console.log(queryObject.upc)
+    if (isNaN(queryObject.upc)) {
+
+        throw new BadRequestError("UPC parameter is not a number")
+    }
+
+    productData = await searchByUpcAPICall(queryObject)
+
+    if (!productData) {
+        throw new NotFoundError(`No results found with upc ${queryObject.id}`)
+    }
+
+    res.status(StatusCodes.OK).json({ productData })
+}
 
 
 
@@ -188,5 +213,6 @@ module.exports = {
     searchByPantry,
     searchIngredientInformation,
     searchGroceryProducts,
-    searchGroceryProductInformation
+    searchGroceryProductInformation,
+    searchGroceryProductByUPC
 }

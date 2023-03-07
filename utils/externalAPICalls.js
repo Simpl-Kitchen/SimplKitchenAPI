@@ -160,7 +160,27 @@ const groceryProductInformationAPICall = async (queryObject) => {
   return searchResults
 
 }
+const searchByUpcAPICall = async (queryObject) => {
+  let upc = queryObject.upc
 
+  let requestHeaders = {
+    'x-api-key': 'e44c9f0796b4400ab3a69f1354d139a9'
+  }
+
+  const options = {
+    method: 'GET',
+    headers: requestHeaders,
+    url: `https://api.spoonacular.com/food/products/upc/${upc}`,
+  };
+
+  const searchResults = axios.request(options).then(function (response) {
+    return response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
+  //console.log("Hello ")
+  return searchResults
+}
 
 
 
@@ -193,5 +213,6 @@ module.exports = {
   searchIngredientsAPI,
   ingredientInformationAPICall,
   searchGroceryProductsAPICall,
-  groceryProductInformationAPICall
+  groceryProductInformationAPICall,
+  searchByUpcAPICall
 };
