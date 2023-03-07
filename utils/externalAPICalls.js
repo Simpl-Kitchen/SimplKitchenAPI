@@ -1,6 +1,6 @@
 require('dotenv').config()
 const axios = require("axios");
-const { query } = require('express');
+//const { query } = require('express');
 
 
 // Spoonacular connection, https://spoonacular.com/food-api/docs#Ingredient-Search
@@ -117,7 +117,7 @@ const searchGroceryProductsAPICall = async (queryObject) => {
   };
 
   let requestHeaders = {
-    'x-api-key': 'e44c9f0796b4400ab3a69f1354d139a9'
+    'x-api-key': process.env.SPOONACULAR_API_KEY
   }
 
   const options = {
@@ -142,7 +142,7 @@ const groceryProductInformationAPICall = async (queryObject) => {
   let id = queryObject.id // Number | The item's id.
 
   let requestHeaders = {
-    'x-api-key': 'e44c9f0796b4400ab3a69f1354d139a9'
+    'x-api-key': process.env.SPOONACULAR_API_KEY
   }
 
   const options = {
@@ -164,7 +164,7 @@ const searchByUpcAPICall = async (queryObject) => {
   let upc = queryObject.upc
 
   let requestHeaders = {
-    'x-api-key': 'e44c9f0796b4400ab3a69f1354d139a9'
+    'x-api-key': process.env.SPOONACULAR_API_KEY
   }
 
   const options = {

@@ -140,8 +140,8 @@ const searchGroceryProductByUPC = async (req, res) => {
 
     productData = await searchByUpcAPICall(queryObject)
 
-    if (!productData) {
-        throw new NotFoundError(`No results found with upc ${queryObject.id}`)
+    if (!productData || productData.status == "failure") {
+        throw new NotFoundError(`No results found with upc ${queryObject.upc}`)
     }
 
     res.status(StatusCodes.OK).json({ productData })
