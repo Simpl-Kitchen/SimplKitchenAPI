@@ -6,7 +6,8 @@ const {
     searchIngredientInformation,
     searchRecipes,
     searchByPantry,
-    searchGroceryProducts
+    searchGroceryProducts,
+    searchGroceryProductInformation
 } = require('../controllers/searchController')
 
 router.get('/ingredients', searchIngredients)
