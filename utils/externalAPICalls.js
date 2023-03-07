@@ -96,6 +96,17 @@ const ingredientInformationAPICall = async (queryObject) => {
   const searchResults = await promise
   return searchResults
 }
+
+const searchGroceryProductsAPICall = async (queryObject) => {
+
+}
+
+
+
+
+
+
+
 const recipeAPICall = async (queryObject) => {
 
   queryObject.app_id = process.env.RECIPE_APP_ID
