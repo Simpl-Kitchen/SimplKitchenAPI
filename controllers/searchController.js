@@ -99,6 +99,11 @@ const searchGroceryProducts = async (req, res) => {
     // Return data to frontend
     res.status(StatusCodes.OK).json({ productData })
 }
+const searchGroceryProductInformation = async (req, res) => {
+    queryObject = {}
+    productData = await searchGroceryProductsAPICall(queryObject)
+    res.send("Hello world 1")
+}
 
 
 
