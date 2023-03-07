@@ -14,6 +14,7 @@ router.get('/ingredients', searchIngredients)
 router.get('/ingredient/properties/:id', searchIngredientInformation)
 
 router.get('/grocery/products', searchGroceryProducts)
+router.get('/grocery/product/properties', searchGroceryProductInformation)
 
 router.get('/recipes', searchRecipes)
 router.get('/pantryRecipe', searchByPantry)
