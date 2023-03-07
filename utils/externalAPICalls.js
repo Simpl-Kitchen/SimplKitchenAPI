@@ -5,7 +5,9 @@ const { search } = require('superagent');
 
 
 // Spoonacular connection
-const connectSpoonacularApi = require('../connections/connectSpoonacular')
+const connectSpoonacularApi = require('../connections/connectSpoonacular');
+const { NotFoundError } = require('../errors');
+const SpoonacularError = require('../errors/spoonacular');
 const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 
 // This returns all the data ** 
@@ -33,105 +35,143 @@ const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 // }
 
 const searchIngredientsAPI = async (queryObject) => {
- 
-    let opts = {
-        'query': queryObject.ingr, // String | The (natural language) search query.
-        //'query': "Burger", // String | The (natural language) search query.
-        'addChildren': true, // Boolean | Whether to add children of found foods.
-        //'minProteinPercent': 10, // Number | The minimum percentage of protein the food must have (between 0 and 100).
-        // 'maxProteinPercent': 90, // Number | The maximum percentage of protein the food can have (between 0 and 100).
-        // 'minFatPercent': 10, // Number | The minimum percentage of fat the food must have (between 0 and 100).
-        // 'maxFatPercent': 90, // Number | The maximum percentage of fat the food can have (between 0 and 100).
-        // 'minCarbsPercent': 10, // Number | The minimum percentage of carbs the food must have (between 0 and 100).
-        // 'maxCarbsPercent': 90, // Number | The maximum percentage of carbs the food can have (between 0 and 100).
-        // 'metaInformation': false, // Boolean | Whether to return more meta information about the ingredients.
-        // //'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
-        // 'sort': "calories", // String | The strategy to sort recipes by. See a full list of supported sorting options.
-        'sortDirection': "asc", // String | The direction in which to sort. Must be either 'asc' (ascending) or 'desc' (descending).
-        // 'offset': 56, // Number | The number of results to skip (between 0 and 900).
-        'number': 10, // Number | The maximum number of items to return (between 1 and 100). Defaults to 10.
-        // 'language': "en" // String | The language of the input. Either 'en' or 'de'.
-    };
+
+  let opts = {
+    'query': queryObject.ingr, // String | The (natural language) search query.
+    //'query': "Burger", // String | The (natural language) search query.
+    'addChildren': true, // Boolean | Whether to add children of found foods.
+    //'minProteinPercent': 10, // Number | The minimum percentage of protein the food must have (between 0 and 100).
+    // 'maxProteinPercent': 90, // Number | The maximum percentage of protein the food can have (between 0 and 100).
+    // 'minFatPercent': 10, // Number | The minimum percentage of fat the food must have (between 0 and 100).
+    // 'maxFatPercent': 90, // Number | The maximum percentage of fat the food can have (between 0 and 100).
+    // 'minCarbsPercent': 10, // Number | The minimum percentage of carbs the food must have (between 0 and 100).
+    // 'maxCarbsPercent': 90, // Number | The maximum percentage of carbs the food can have (between 0 and 100).
+    // 'metaInformation': false, // Boolean | Whether to return more meta information about the ingredients.
+    // //'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
+    // 'sort': "calories", // String | The strategy to sort recipes by. See a full list of supported sorting options.
+    'sortDirection': "asc", // String | The direction in which to sort. Must be either 'asc' (ascending) or 'desc' (descending).
+    // 'offset': 56, // Number | The number of results to skip (between 0 and 900).
+    'number': 10, // Number | The maximum number of items to return (between 1 and 100). Defaults to 10.
+    // 'language': "en" // String | The language of the input. Either 'en' or 'de'.
+  };
 
 
-    let promise = new Promise((resolve, reject) => {
-        api.ingredientSearch(opts, function (error, data, response) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(data);
-          }
-        });
-      });
+  let promise = new Promise((resolve, reject) => {
+    api.ingredientSearch(opts, function (error, data, response) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  });
 
-      promise.then((data) => {
-        //console.log('API called successfully. Returned data: ' + data);
-        //console.log(data);
-        //console.log('API called successfully.')
-      }).catch((error) => {
-        console.error(error);
-      });
+  promise.then((data) => {
+    //console.log('API called successfully. Returned data: ' + data);
+    //console.log(data);
+    //console.log('API called successfully.')
+  }).catch((error) => {
+    console.error(error);
+  });
 
-    const searchResults = await promise
+  const searchResults = await promise
 
-    return searchResults
+  return searchResults
 }
 const ingredientInformationAPICall = async (queryObject) => {
-    let id = queryObject.id // Number | The item's id.
+  let id = queryObject.id // Number | The item's id.
 
-    let opts = {
-    'amount': !queryObject.amount? 1 : queryObject.amount, // Number | The amount of this ingredient.
+  let opts = {
+    'amount': !queryObject.amount ? 1 : queryObject.amount, // Number | The amount of this ingredient.
     //'unit': "grams" // String | The unit for the given amount.
-    };
+  };
 
-    let promise = new Promise((resolve, reject) => {
-        api.getIngredientInformation(id, opts, function (error, data, response) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(data);
-          }
-        });
-      });
+  // let promise = new Promise((resolve, reject) => {
+  //   api.getIngredientInformation(id, opts, function (error, data, response) {
+  //     if (error) {
+  //       //reject(error);
+  //       reject(new error);
+  //     } else {
+  //       resolve(data);
+  //     }
+  //   });
+  // });
 
-      promise.then((data) => {
-        //console.log('API called successfully. Returned data: ' + data);
-        //console.log(data);
-        //console.log('API called successfully.')
-      }).catch((error) => {
-        console.error(error);
-        //console.log("In error")
-      });
+  // promise.then((data) => {
+  //   //console.log('API called successfully. Returned data: ' + data);
+  //   //console.log(data);
+  //   //console.log('API called successfully.')
+  // }).catch((error) => {
+  //   error.name = 'Spoonacular'
+  //   console.error(error.name);
+  //   //throw new SpoonacularError(error)
+  //   //console.log("In error")
+  // });
 
-    const searchResults = await promise
+  // let promise = new Promise((resolve, reject) => {
+  //   api.getIngredientInformation(id, opts, function (error, data, response) {
+  //     if (error) {
+  //       //reject(error);
+  //       reject(new SpoonacularError(error.message, error.status));
+  //     } else {
+  //       resolve(data);
+  //     }
+  //   });
+  // });
 
-    return searchResults
+  // promise.then((data) => {
+  //   //console.log('API called successfully. Returned data: ' + data);
+  //   //console.log(data);
+  //   //console.log('API called successfully.')
+  // }).catch((error) => {
+  //   //error.name = 'Spoonacular'
+  //   console.error(error);
+  //   //throw new SpoonacularError(error)
+  //   //console.log("In error")
+  // });
+
+  let promise = new Promise((resolve, reject) => {
+    api.getIngredientInformation(id, opts, function (error, data, response) {
+      if (error) {
+        //reject(error);
+        reject(new SpoonacularError(error.message, error.status));
+      } else {
+        resolve(data);
+      }
+    });
+  }).catch((error) => {
+    console.error(error);
+  });
+
+  const searchResults = await promise
+
+  return searchResults
 }
 const recipeAPICall = async (queryObject) => {
 
-    queryObject.app_id = process.env.RECIPE_APP_ID
-    queryObject.app_key = process.env.RECIPE_APP_KEY
+  queryObject.app_id = process.env.RECIPE_APP_ID
+  queryObject.app_key = process.env.RECIPE_APP_KEY
 
-    console.log(queryObject);
+  console.log(queryObject);
 
-    const options = {
-        method: 'GET',
-        url: 'https://api.edamam.com/api/recipes/v2',
-        params: queryObject,
-    };
+  const options = {
+    method: 'GET',
+    url: 'https://api.edamam.com/api/recipes/v2',
+    params: queryObject,
+  };
 
-    const searchResults = axios.request(options).then(function (response) {
-        return response.data
-    }).catch(function (error) {
-        console.error(error);
-    });
+  const searchResults = axios.request(options).then(function (response) {
+    return response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
 
-    return searchResults
+  return searchResults
 }
 
 module.exports = {
-    //ingredientAPICall,
-    recipeAPICall,
-    searchIngredientsAPI,
-    ingredientInformationAPICall
+  //ingredientAPICall,
+  recipeAPICall,
+  searchIngredientsAPI,
+  ingredientInformationAPICall
 };

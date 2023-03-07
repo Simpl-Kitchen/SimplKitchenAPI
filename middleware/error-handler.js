@@ -29,7 +29,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     customError.statusCode = 404
   }
 
-  //return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
+  if (err.name === 'Spoonacular') {
+    console.log("Inside")
+    customError.msg = `Spoonacular error`
+    customError.statusCode = err.statusCode
+  }
+
   return res.status(customError.statusCode).json({ msg: customError.msg })
 }
 
