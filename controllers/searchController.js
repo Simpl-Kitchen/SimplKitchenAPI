@@ -1,6 +1,12 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, recipeAPICall, searchIngredientsAPI, ingredientInformationAPICall, searchGroceryProductsAPICall } = require('../utils/externalAPICalls')
+const { ingredientAPICall, 
+        recipeAPICall, 
+        searchIngredientsAPI, 
+        ingredientInformationAPICall, 
+        searchGroceryProductsAPICall,
+        groceryProductInformationAPICall
+    } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
