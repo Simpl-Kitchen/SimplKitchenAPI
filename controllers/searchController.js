@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, recipeAPICall, searchIn, searchIngredientsAPI } = require('../utils/externalAPICalls')
+const { ingredientAPICall, recipeAPICall, searchIngredientsAPI, ingredientInformationAPICall } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
@@ -13,28 +13,28 @@ const searchIngredients = async (req, res) => {
     const queryObject = {}
 
     // Construct query object
-    // queryObject.app_id = process.env.INGREDIENT_APP_ID
-    // queryObject.app_key = process.env.INGREDIENT_APP_KEY
-
-
     if (!upc && !search && !brand) {
         throw new BadRequestError("No search terms provided")
     }
 
-    if (upc) {
-        queryObject.upc = upc
-    } else {
-        if (search) {
-            queryObject.ingr = search
-        }
-        if (brand) {
-            queryObject.brand = brand
-        }
-    }
+    queryObject.ingr = search
 
-    if (category) {
-        queryObject.category = category
-    }
+
+    //      Old one just in case
+    // if (upc) {
+    //     queryObject.upc = upc
+    // } else {
+    //     if (search) {
+    //         queryObject.ingr = search
+    //     }
+    //     if (brand) {
+    //         queryObject.brand = brand
+    //     }
+    // }
+
+    // if (category) {
+    //     queryObject.category = category
+    // }
 
     // Call ingredient API
     //foodData = await ingredientAPICall(queryObject)
@@ -42,19 +42,56 @@ const searchIngredients = async (req, res) => {
     foodData = await searchIngredientsAPI(queryObject);
 
     // If no results throw error
-    if (!foodData) {
-        throw new NotFoundError(`No results found`)
+    if (foodData.totalResults == 0) {
+        throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
     }
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ foodData })
 }
-const getIngredientInformation = async (req, res) => {
-    const { id } = req.query
+const searchIngredientInformation = async (req, res) => {
     const queryObject = {}
 
-    
+    const {
+        params: { id: ingredientId }
+    } = req
+
+    queryObject.id = ingredientId
+
+    if (isNaN(queryObject.id)) {
+
+        throw new BadRequestError("ID parameter is not a number")
+    }
+
+    ingredientData = await ingredientInformationAPICall(queryObject)
+
+    if (!ingredientData) {
+        throw new NotFoundError(`No results found with id ${queryObject.id}`)
+    }
+
+    res.status(StatusCodes.OK).json({ ingredientData })
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const searchRecipes = async (req, res) => {
     const { q, type } = req.query
     const queryObject = {}
@@ -75,16 +112,6 @@ const searchRecipes = async (req, res) => {
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ recipeData })
-
-    //original code, for reference
-    //query API 
-    // const response = await axios.get
-    //     (`https://api.edamam.com/search?
-    // app_id=${APP_ID}
-    // &app_key=${APP_KEY}
-    // &q=chicken`)
-    // //export query response into json file, return json file
-    // res.json(response.data)
 }
 const searchByPantry = async (req, res) => {
     //retrieve users ingredients
@@ -111,4 +138,5 @@ module.exports = {
     searchIngredients,
     searchRecipes,
     searchByPantry,
+    searchIngredientInformation
 }
