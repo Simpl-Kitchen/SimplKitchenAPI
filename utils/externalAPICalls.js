@@ -99,6 +99,40 @@ const ingredientInformationAPICall = async (queryObject) => {
 
 const searchGroceryProductsAPICall = async (queryObject) => {
 
+  let opts = {
+    'query': queryObject.ingr, // String | The (natural language) search query.
+    //'query': burger, // String | The (natural language) search query.
+    //'minCalories': 50, // Number | The minimum amount of calories the product must have.
+    //'maxCalories': 800, // Number | The maximum amount of calories the product can have.
+    //'minCarbs': 10, // Number | The minimum amount of carbohydrates in grams the product must have.
+    //'maxCarbs': 100, // Number | The maximum amount of carbohydrates in grams the product can have.
+    //'minProtein': 10, // Number | The minimum amount of protein in grams the product must have.
+    //'maxProtein': 100, // Number | The maximum amount of protein in grams the product can have.
+    //'minFat': 1, // Number | The minimum amount of fat in grams the product must have.
+    //'maxFat': 100, // Number | The maximum amount of fat in grams the product can have.
+    //'addProductInformation': true, // Boolean | If set to true, you get more information about the products returned.
+    //'offset': 56, // Number | The number of results to skip (between 0 and 900).
+    'number': 10 // Number | The maximum number of items to return (between 1 and 100). Defaults to 10.
+  };
+
+  let requestHeaders = {
+    'x-api-key': 'e44c9f0796b4400ab3a69f1354d139a9'
+  }
+
+  const options = {
+    method: 'GET',
+    headers: requestHeaders,
+    url: 'https://api.spoonacular.com/food/products/search',
+    params: opts,
+  };
+
+  const searchResults = axios.request(options).then(function (response) {
+    return response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
+
+  return searchResults
 }
 
 
@@ -133,5 +167,6 @@ module.exports = {
   //ingredientAPICall,
   recipeAPICall,
   searchIngredientsAPI,
-  ingredientInformationAPICall
+  ingredientInformationAPICall,
+  searchGroceryProductsAPICall
 };

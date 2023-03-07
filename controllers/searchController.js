@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, recipeAPICall, searchIngredientsAPI, ingredientInformationAPICall } = require('../utils/externalAPICalls')
+const { ingredientAPICall, recipeAPICall, searchIngredientsAPI, ingredientInformationAPICall, searchGroceryProductsAPICall } = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const axios = require("axios");
@@ -72,7 +72,27 @@ const searchIngredientInformation = async (req, res) => {
     res.status(StatusCodes.OK).json({ ingredientData })
 
 }
+const searchGroceryProducts = async (req, res) => {
+    const queryObject = {}
 
+    const { search } = req.query
+
+    // Construct query object
+    if (!search) {
+        throw new BadRequestError("No search term provided")
+    }
+
+    queryObject.ingr = search
+
+    productData = await searchGroceryProductsAPICall(queryObject);
+
+    if (productData.totalProducts == 0) {
+        throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
+    }
+
+    // Return data to frontend
+    res.status(StatusCodes.OK).json({ productData })
+}
 
 
 
@@ -138,5 +158,6 @@ module.exports = {
     searchIngredients,
     searchRecipes,
     searchByPantry,
-    searchIngredientInformation
+    searchIngredientInformation,
+    searchGroceryProducts
 }
