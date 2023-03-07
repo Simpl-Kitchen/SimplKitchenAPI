@@ -13,10 +13,6 @@ const searchIngredients = async (req, res) => {
     const queryObject = {}
 
     // Construct query object
-    // queryObject.app_id = process.env.INGREDIENT_APP_ID
-    // queryObject.app_key = process.env.INGREDIENT_APP_KEY
-
-
     if (!upc && !search && !brand) {
         throw new BadRequestError("No search terms provided")
     }
