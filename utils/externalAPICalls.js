@@ -135,7 +135,9 @@ const searchGroceryProductsAPICall = async (queryObject) => {
   return searchResults
 }
 
-
+const groceryProductInformationAPICall = async (queryObject) => {
+  
+}
 
 
 
