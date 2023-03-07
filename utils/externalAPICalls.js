@@ -136,6 +136,8 @@ const searchGroceryProductsAPICall = async (queryObject) => {
 }
 
 const groceryProductInformationAPICall = async (queryObject) => {
+  // Documentation: https://spoonacular.com/food-api/docs#Get-Recipe-Information
+
   
 }
 
