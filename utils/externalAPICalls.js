@@ -47,7 +47,7 @@ const searchIngredientsAPI = async (queryObject) => {
     // 'minCarbsPercent': 10, // Number | The minimum percentage of carbs the food must have (between 0 and 100).
     // 'maxCarbsPercent': 90, // Number | The maximum percentage of carbs the food can have (between 0 and 100).
     // 'metaInformation': false, // Boolean | Whether to return more meta information about the ingredients.
-    // //'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
+    //'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
     // 'sort': "calories", // String | The strategy to sort recipes by. See a full list of supported sorting options.
     'sortDirection': "asc", // String | The direction in which to sort. Must be either 'asc' (ascending) or 'desc' (descending).
     // 'offset': 56, // Number | The number of results to skip (between 0 and 900).
