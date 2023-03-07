@@ -21,20 +21,22 @@ const searchIngredients = async (req, res) => {
         throw new BadRequestError("No search terms provided")
     }
 
-    if (upc) {
-        queryObject.upc = upc
-    } else {
-        if (search) {
-            queryObject.ingr = search
-        }
-        if (brand) {
-            queryObject.brand = brand
-        }
-    }
+    queryObject.ingr = search
 
-    if (category) {
-        queryObject.category = category
-    }
+    // if (upc) {
+    //     queryObject.upc = upc
+    // } else {
+    //     if (search) {
+    //         queryObject.ingr = search
+    //     }
+    //     if (brand) {
+    //         queryObject.brand = brand
+    //     }
+    // }
+
+    // if (category) {
+    //     queryObject.category = category
+    // }
 
     // Call ingredient API
     //foodData = await ingredientAPICall(queryObject)
@@ -51,7 +53,7 @@ const searchIngredients = async (req, res) => {
 }
 const searchIngredientInformation = async (req, res) => {
     const queryObject = {}
-    
+
     const {
         params: { id: ingredientId }
     } = req
@@ -69,8 +71,8 @@ const searchIngredientInformation = async (req, res) => {
         throw new NotFoundError(`No results found`)
     }
 
-    res.status(StatusCodes.OK).json({ingredientData})
-    
+    res.status(StatusCodes.OK).json({ ingredientData })
+
 }
 const searchRecipes = async (req, res) => {
     const { q, type } = req.query
