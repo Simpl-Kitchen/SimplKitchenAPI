@@ -170,5 +170,6 @@ module.exports = {
     searchRecipes,
     searchByPantry,
     searchIngredientInformation,
-    searchGroceryProducts
+    searchGroceryProducts,
+    searchGroceryProductInformation
 }
