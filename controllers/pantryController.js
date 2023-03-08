@@ -14,8 +14,6 @@ const getAllIngredients = async (req, res) => {
     const ingredients = await result
 
     res.status(StatusCodes.OK).json({ ingredients })
-    //console.log(queryObject)
-    //res.send("Get all ingredients")
 }
 const getIngredient = async (req, res) => {
     const {
@@ -32,7 +30,6 @@ const getIngredient = async (req, res) => {
 
     }
     res.status(StatusCodes.OK).json({ ingredient })
-    //res.send("Get ingredient")
 }
 const addIngredient = async (req, res) => {
     //console.log(req.body)
