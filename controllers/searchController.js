@@ -1,9 +1,16 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const { ingredientAPICall, recipeAPICall, searchIngredientsAPI, ingredientInformationAPICall } = require('../utils/externalAPICalls')
+const { ingredientAPICall,
+    recipeAPICall,
+    searchIngredientsAPI,
+    ingredientInformationAPICall,
+    searchGroceryProductsAPICall,
+    groceryProductInformationAPICall,
+    searchByUpcAPICall
+} = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
-const axios = require("axios");
+//const axios = require("axios");
 
 //search ingredients, work in progress
 const searchIngredients = async (req, res) => {
@@ -72,7 +79,73 @@ const searchIngredientInformation = async (req, res) => {
     res.status(StatusCodes.OK).json({ ingredientData })
 
 }
+const searchGroceryProducts = async (req, res) => {
+    const queryObject = {}
 
+    const { search } = req.query
+
+    // Construct query object
+    if (!search) {
+        throw new BadRequestError("No search term provided")
+    }
+
+    queryObject.ingr = search
+
+    productData = await searchGroceryProductsAPICall(queryObject);
+
+    if (productData.totalProducts == 0) {
+        throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
+    }
+
+    // Return data to frontend
+    res.status(StatusCodes.OK).json({ productData })
+}
+const searchGroceryProductInformation = async (req, res) => {
+    const queryObject = {}
+
+    const {
+        params: { id: productId }
+    } = req
+
+    queryObject.id = productId
+
+    if (isNaN(queryObject.id)) {
+
+        throw new BadRequestError("ID parameter is not a number")
+    }
+
+    productData = await groceryProductInformationAPICall(queryObject)
+
+    if (!productData) {
+        throw new NotFoundError(`No results found with id ${queryObject.id}`)
+    }
+
+    res.status(StatusCodes.OK).json({ productData })
+}
+const searchGroceryProductByUPC = async (req, res) => {
+    const queryObject = {}
+
+    console.log(req.params)
+    const {
+        params: { upc: productUpc }
+    } = req
+
+    queryObject.upc = productUpc
+
+    console.log(queryObject.upc)
+    if (isNaN(queryObject.upc)) {
+
+        throw new BadRequestError("UPC parameter is not a number")
+    }
+
+    productData = await searchByUpcAPICall(queryObject)
+
+    if (!productData || productData.status == "failure") {
+        throw new NotFoundError(`No results found with upc ${queryObject.upc}`)
+    }
+
+    res.status(StatusCodes.OK).json({ productData })
+}
 
 
 
@@ -138,5 +211,8 @@ module.exports = {
     searchIngredients,
     searchRecipes,
     searchByPantry,
-    searchIngredientInformation
+    searchIngredientInformation,
+    searchGroceryProducts,
+    searchGroceryProductInformation,
+    searchGroceryProductByUPC
 }

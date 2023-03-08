@@ -14,8 +14,6 @@ const getAllIngredients = async (req, res) => {
     const ingredients = await result
 
     res.status(StatusCodes.OK).json({ ingredients })
-    //console.log(queryObject)
-    //res.send("Get all ingredients")
 }
 const getIngredient = async (req, res) => {
     const {
@@ -32,18 +30,28 @@ const getIngredient = async (req, res) => {
 
     }
     res.status(StatusCodes.OK).json({ ingredient })
-    //res.send("Get ingredient")
 }
 const addIngredient = async (req, res) => {
     //console.log(req.body)
     //console.log(req.user)
     req.body.createdBy = req.user.userId
-    const ingredient = await Ingredient.create(req.body)
-    res.status(StatusCodes.CREATED).json({ ingredient })
 
+    let ingredient = await Ingredient.findOne({
+        ingredientId: req.body.ingredientId,
+        createdBy: req.user.userId
+    })
 
-    // Regenerate recipes
-    generateRecipes(req.user)
+    // If ingredient is not in the user's pantry, add it
+    if (!ingredient) {
+        ingredient = await Ingredient.create(req.body)
+        res.status(StatusCodes.CREATED).json({ ingredient })
+
+    }
+    // If ingredient is in the user's pantry, update amount.
+    else {
+        await ingredient.incrementAmount();
+        res.status(StatusCodes.OK).json({ ingredient });
+    }
 }
 const updateIngredient = async (req, res) => {
     const {
@@ -94,6 +102,8 @@ const getAllRecipes = async (req, res) => {
     res.status(StatusCodes.OK).json({ recipes })
     //console.log(queryObject)
     //res.send("Get all recipes")
+
+
 }
 
 const getRecipe = async (req, res) => {

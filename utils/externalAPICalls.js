@@ -1,5 +1,6 @@
 require('dotenv').config()
 const axios = require("axios");
+//const { query } = require('express');
 
 
 // Spoonacular connection, https://spoonacular.com/food-api/docs#Ingredient-Search
@@ -47,7 +48,7 @@ const searchIngredientsAPI = async (queryObject) => {
     // 'minCarbsPercent': 10, // Number | The minimum percentage of carbs the food must have (between 0 and 100).
     // 'maxCarbsPercent': 90, // Number | The maximum percentage of carbs the food can have (between 0 and 100).
     // 'metaInformation': false, // Boolean | Whether to return more meta information about the ingredients.
-    // //'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
+    //'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
     // 'sort': "calories", // String | The strategy to sort recipes by. See a full list of supported sorting options.
     'sortDirection': "asc", // String | The direction in which to sort. Must be either 'asc' (ascending) or 'desc' (descending).
     // 'offset': 56, // Number | The number of results to skip (between 0 and 900).
@@ -96,6 +97,94 @@ const ingredientInformationAPICall = async (queryObject) => {
   const searchResults = await promise
   return searchResults
 }
+
+const searchGroceryProductsAPICall = async (queryObject) => {
+
+  let opts = {
+    'query': queryObject.ingr, // String | The (natural language) search query.
+    //'query': burger, // String | The (natural language) search query.
+    //'minCalories': 50, // Number | The minimum amount of calories the product must have.
+    //'maxCalories': 800, // Number | The maximum amount of calories the product can have.
+    //'minCarbs': 10, // Number | The minimum amount of carbohydrates in grams the product must have.
+    //'maxCarbs': 100, // Number | The maximum amount of carbohydrates in grams the product can have.
+    //'minProtein': 10, // Number | The minimum amount of protein in grams the product must have.
+    //'maxProtein': 100, // Number | The maximum amount of protein in grams the product can have.
+    //'minFat': 1, // Number | The minimum amount of fat in grams the product must have.
+    //'maxFat': 100, // Number | The maximum amount of fat in grams the product can have.
+    //'addProductInformation': true, // Boolean | If set to true, you get more information about the products returned.
+    //'offset': 56, // Number | The number of results to skip (between 0 and 900).
+    'number': !queryObject.pages ? 10 : queryObject.pages // Number | The maximum number of items to return (between 1 and 100). Defaults to 10.
+  };
+
+  let requestHeaders = {
+    'x-api-key': process.env.SPOONACULAR_API_KEY
+  }
+
+  const options = {
+    method: 'GET',
+    headers: requestHeaders,
+    url: 'https://api.spoonacular.com/food/products/search',
+    params: opts,
+  };
+
+  const searchResults = axios.request(options).then(function (response) {
+    return response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
+  console.log("Hello ")
+  return searchResults
+}
+
+const groceryProductInformationAPICall = async (queryObject) => {
+  // Documentation: https://spoonacular.com/food-api/docs#Get-Recipe-Information
+
+  let id = queryObject.id // Number | The item's id.
+
+  let requestHeaders = {
+    'x-api-key': process.env.SPOONACULAR_API_KEY
+  }
+
+  const options = {
+    method: 'GET',
+    headers: requestHeaders,
+    url: `https://api.spoonacular.com/food/products/${id}`,
+  };
+
+  const searchResults = axios.request(options).then(function (response) {
+    return response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
+  //console.log("Hello ")
+  return searchResults
+
+}
+const searchByUpcAPICall = async (queryObject) => {
+  let upc = queryObject.upc
+
+  let requestHeaders = {
+    'x-api-key': process.env.SPOONACULAR_API_KEY
+  }
+
+  const options = {
+    method: 'GET',
+    headers: requestHeaders,
+    url: `https://api.spoonacular.com/food/products/upc/${upc}`,
+  };
+
+  const searchResults = axios.request(options).then(function (response) {
+    return response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
+  //console.log("Hello ")
+  return searchResults
+}
+
+
+
+
 const recipeAPICall = async (queryObject) => {
 
   queryObject.app_id = process.env.RECIPE_APP_ID
@@ -122,5 +211,8 @@ module.exports = {
   //ingredientAPICall,
   recipeAPICall,
   searchIngredientsAPI,
-  ingredientInformationAPICall
+  ingredientInformationAPICall,
+  searchGroceryProductsAPICall,
+  groceryProductInformationAPICall,
+  searchByUpcAPICall
 };
