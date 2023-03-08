@@ -43,7 +43,7 @@ const addIngredient = async (req, res) => {
 
 
     // Regenerate recipes
-    generateRecipes(req.user)
+    //generateRecipes(req.user)
 }
 const updateIngredient = async (req, res) => {
     const {
