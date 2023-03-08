@@ -38,6 +38,9 @@ const addIngredient = async (req, res) => {
     //console.log(req.body)
     //console.log(req.user)
     req.body.createdBy = req.user.userId
+
+    // Add logic to check for an already existing ingredient
+
     const ingredient = await Ingredient.create(req.body)
     res.status(StatusCodes.CREATED).json({ ingredient })
 
