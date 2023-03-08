@@ -102,6 +102,8 @@ const getAllRecipes = async (req, res) => {
     res.status(StatusCodes.OK).json({ recipes })
     //console.log(queryObject)
     //res.send("Get all recipes")
+
+
 }
 
 const getRecipe = async (req, res) => {
