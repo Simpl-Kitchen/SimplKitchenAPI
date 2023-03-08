@@ -81,4 +81,9 @@ IngredientSchema.methods.incrementAmount = async function () {
     await this.save();
 }
 
+IngredientSchema.methods.decrementAmount = async function () {
+    this.amount -= 1;
+    await this.save();
+}
+
 module.exports = mongoose.model('Ingredient', IngredientSchema)
