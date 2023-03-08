@@ -76,4 +76,9 @@ const IngredientSchema = new mongoose.Schema({
     { strict: false },
 ) // May need to change strict settings. Leaving as false for ease of testing. 
 
+IngredientSchema.methods.incrementAmount = async function () {
+    this.amount += 1;
+    await this.save();
+}
+
 module.exports = mongoose.model('Ingredient', IngredientSchema)

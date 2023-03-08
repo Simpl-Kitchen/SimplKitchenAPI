@@ -36,14 +36,22 @@ const addIngredient = async (req, res) => {
     //console.log(req.user)
     req.body.createdBy = req.user.userId
 
-    // Add logic to check for an already existing ingredient
+    let ingredient = await Ingredient.findOne({
+        ingredientId: req.body.ingredientId,
+        createdBy: req.user.userId
+    })
 
-    const ingredient = await Ingredient.create(req.body)
-    res.status(StatusCodes.CREATED).json({ ingredient })
+    // If ingredient is not in the user's pantry, add it
+    if (!ingredient) {
+        ingredient = await Ingredient.create(req.body)
+        res.status(StatusCodes.CREATED).json({ ingredient })
 
-
-    // Regenerate recipes
-    //generateRecipes(req.user)
+    }
+    // If ingredient is in the user's pantry, update amount.
+    else {
+        await ingredient.incrementAmount();
+        res.status(StatusCodes.OK).json({ ingredient });
+    }
 }
 const updateIngredient = async (req, res) => {
     const {
