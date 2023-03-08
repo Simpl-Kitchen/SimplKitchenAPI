@@ -62,6 +62,10 @@ const IngredientSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please provide the url for ingredient picture'],
     },
+    amount: {
+        type: Number,
+        default: 1
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
