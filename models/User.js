@@ -23,6 +23,14 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide password'],
     minlength: 6,
   },
+  intolerances: {
+    type: Array,
+    default: [],
+    enum: {
+      values: ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'],
+      message: '{VALUE} is not supported'
+    }
+  }
 })
 
 UserSchema.pre('save', async function () {
