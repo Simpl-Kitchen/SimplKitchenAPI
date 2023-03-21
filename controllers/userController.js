@@ -10,8 +10,11 @@ const updateIntolerances = async (req, res) => {
     // const ingredients = await result
 
     // res.status(StatusCodes.OK).json({ ingredients })
+    console.log(req.body)
 
     console.log("Hello world")
+
+    res.send('Hello World')
 }
 
 
