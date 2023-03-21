@@ -3,14 +3,16 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
 const updateIntolerances = async (req, res) => {
-    // queryObject = {
-    //     createdBy: req.user.userId
-    // }
-    // let result = Ingredient.find(queryObject)
-    // const ingredients = await result
 
-    // res.status(StatusCodes.OK).json({ ingredients })
+
+    const userID = req.user.userID;
+    const user = await User.findOne({ userID })
+
+
     console.log(req.body)
+
+    //console.log(req.user)
+    console.log(user)
 
     console.log("Hello world")
 

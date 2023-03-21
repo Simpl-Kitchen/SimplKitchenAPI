@@ -45,7 +45,7 @@ app.use(cors())
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
-app.use('/api/v1/user/', userRouter)
+app.use('/api/v1/user/', authenticateUser, userRouter)
 app.use('/api/v1/search', searchRouter)
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
