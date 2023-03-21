@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+const allowedIntolerances = ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'];
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -24,13 +26,15 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
   },
   intolerances: {
-    type: Array,
+    type: [String],
     default: [],
-    enum: {
-      values: ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'],
-      message: '{VALUE} is not supported'
-    }
-  }
+    validate: {
+      validator: function (array) {
+        return array.every(value => allowedIntolerances.includes(value));
+      },
+      message: 'One or more intolerances are not supported',
+    },
+  },
 })
 
 UserSchema.pre('save', async function () {
