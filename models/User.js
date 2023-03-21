@@ -28,12 +28,21 @@ const UserSchema = new mongoose.Schema({
   intolerances: {
     type: [String],
     default: [],
-    validate: {
-      validator: function (array) {
-        return array.every(value => allowedIntolerances.includes(value));
+    validate: [
+      {
+        validator: function (array) {
+          return array.every(value => allowedIntolerances.includes(value));
+        },
+        message: 'One or more intolerances are not supported',
       },
-      message: 'One or more intolerances are not supported',
-    },
+      {
+        validator: function (array) {
+          const uniqueArray = [...new Set(array)];
+          return array.length === uniqueArray.length;
+        },
+        message: 'Duplicate intolerances are not allowed',
+      },
+    ],
   },
 })
 

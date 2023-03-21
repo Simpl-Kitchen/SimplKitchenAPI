@@ -4,19 +4,19 @@ const { BadRequestError, UnauthenticatedError } = require('../errors')
 
 const updateIntolerances = async (req, res) => {
 
+    const {
+        user: { userId },
+    } = req
 
-    const userID = req.user.userID;
-    const user = await User.findOne({ userID })
+    const user = await User.findByIdAndUpdate(
+        { _id: userId },
+        req.body,
+        { new: true, runValidators: true }
+    )
 
+    // Add error handling
 
-    console.log(req.body)
-
-    //console.log(req.user)
-    console.log(user)
-
-    console.log("Hello world")
-
-    res.send('Hello World')
+    res.status(StatusCodes.OK).json({ user })
 }
 
 
