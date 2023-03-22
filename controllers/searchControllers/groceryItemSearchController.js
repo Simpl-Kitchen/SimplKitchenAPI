@@ -76,9 +76,10 @@ const searchGroceryProductByUPC = async (req, res) => {
         throw new BadRequestError("UPC parameter must be a number")
     }
 
-    //productData = await searchByUpcAPICall(queryObject)
+    // Call API for product data
     productData = await externalAPICalls.searchByUpcAPICall(queryObject)
 
+    // If no results throw error
     if (!productData || productData.status == "failure") {
         throw new NotFoundError(`No results found with upc ${queryObject.upc}`)
     }
