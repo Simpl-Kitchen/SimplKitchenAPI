@@ -1,4 +1,4 @@
-const externalAPICalls = require('../utils/externalAPICalls')
+const externalAPICalls = require('../../utils/externalAPICalls')
 const userHelpers = require('../../utils/helpers')
 
 const { StatusCodes } = require('http-status-codes')
