@@ -13,7 +13,7 @@ const searchIngredientsAPI = async (queryObject) => {
 
   console.log(queryObject.intolerances)
   let opts = {
-    'query': queryObject.ingr, // String | The (natural language) search query.
+    'query': queryObject.search, // String | The (natural language) search query.
     //'query': "Burger", // String | The (natural language) search query.
     'addChildren': true, // Boolean | Whether to add children of found foods.
     //'minProteinPercent': 10, // Number | The minimum percentage of protein the food must have (between 0 and 100).
@@ -77,7 +77,7 @@ const ingredientInformationAPICall = async (queryObject) => {
 const searchGroceryProductsAPICall = async (queryObject) => {
 
   let opts = {
-    'query': queryObject.ingr, // String | The (natural language) search query.
+    'query': queryObject.search, // String | The (natural language) search query.
     //'query': burger, // String | The (natural language) search query.
     //'minCalories': 50, // Number | The minimum amount of calories the product must have.
     //'maxCalories': 800, // Number | The maximum amount of calories the product can have.

@@ -23,7 +23,7 @@ const searchIngredients = async (req, res) => {
     }
     
     // Construct query object
-    queryObject.ingr = search
+    queryObject.search = search
     queryObject.intolerances = intolerances
     
     // Call API for ingredient data
@@ -31,7 +31,7 @@ const searchIngredients = async (req, res) => {
     
     // If no results throw error
     if (foodData.totalResults == 0) {
-        throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
+        throw new NotFoundError(`No results found for search term '${queryObject.search}'`)
     }
 
     // Return data to frontend
@@ -79,25 +79,26 @@ const searchGroceryProducts = async (req, res) => {
     }
 
     // Construct query object
-    queryObject.ingr = search
+    queryObject.search = search
 
     // Call API for product data
     productData = await externalAPICalls.searchGroceryProductsAPICall(queryObject);
 
     // If no results throw error
     if (productData.totalProducts == 0) {
-        throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
+        throw new NotFoundError(`No results found for search term '${queryObject.search}'`)
     }
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ productData })
 }
 const searchGroceryProductInformation = async (req, res) => {
-    const queryObject = {}
-
+    
+    // Set up variables. Destructure req.params and req.user
     const {
         params: { id: productId }
     } = req
+    const queryObject = {}
 
     queryObject.id = productId
 
