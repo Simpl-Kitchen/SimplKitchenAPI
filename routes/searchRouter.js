@@ -2,15 +2,6 @@ const express = require('express')
 const router = express.Router()
 
 const searchController = require('../controllers/searchControllers')
-// const {
-//     searchIngredients,
-//     searchIngredientInformation,
-//     searchRecipes,
-//     //searchByPantry,
-//     searchGroceryProducts,
-//     searchGroceryProductInformation,
-//     searchGroceryProductByUPC
-// } = require('../controllers/searchController')
 
 router.get('/ingredients', searchController.searchIngredients)
 router.get('/ingredient/id/:id', searchController.searchIngredientInformation)
