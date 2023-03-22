@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const User = require('../models/User')
+//const User = require('../models/User')
 
 const externalAPICalls = require('../utils/externalAPICalls')
 const userHelpers = require('../utils/helpers/userHelpers')
