@@ -1,6 +1,5 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-const User = require('../models/User')
 
 const externalAPICalls = require('../utils/externalAPICalls')
 const userHelpers = require('../utils/helpers/userHelpers')
@@ -15,9 +14,6 @@ const searchIngredients = async (req, res) => {
     const {search} = req.query
     const {userId} = req.user
     const queryObject = {}
-    
-    // Get user by ID
-    const user = await User.findById(userId);
 
     // Get user intolerances
     //const userIntolerances = user.intolerances.toString()
