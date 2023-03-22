@@ -141,24 +141,6 @@ const searchGroceryProductByUPC = async (req, res) => {
     res.status(StatusCodes.OK).json({ productData })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const searchRecipes = async (req, res) => {
 //     const { q, type } = req.query
 //     const queryObject = {}
