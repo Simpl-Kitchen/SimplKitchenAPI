@@ -84,6 +84,7 @@ const searchGroceryProductByUPC = async (req, res) => {
         throw new NotFoundError(`No results found with upc ${queryObject.upc}`)
     }
 
+    // Return data to frontend
     res.status(StatusCodes.OK).json({ productData })
 }
 
