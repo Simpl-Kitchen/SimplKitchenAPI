@@ -38,25 +38,31 @@ const searchIngredients = async (req, res) => {
     res.status(StatusCodes.OK).json({ foodData })
 }
 const searchIngredientInformation = async (req, res) => {
-    const queryObject = {}
+    
+    // Set up variables. Destructure req.params and req.user
     const {
         params: { id: ingredientId }
     } = req
+    const queryObject = {}
 
+    // Construct query object
     queryObject.id = ingredientId
 
+    // If id is not a number throw error
     if (isNaN(queryObject.id)) {
 
         throw new BadRequestError("ID parameter is not a number")
     }
 
-    //ingredientData = await ingredientInformationAPICall(queryObject)
+    // Call API for ingredient data
     const ingredientData = await externalAPICalls.ingredientInformationAPICall(queryObject)
     
+    // If no results throw error
     if (!ingredientData) {
         throw new NotFoundError(`No results found with id ${queryObject.id}`)
     }
 
+    // Return data to frontend
     res.status(StatusCodes.OK).json({ ingredientData })
 
 }
