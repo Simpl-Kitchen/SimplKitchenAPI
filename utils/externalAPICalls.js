@@ -1,7 +1,5 @@
 require('dotenv').config()
 const axios = require("axios");
-//const { query } = require('express');
-
 
 // Spoonacular connection, https://spoonacular.com/food-api/docs#Ingredient-Search
 const connectSpoonacularApi = require('../connections/connectSpoonacular');
@@ -9,30 +7,6 @@ const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 
 // Spoonacular error handling
 const SpoonacularError = require('../errors/spoonacular');
-
-// This returns all the data **  (Edamam, old)
-
-// const ingredientAPICall = async (queryObject) => {
-
-
-//     queryObject.app_id = process.env.INGREDIENT_APP_ID
-//     queryObject.app_key = process.env.INGREDIENT_APP_KEY
-//     //console.log(queryObject);
-
-//     const options = {
-//         method: 'GET',
-//         url: 'https://api.edamam.com/api/food-database/v2/parser',
-//         params: queryObject,
-//     };
-
-//     const searchResults = axios.request(options).then(function (response) {
-//         return response.data
-//     }).catch(function (error) {
-//         console.error(error);
-//     });
-
-//     return searchResults
-// }
 
 // Call to Spoonacular Ingredient Search endpoint
 const searchIngredientsAPI = async (queryObject) => {
@@ -49,6 +23,7 @@ const searchIngredientsAPI = async (queryObject) => {
     // 'maxCarbsPercent': 90, // Number | The maximum percentage of carbs the food can have (between 0 and 100).
     // 'metaInformation': false, // Boolean | Whether to return more meta information about the ingredients.
     // 'intolerances': "egg", // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
+    'intolerances': queryObject.intolerances, // String | A comma-separated list of intolerances. All recipes returned must not contain ingredients that are not suitable for people with the intolerances entered. See a full list of supported intolerances.
     // 'sort': "calories", // String | The strategy to sort recipes by. See a full list of supported sorting options.
     'sortDirection': "asc", // String | The direction in which to sort. Must be either 'asc' (ascending) or 'desc' (descending).
     // 'offset': 56, // Number | The number of results to skip (between 0 and 900).
