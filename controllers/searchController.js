@@ -142,7 +142,9 @@ const searchGroceryProductByUPC = async (req, res) => {
 }
 
 const searchRecipes = async (req, res) => {
-    const { q, type } = req.query
+    // Set up variables. Destructure req.query and req.user
+    const {search} = req.query
+    const {userId} = req.user
     const queryObject = {}
 
     // Construct query object
