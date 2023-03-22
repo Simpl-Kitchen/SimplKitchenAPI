@@ -3,6 +3,8 @@ const Ingredient = require('../models/Ingredient')
 const User = require('../models/User')
 
 const externalAPICalls = require('../utils/externalAPICalls')
+const userHelpers = require('../utils/helpers/userHelpers')
+
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
@@ -15,8 +17,8 @@ const searchIngredients = async (req, res) => {
     
     // Get user by ID
     const user = await User.findById(userId);
-    const userIntolerances = user.intolerances.toString()
-
+    //const userIntolerances = user.intolerances.toString()
+    const intolerances = userHelpers.getUserIntolerances(userId)
     const queryObject = {}
 
     // Construct query object
@@ -25,10 +27,9 @@ const searchIngredients = async (req, res) => {
     }
 
     queryObject.ingr = search
-    queryObject.intolerances = userIntolerances
-
+    //queryObject.intolerances = userIntolerances
+    queryObject.intolerances = intolerances
     //foodData = await searchIngredientsAPI(queryObject);
-
     foodData = await externalAPICalls.searchIngredientsAPI(queryObject);
     // If no results throw error
     if (foodData.totalResults == 0) {
