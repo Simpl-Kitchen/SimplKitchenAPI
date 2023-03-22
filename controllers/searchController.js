@@ -116,7 +116,7 @@ const searchGroceryProductByUPC = async (req, res) => {
     console.log(queryObject.upc)
     if (isNaN(queryObject.upc)) {
 
-        throw new BadRequestError("UPC parameter is not a number")
+        throw new BadRequestError("UPC parameter must be a number")
     }
 
     //productData = await searchByUpcAPICall(queryObject)
