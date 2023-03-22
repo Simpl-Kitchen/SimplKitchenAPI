@@ -34,28 +34,6 @@ const searchIngredients = async (req, res) => {
     queryObject.ingr = search
     queryObject.intolerances = userIntolerances
 
-    //console.log(queryObject)
-
-
-    //      Old one just in case
-    // if (upc) {
-    //     queryObject.upc = upc
-    // } else {
-    //     if (search) {
-    //         queryObject.ingr = search
-    //     }
-    //     if (brand) {
-    //         queryObject.brand = brand
-    //     }
-    // }
-
-    // if (category) {
-    //     queryObject.category = category
-    // }
-
-    // Call ingredient API
-    //foodData = await ingredientAPICall(queryObject)
-
     foodData = await searchIngredientsAPI(queryObject);
 
     // If no results throw error
