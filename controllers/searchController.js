@@ -63,19 +63,25 @@ const searchIngredientInformation = async (req, res) => {
 
 }
 const searchGroceryProducts = async (req, res) => {
+    
+    // Set up variables. Destructure req.query and req.user
+    const { search } = req.query
+    const { userId } = req.user
     const queryObject = {}
 
-    const { search } = req.query
-
-    // Construct query object
+    // If no search term provided throw error
     if (!search) {
         throw new BadRequestError("No search term provided")
     }
 
+    // Construct query object
     queryObject.ingr = search
 
     //productData = await searchGroceryProductsAPICall(queryObject);
+    // Call API for product data
     productData = await externalAPICalls.searchGroceryProductsAPICall(queryObject);
+
+    // If no results throw error
     if (productData.totalProducts == 0) {
         throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
     }
