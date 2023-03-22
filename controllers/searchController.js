@@ -81,7 +81,6 @@ const searchGroceryProducts = async (req, res) => {
     // Construct query object
     queryObject.ingr = search
 
-    //productData = await searchGroceryProductsAPICall(queryObject);
     // Call API for product data
     productData = await externalAPICalls.searchGroceryProductsAPICall(queryObject);
 
