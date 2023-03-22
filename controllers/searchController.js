@@ -159,52 +159,31 @@ const searchGroceryProductByUPC = async (req, res) => {
 
 
 
-const searchRecipes = async (req, res) => {
-    const { q, type } = req.query
-    const queryObject = {}
+// const searchRecipes = async (req, res) => {
+//     const { q, type } = req.query
+//     const queryObject = {}
 
-    // Construct query object
+//     // Construct query object
 
-    if (!q) {
-        throw new BadRequestError("No search terms provided")
-    } else if (!type) {
-        throw new BadRequestError("No Recipe type provided")
-    } else {
-        queryObject.q = q
-        queryObject.type = type
-    }
+//     if (!q) {
+//         throw new BadRequestError("No search terms provided")
+//     } else if (!type) {
+//         throw new BadRequestError("No Recipe type provided")
+//     } else {
+//         queryObject.q = q
+//         queryObject.type = type
+//     }
 
-    // Call ingredient API
-    recipeData = await recipeAPICall(queryObject)
+//     // Call ingredient API
+//     recipeData = await recipeAPICall(queryObject)
 
-    // Return data to frontend
-    res.status(StatusCodes.OK).json({ recipeData })
-}
-const searchByPantry = async (req, res) => {
-    //retrieve users ingredients
-    queryObject = {
-        createdBy: req.userId
-    }
-    let result = Ingredient.find(queryObject)
-    const ingredients = await result
-    // check for bad queries
-
-    if (!queryObject) {
-        throw new BadRequestError("No search terms provided")
-    }
-
-    // Call ingredient API
-    recipeData = await recipeAPICall(ingredients.label)
-
-    // Return data to frontend
-    res.status(StatusCodes.OK).json({ recipeData })
-
-}
+//     // Return data to frontend
+//     res.status(StatusCodes.OK).json({ recipeData })
+// }
 
 module.exports = {
     searchIngredients,
-    searchRecipes,
-    searchByPantry,
+    //searchRecipes,
     searchIngredientInformation,
     searchGroceryProducts,
     searchGroceryProductInformation,

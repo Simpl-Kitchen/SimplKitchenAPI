@@ -18,7 +18,6 @@ router.get('/grocery/products', searchGroceryProducts)
 router.get('/grocery/product/id/:id', searchGroceryProductInformation)
 router.get('/grocery/product/upc/:upc', searchGroceryProductByUPC)
 
-router.get('/recipes', searchRecipes)
-router.get('/pantryRecipe', searchByPantry)
+//router.get('/recipes', searchRecipes)
 
 module.exports = router
