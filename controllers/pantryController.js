@@ -79,14 +79,32 @@ const deleteIngredient = async (req, res) => {
         params: { id: ingredientId }
     } = req
 
-    const ingredient = await Ingredient.findByIdAndRemove({
-        _id: ingredientId,
-        createdBy: userId,
-    })
+    console.log(ingredientId)
+    // const ingredient = await Ingredient.findByIdAndRemove({
+    //     _id: ingredientId,
+    //     createdBy: userId,
+    // })
+    const ingredient = await Ingredient.findById(ingredientId);
+    // const ingredient = await Ingredient.findOne({
+    //     ingredientId: ingredientId,
+    //     createdBy: userId
+    // })
+
+
+    console.log(ingredient)
+
     if (!ingredient) {
         throw new NotFoundError(`No ingredient with id ${ingredientId}`)
     }
-    res.status(StatusCodes.OK).send()
+
+    if (ingredient.amount > 1) {
+        await ingredient.decrementAmount();
+        res.status(StatusCodes.OK).json({ ingredient });
+    }
+    else {
+        await ingredient.remove();
+        res.status(StatusCodes.OK).send()
+    }
     //res.send("Delete Ingredient")
 }
 //CRUD functionality for Recipe API and DB
