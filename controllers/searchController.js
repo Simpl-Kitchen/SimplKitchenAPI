@@ -7,7 +7,6 @@ const userHelpers = require('../utils/helpers/userHelpers')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
-//search ingredients, work in progress
 const searchIngredients = async (req, res) => {
     
     // Set up variables. Destructure req.query and req.user
@@ -16,19 +15,18 @@ const searchIngredients = async (req, res) => {
     const queryObject = {}
 
     // Get user intolerances
-    //const userIntolerances = user.intolerances.toString()
     const intolerances = await userHelpers.getUserIntolerances(userId)
 
+    // If no search term provided throw error
     if (!search) {
         throw new BadRequestError("No search term was provided")
     }
     
     // Construct query object
     queryObject.ingr = search
-    //queryObject.intolerances = userIntolerances
     queryObject.intolerances = intolerances
     
-    //foodData = await searchIngredientsAPI(queryObject);
+    // Call API for ingredient data
     const foodData = await externalAPICalls.searchIngredientsAPI(queryObject);
     
     // If no results throw error
