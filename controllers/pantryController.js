@@ -2,7 +2,6 @@ const Ingredient = require('../models/Ingredient')
 const Recipe = require('../models/Recipe')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
-const generateRecipes = require('../utils/generateRecipes');
 
 //CRUD functionality for ingredients API and DB 
 
@@ -130,10 +129,6 @@ const addRecipe = async (req, res) => {
     req.body.createdBy = req.user.userId
     const recipe = await Recipe.create(req.body)
     res.status(StatusCodes.CREATED).json({ recipe })
-
-
-    // Regenerate recipes
-    generateRecipes(req.user)
 }
 
 const updateRecipe = async (req, res) => {
