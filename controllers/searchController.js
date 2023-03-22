@@ -1,5 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
+const User = require('../models/User')
 const { ingredientAPICall,
     recipeAPICall,
     searchIngredientsAPI,
@@ -19,8 +20,9 @@ const searchIngredients = async (req, res) => {
     const { search, upc, brand } = req.query
     const {userId} = req.user
     
-    //console.log(userId)
-
+    // Get user by ID
+    const user = await User.findById(userId);
+    const userIntolerances = user.intolerances.toString()
 
     const queryObject = {}
 
@@ -30,6 +32,9 @@ const searchIngredients = async (req, res) => {
     }
 
     queryObject.ingr = search
+    queryObject.intolerances = userIntolerances
+
+    //console.log(queryObject)
 
 
     //      Old one just in case
