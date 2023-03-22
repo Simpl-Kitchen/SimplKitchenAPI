@@ -1,9 +1,11 @@
-const {recipeAPICall,
+const {
+    recipeAPICall,
     searchIngredientsAPI,
     ingredientInformationAPICall,
     searchGroceryProductsAPICall,
     groceryProductInformationAPICall,
-    searchByUpcAPICall} = require('./spoonacularAPICalls')
+    searchByUpcAPICall
+} = require('./spoonacularAPICalls')
 
 module.exports = { 
     recipeAPICall,
