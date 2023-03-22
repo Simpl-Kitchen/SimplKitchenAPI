@@ -11,6 +11,7 @@ const SpoonacularError = require('../../errors/spoonacular');
 // Call to Spoonacular Ingredient Search endpoint
 const searchIngredientsAPI = async (queryObject) => {
 
+  console.log(queryObject.intolerances)
   let opts = {
     'query': queryObject.ingr, // String | The (natural language) search query.
     //'query': "Burger", // String | The (natural language) search query.

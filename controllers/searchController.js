@@ -14,21 +14,20 @@ const searchIngredients = async (req, res) => {
     // Set up variables. Destructure req.query and req.user
     const {search} = req.query
     const {userId} = req.user
+    const queryObject = {}
     
     // Get user by ID
     const user = await User.findById(userId);
 
     // Get user intolerances
     //const userIntolerances = user.intolerances.toString()
-    const intolerances = userHelpers.getUserIntolerances(userId)
-    const queryObject = {}
+    const intolerances = await userHelpers.getUserIntolerances(userId)
 
-    // Construct query object
     if (!search) {
         throw new BadRequestError("No search term was provided")
     }
-
-    // 
+    
+    // Construct query object
     queryObject.ingr = search
     //queryObject.intolerances = userIntolerances
     queryObject.intolerances = intolerances
