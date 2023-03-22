@@ -14,9 +14,14 @@ const { BadRequestError, NotFoundError } = require('../errors')
 
 //search ingredients, work in progress
 const searchIngredients = async (req, res) => {
+    
+    // Set up variables. Destructure req.query and req.user
+    const { search, upc, brand } = req.query
+    const {userId} = req.user
+    
+    //console.log(userId)
 
-    // Set up variables. Destructure req.query
-    const { search, upc, brand, category } = req.query
+
     const queryObject = {}
 
     // Construct query object
@@ -58,7 +63,6 @@ const searchIngredients = async (req, res) => {
 }
 const searchIngredientInformation = async (req, res) => {
     const queryObject = {}
-
     const {
         params: { id: ingredientId }
     } = req
