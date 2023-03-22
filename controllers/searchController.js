@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
-//const User = require('../models/User')
+const User = require('../models/User')
 
 const externalAPICalls = require('../utils/externalAPICalls')
 const userHelpers = require('../utils/helpers/userHelpers')
@@ -12,25 +12,30 @@ const { BadRequestError, NotFoundError } = require('../errors')
 const searchIngredients = async (req, res) => {
     
     // Set up variables. Destructure req.query and req.user
-    const { search, upc, brand } = req.query
+    const {search} = req.query
     const {userId} = req.user
     
     // Get user by ID
     const user = await User.findById(userId);
+
+    // Get user intolerances
     //const userIntolerances = user.intolerances.toString()
     const intolerances = userHelpers.getUserIntolerances(userId)
     const queryObject = {}
 
     // Construct query object
-    if (!upc && !search && !brand) {
-        throw new BadRequestError("No search terms provided")
+    if (!search) {
+        throw new BadRequestError("No search term was provided")
     }
 
+    // 
     queryObject.ingr = search
     //queryObject.intolerances = userIntolerances
     queryObject.intolerances = intolerances
+    
     //foodData = await searchIngredientsAPI(queryObject);
-    foodData = await externalAPICalls.searchIngredientsAPI(queryObject);
+    const foodData = await externalAPICalls.searchIngredientsAPI(queryObject);
+    
     // If no results throw error
     if (foodData.totalResults == 0) {
         throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
@@ -53,7 +58,8 @@ const searchIngredientInformation = async (req, res) => {
     }
 
     //ingredientData = await ingredientInformationAPICall(queryObject)
-    ingredientData = await externalAPICalls.ingredientInformationAPICall(queryObject)
+    const ingredientData = await externalAPICalls.ingredientInformationAPICall(queryObject)
+    
     if (!ingredientData) {
         throw new NotFoundError(`No results found with id ${queryObject.id}`)
     }
