@@ -46,25 +46,31 @@ const searchGroceryProductInformation = async (req, res) => {
         throw new BadRequestError("ID parameter is not a number")
     }
 
-    //productData = await groceryProductInformationAPICall(queryObject)
+    // Call API for product data
     productData = await externalAPICalls.groceryProductInformationAPICall(queryObject)
+
+    // If no results throw error
     if (!productData) {
         throw new NotFoundError(`No results found with id ${queryObject.id}`)
     }
 
+    // Return data to frontend
     res.status(StatusCodes.OK).json({ productData })
 }
 const searchGroceryProductByUPC = async (req, res) => {
-    const queryObject = {}
-
-    console.log(req.params)
+    
+    // Set up variables. Destructure req.params and req.user
     const {
         params: { upc: productUpc }
     } = req
+    const queryObject = {}
 
+    // Construct query object
     queryObject.upc = productUpc
 
-    console.log(queryObject.upc)
+    //console.log(queryObject.upc)
+
+    // If upc is not a number throw error
     if (isNaN(queryObject.upc)) {
 
         throw new BadRequestError("UPC parameter must be a number")
