@@ -11,16 +11,19 @@ const searchRecipes = async (req, res) => {
     const {userId} = req.user
     const queryObject = {}
 
+    if (!search) {
+        throw new BadRequestError("No search terms provided")
+    }
     // Construct query object
 
-    if (!q) {
-        throw new BadRequestError("No search terms provided")
-    } else if (!type) {
-        throw new BadRequestError("No Recipe type provided")
-    } else {
-        queryObject.q = q
-        queryObject.type = type
-    }
+    // if (!q) {
+    //     throw new BadRequestError("No search terms provided")
+    // } else if (!type) {
+    //     throw new BadRequestError("No Recipe type provided")
+    // } else {
+    //     queryObject.q = q
+    //     queryObject.type = type
+    // }
 
     // Call ingredient API
     //recipeData = await externalAPICalls.searchRecipesAPI(queryObject)
