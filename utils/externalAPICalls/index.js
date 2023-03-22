@@ -1,5 +1,5 @@
 const {
-    recipeAPICall,
+    searchRecipesAPI,
     searchIngredientsAPI,
     ingredientInformationAPICall,
     searchGroceryProductsAPICall,
@@ -8,7 +8,7 @@ const {
 } = require('./spoonacularAPICalls')
 
 module.exports = { 
-    recipeAPICall,
+    searchRecipesAPI,
     searchIngredientsAPI,
     ingredientInformationAPICall,
     searchGroceryProductsAPICall,

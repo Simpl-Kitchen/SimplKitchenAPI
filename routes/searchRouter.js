@@ -5,7 +5,7 @@ const {
     searchIngredients,
     searchIngredientInformation,
     searchRecipes,
-    searchByPantry,
+    //searchByPantry,
     searchGroceryProducts,
     searchGroceryProductInformation,
     searchGroceryProductByUPC
@@ -18,6 +18,6 @@ router.get('/grocery/products', searchGroceryProducts)
 router.get('/grocery/product/id/:id', searchGroceryProductInformation)
 router.get('/grocery/product/upc/:upc', searchGroceryProductByUPC)
 
-//router.get('/recipes', searchRecipes)
+router.get('/recipes', searchRecipes)
 
 module.exports = router

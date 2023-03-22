@@ -158,34 +158,37 @@ const searchByUpcAPICall = async (queryObject) => {
   return searchResults
 }
 
+const searchRecipesAPI = async (queryObject) => {
 
-
-
-const recipeAPICall = async (queryObject) => {
-
-  queryObject.app_id = process.env.RECIPE_APP_ID
-  queryObject.app_key = process.env.RECIPE_APP_KEY
-
-  console.log(queryObject);
-
-  const options = {
-    method: 'GET',
-    url: 'https://api.edamam.com/api/recipes/v2',
-    params: queryObject,
-  };
-
-  const searchResults = axios.request(options).then(function (response) {
-    return response.data
-  }).catch(function (error) {
-    console.error(error);
-  });
-
-  return searchResults
+    console.log(queryObject);
 }
+
+
+// const recipeAPICall = async (queryObject) => {
+
+//   queryObject.app_id = process.env.RECIPE_APP_ID
+//   queryObject.app_key = process.env.RECIPE_APP_KEY
+
+//   console.log(queryObject);
+
+//   const options = {
+//     method: 'GET',
+//     url: 'https://api.edamam.com/api/recipes/v2',
+//     params: queryObject,
+//   };
+
+//   const searchResults = axios.request(options).then(function (response) {
+//     return response.data
+//   }).catch(function (error) {
+//     console.error(error);
+//   });
+
+//   return searchResults
+// }
 
 module.exports = {
   //ingredientAPICall,
-  recipeAPICall,
+  searchRecipesAPI,
   searchIngredientsAPI,
   ingredientInformationAPICall,
   searchGroceryProductsAPICall,
