@@ -79,7 +79,6 @@ const deleteIngredient = async (req, res) => {
         params: { id: ingredientId }
     } = req
 
-    console.log(ingredientId)
     // const ingredient = await Ingredient.findByIdAndRemove({
     //     _id: ingredientId,
     //     createdBy: userId,
@@ -89,9 +88,6 @@ const deleteIngredient = async (req, res) => {
     //     ingredientId: ingredientId,
     //     createdBy: userId
     // })
-
-
-    console.log(ingredient)
 
     if (!ingredient) {
         throw new NotFoundError(`No ingredient with id ${ingredientId}`)
