@@ -1,17 +1,10 @@
 require('dotenv').config()
 const Ingredient = require('../models/Ingredient')
 const User = require('../models/User')
-const { ingredientAPICall,
-    recipeAPICall,
-    searchIngredientsAPI,
-    ingredientInformationAPICall,
-    searchGroceryProductsAPICall,
-    groceryProductInformationAPICall,
-    searchByUpcAPICall
-} = require('../utils/externalAPICalls')
+
+const externalAPICalls = require('../utils/externalAPICalls')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
-//const axios = require("axios");
 
 //search ingredients, work in progress
 const searchIngredients = async (req, res) => {
@@ -34,8 +27,9 @@ const searchIngredients = async (req, res) => {
     queryObject.ingr = search
     queryObject.intolerances = userIntolerances
 
-    foodData = await searchIngredientsAPI(queryObject);
+    //foodData = await searchIngredientsAPI(queryObject);
 
+    foodData = await externalAPICalls.searchIngredientsAPI(queryObject);
     // If no results throw error
     if (foodData.totalResults == 0) {
         throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
@@ -57,8 +51,8 @@ const searchIngredientInformation = async (req, res) => {
         throw new BadRequestError("ID parameter is not a number")
     }
 
-    ingredientData = await ingredientInformationAPICall(queryObject)
-
+    //ingredientData = await ingredientInformationAPICall(queryObject)
+    ingredientData = await externalAPICalls.ingredientInformationAPICall(queryObject)
     if (!ingredientData) {
         throw new NotFoundError(`No results found with id ${queryObject.id}`)
     }
@@ -78,8 +72,8 @@ const searchGroceryProducts = async (req, res) => {
 
     queryObject.ingr = search
 
-    productData = await searchGroceryProductsAPICall(queryObject);
-
+    //productData = await searchGroceryProductsAPICall(queryObject);
+    productData = await externalAPICalls.searchGroceryProductsAPICall(queryObject);
     if (productData.totalProducts == 0) {
         throw new NotFoundError(`No results found for search term '${queryObject.ingr}'`)
     }
@@ -101,8 +95,8 @@ const searchGroceryProductInformation = async (req, res) => {
         throw new BadRequestError("ID parameter is not a number")
     }
 
-    productData = await groceryProductInformationAPICall(queryObject)
-
+    //productData = await groceryProductInformationAPICall(queryObject)
+    productData = await externalAPICalls.groceryProductInformationAPICall(queryObject)
     if (!productData) {
         throw new NotFoundError(`No results found with id ${queryObject.id}`)
     }
@@ -125,7 +119,8 @@ const searchGroceryProductByUPC = async (req, res) => {
         throw new BadRequestError("UPC parameter is not a number")
     }
 
-    productData = await searchByUpcAPICall(queryObject)
+    //productData = await searchByUpcAPICall(queryObject)
+    productData = await externalAPICalls.searchByUpcAPICall(queryObject)
 
     if (!productData || productData.status == "failure") {
         throw new NotFoundError(`No results found with upc ${queryObject.upc}`)
