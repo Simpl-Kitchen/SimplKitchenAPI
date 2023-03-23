@@ -2,7 +2,6 @@ const createSearchOptions = (queryObject, apiType) => {
 
     let options = {}
 
-    console.log("Hello world")
     if (apiType === 'ingredients') {
         options = {
             'query': queryObject.search, // String | The (natural language) search query.
