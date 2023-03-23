@@ -2,11 +2,11 @@ require('dotenv').config()
 const axios = require("axios");
 
 // Spoonacular connection, https://spoonacular.com/food-api/docs#Ingredient-Search
-const connectSpoonacularApi = require('../../connections/connectSpoonacular');
+const connectSpoonacularApi = require('../../../connections/connectSpoonacular');
 const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
-const { createSearchOptions } = require('../spoonacular/createSearchOptions')
+const { createSearchOptions } = require('../createSearchOptions')
 // Spoonacular error handling
-const SpoonacularError = require('../../errors/spoonacular');
+const SpoonacularError = require('../../../errors/spoonacular');
 
 // Call to Spoonacular Ingredient Search endpoint
 const searchIngredientsAPI = async (queryObject) => {
