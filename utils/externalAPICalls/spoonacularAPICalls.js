@@ -4,7 +4,7 @@ const axios = require("axios");
 // Spoonacular connection, https://spoonacular.com/food-api/docs#Ingredient-Search
 const connectSpoonacularApi = require('../../connections/connectSpoonacular');
 const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
-const { createSearchOptions } = require('../options/createSearchOptions')
+const { createSearchOptions } = require('../spoonacular/createSearchOptions')
 // Spoonacular error handling
 const SpoonacularError = require('../../errors/spoonacular');
 
