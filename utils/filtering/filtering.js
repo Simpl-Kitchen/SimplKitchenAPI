@@ -55,8 +55,26 @@ const allowedCuisines = [
     'Thai',
     'Vietnamese',
 ];
+
+const allowedMealTypes = [
+    'main course',
+    'side dish',
+    'dessert',
+    'appetizer',
+    'salad',
+    'bread',
+    'breakfast',
+    'soup',
+    'beverage',
+    'sauce',
+    'marinade',
+    'fingerfood',
+    'snack',
+    'drink',
+];
 module.exports = {
     allowedIntolerances,
     allowedDiets,
     allowedCuisines,
+    allowedMealTypes,
 };
