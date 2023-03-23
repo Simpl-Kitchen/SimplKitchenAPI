@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 //const allowedIntolerances = ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'];
-const { allowedIntolerances } = require('../utils/filtering/filtering.js')
+const { allowedIntolerances } = require('../utils/spoonacular/allowedFilterOptions.js')
 
 const UserSchema = new mongoose.Schema({
   name: {
