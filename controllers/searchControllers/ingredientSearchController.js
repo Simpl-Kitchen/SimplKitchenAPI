@@ -5,10 +5,10 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../../errors')
 
 const searchIngredients = async (req, res) => {
-    
+
     // Set up variables. Destructure req.query and req.user
-    const {search} = req.query
-    const {userId} = req.user
+    const { search } = req.query
+    const { userId } = req.user
     const queryObject = {}
 
     // Get user intolerances
@@ -18,14 +18,14 @@ const searchIngredients = async (req, res) => {
     if (!search) {
         throw new BadRequestError("No search term was provided")
     }
-    
+
     // Construct query object
     queryObject.search = search
     queryObject.intolerances = intolerances
-    
+
     // Call API for ingredient data
     const foodData = await externalAPICalls.searchIngredientsAPI(queryObject);
-    
+
     // If no results throw error
     if (foodData.totalResults == 0) {
         throw new NotFoundError(`No results found for search term '${queryObject.search}'`)
@@ -35,7 +35,7 @@ const searchIngredients = async (req, res) => {
     res.status(StatusCodes.OK).json({ foodData })
 }
 const searchIngredientInformation = async (req, res) => {
-    
+
     // Set up variables. Destructure req.params and req.user
     const {
         params: { id: ingredientId }
@@ -53,7 +53,7 @@ const searchIngredientInformation = async (req, res) => {
 
     // Call API for ingredient data
     const ingredientData = await externalAPICalls.ingredientInformationAPICall(queryObject)
-    
+
     // If no results throw error
     if (!ingredientData) {
         throw new NotFoundError(`No results found with id ${queryObject.id}`)
