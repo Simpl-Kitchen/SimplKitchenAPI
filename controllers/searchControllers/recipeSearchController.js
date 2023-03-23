@@ -16,10 +16,9 @@ const searchRecipes = async (req, res) => {
     }
     // Construct query object
     queryObject.search = search
+
     // Call ingredient API
-    //recipeData = await externalAPICalls.searchRecipesAPI(queryObject)
     recipeData = await externalAPICalls.searchRecipesAPI(queryObject)
-    //console.log(recipeData)
 
     // Return data to frontend
     res.status(StatusCodes.OK).json({ recipeData })
