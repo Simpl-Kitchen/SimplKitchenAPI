@@ -1,3 +1,5 @@
+// Search options utility for converting query object to Spoonacular API options
+
 const createSearchOptions = (queryObject, apiType) => {
 
     let options = {}
