@@ -62,8 +62,20 @@ const updateIngredient = async (req, res) => {
     if (amount === '') {
         throw new BadRequestError('Amount field cannot be empty')
     }
-    const ingredient = await Ingredient.findByIdAndUpdate(
-        { _id: ingredientId, createdBy: userId },
+    // const ingredient = await Ingredient.findByIdAndUpdate(
+    //     { _id: ingredientId, createdBy: userId },
+    //     req.body,
+    //     { new: true, runValidators: true }
+    // )
+    console.log(req.params.id)
+    // const ingredient = await Ingredient.findByIdAndUpdate(
+    //     { ingredientId: req.params.id, createdBy: req.user.userId },
+    //     req.body,
+    //     { new: true, runValidators: true }
+    // )
+
+    const ingredient = await Ingredient.findOneAndUpdate(
+        { ingredientId: req.params.id, createdBy: req.user.userId },
         req.body,
         { new: true, runValidators: true }
     )
@@ -79,11 +91,19 @@ const deleteIngredient = async (req, res) => {
         params: { id: ingredientId }
     } = req
 
+    // console.log(req.params.id)
+    // console.log("Hello")
+
+    let ingredient = await Ingredient.findOne({
+        ingredientId: req.params.id,
+        createdBy: req.user.userId
+    })
+
     // const ingredient = await Ingredient.findByIdAndRemove({
     //     _id: ingredientId,
     //     createdBy: userId,
     // })
-    const ingredient = await Ingredient.findById(ingredientId);
+    //const ingredient = await Ingredient.findById(ingredientId);
     // const ingredient = await Ingredient.findOne({
     //     ingredientId: ingredientId,
     //     createdBy: userId
