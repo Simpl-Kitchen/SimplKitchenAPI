@@ -20,7 +20,7 @@ const searchIngredients = async (req, res) => {
     }
 
     // Construct query object
-    queryObject.search = search
+    queryObject.search = search.toLowerCase()
     queryObject.intolerances = intolerances
 
     // Call API for ingredient data
