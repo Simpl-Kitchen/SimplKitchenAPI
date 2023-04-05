@@ -186,14 +186,26 @@ const deleteRecipe = async (req, res) => {
         params: { id: recipeID }
     } = req
 
-    const ingredient = await Ingredient.findByIdAndRemove({
-        _id: recipeID,
-        createdBy: userId,
+    // console.log(req.params.id)
+    // console.log("Hello")
+
+    let recipe = await Recipe.findOne({
+        recipeID: req.params.id,
+        createdBy: req.user.userId
     })
-    if (!Recipe) {
-        throw new NotFoundError(`No recipe with id ${recipeID}`)
+
+    if (!recipe) {
+        throw new NotFoundError(`No ingredient with id ${recipeID}`)
     }
-    res.status(StatusCodes.OK).send()
+
+    if (recipe.amount > 1) {
+        await recipe.decrementAmount();
+        res.status(StatusCodes.OK).json({ recipe });
+    }
+    else {
+        await recipe.remove();
+        res.status(StatusCodes.OK).send()
+    }
     //res.send("Delete Ingredient")
 }
 
