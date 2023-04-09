@@ -144,7 +144,7 @@ const getRecipe = async (req, res) => {
         createdBy: userId,
     })
     if (!recipe) {
-        throw new NotFoundError(`No ingredient with ${recipeID}`)
+        throw new NotFoundError(`No recipe with ${recipeID}`)
 
     }
     res.status(StatusCodes.OK).json({ recipe })
