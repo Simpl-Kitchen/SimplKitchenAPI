@@ -91,9 +91,6 @@ const deleteIngredient = async (req, res) => {
         params: { id: ingredientId }
     } = req
 
-    // console.log(req.params.id)
-    // console.log("Hello")
-
     let ingredient = await Ingredient.findOne({
         ingredientId: req.params.id,
         createdBy: req.user.userId
