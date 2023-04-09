@@ -140,7 +140,8 @@ const getRecipe = async (req, res) => {
     } = req
 
     const recipe = await Recipe.findOne({
-        _id: recipeID,
+        //_id: recipeID,
+        recipeID: recipeID,
         createdBy: userId,
     })
     if (!recipe) {
