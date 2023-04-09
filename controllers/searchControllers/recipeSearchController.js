@@ -24,6 +24,8 @@ const searchRecipes = async (req, res) => {
     res.status(StatusCodes.OK).json({ recipeData })
 }
 
+
+
 module.exports = {
     searchRecipes,
 }
