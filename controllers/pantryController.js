@@ -2,6 +2,7 @@ const Ingredient = require('../models/Ingredient')
 const Recipe = require('../models/Recipe')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
+const { GetRecipeEquipmentByID200Response } = require('spoonacular_api_simplkitchen')
 
 //CRUD functionality for ingredients API and DB 
 
@@ -130,10 +131,6 @@ const getAllRecipes = async (req, res) => {
     const recipes = await result
 
     res.status(StatusCodes.OK).json({ recipes })
-    //console.log(queryObject)
-    //res.send("Get all recipes")
-
-
 }
 
 const getRecipe = async (req, res) => {
@@ -143,7 +140,7 @@ const getRecipe = async (req, res) => {
     } = req
 
     const recipe = await Recipe.findOne({
-        _id: recipeID,
+        _id: GetRecipeEquipmentByID200Response,
         createdBy: userId,
     })
     if (!recipe) {
@@ -151,15 +148,29 @@ const getRecipe = async (req, res) => {
 
     }
     res.status(StatusCodes.OK).json({ recipe })
-    //res.send("Get Recipe")
 }
 
 const addRecipe = async (req, res) => {
-    console.log(req.body)
-    console.log(req.user)
+    //console.log(req.body)
+    //console.log(req.user)
     req.body.createdBy = req.user.userId
-    const recipe = await Recipe.create(req.body)
-    res.status(StatusCodes.CREATED).json({ recipe })
+
+    let recipe = await Recipe.findOne({
+        recipeID: req.body.recipeID,
+        createdBy: req.user.userId
+    })
+
+    // If ingredient is not in the user's pantry, add it
+    if (!recipe) {
+        recipe = await Recipe.create(req.body)
+        res.status(StatusCodes.CREATED).json({ recipe })
+
+    }
+    // If ingredient is in the user's pantry, update amount.
+    else {
+        await recipe.incrementAmount();
+        res.status(StatusCodes.OK).json({ recipe });
+    }
 }
 
 const updateRecipe = async (req, res) => {
@@ -172,14 +183,26 @@ const deleteRecipe = async (req, res) => {
         params: { id: recipeID }
     } = req
 
-    const ingredient = await Ingredient.findByIdAndRemove({
-        _id: recipeID,
-        createdBy: userId,
+    // console.log(req.params.id)
+    // console.log("Hello")
+
+    let recipe = await Recipe.findOne({
+        recipeID: req.params.id,
+        createdBy: req.user.userId
     })
-    if (!Recipe) {
-        throw new NotFoundError(`No recipe with id ${recipeID}`)
+
+    if (!recipe) {
+        throw new NotFoundError(`No ingredient with id ${recipeID}`)
     }
-    res.status(StatusCodes.OK).send()
+
+    if (recipe.amount > 1) {
+        await recipe.decrementAmount();
+        res.status(StatusCodes.OK).json({ recipe });
+    }
+    else {
+        await recipe.remove();
+        res.status(StatusCodes.OK).send()
+    }
     //res.send("Delete Ingredient")
 }
 
