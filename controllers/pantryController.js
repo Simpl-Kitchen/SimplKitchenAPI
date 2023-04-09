@@ -140,11 +140,11 @@ const getRecipe = async (req, res) => {
     } = req
 
     const recipe = await Recipe.findOne({
-        _id: GetRecipeEquipmentByID200Response,
+        _id: recipeID,
         createdBy: userId,
     })
     if (!recipe) {
-        throw new NotFoundError(`No ingredient with ${recipeID}`)
+        throw new NotFoundError(`No recipe with ${recipeID}`)
 
     }
     res.status(StatusCodes.OK).json({ recipe })
