@@ -18,10 +18,8 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    //console.log('Login user');
 
     // Check to make sure structure of the request is correct. Requires an email and a password.
-    //res.send('login')
     const { email, password } = req.body
     if (!email || !password) {
         throw new BadRequestError('Please provide email and pasword')

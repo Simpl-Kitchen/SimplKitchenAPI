@@ -1,54 +1,5 @@
 const mongoose = require('mongoose')
 
-// const IngredientSchema = new mongoose.Schema({
-//     foodId: {
-//         type: String,
-//         //required: [true, 'please provide the food Id'],
-//     },
-//     uri: {
-//         type: String,
-//     },
-//     label: {
-//         type: String,
-//         required: [true, 'please provide the name of the ingredient']
-
-//     },
-//     nutrients: {
-//         type: Map,
-//         of: String
-//     },
-//     brand: {
-//         type: String,
-
-//     },
-//     category: {
-//         type: String,
-//         enum: ['generic-foods', 'packaged-foods', 'generic-meals', 'fast-foods'],
-//     },
-//     categoryLabel: {
-//         type: String,
-//         enum: ['food', 'meal'],
-//         default: 'food'
-//     },
-//     foodContentsLabel: {
-//         type: String
-//     },
-//     image: {
-//         type: String,
-//     },
-//     amount: {
-//         type: Number
-//     },
-//     createdBy: {
-//         type: mongoose.Types.ObjectId,
-//         ref: 'User',
-//         required: [true, 'Please provide a user']
-//     }
-// },
-// {timestamps: true}, 
-// { strict: false },
-// ) // May need to change strict settings. Leaving as false for ease of testing. 
-
 const IngredientSchema = new mongoose.Schema({
     ingredientId: {
         type: String,
@@ -61,6 +12,16 @@ const IngredientSchema = new mongoose.Schema({
     pictureURL: {
         type: String,
         required: [true, 'please provide the url for ingredient picture'],
+        match: [
+            /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/,
+            'not a valid ingredient image URL'
+        ],
+        // validate: {
+        //     validator: function (v) {
+        //       return /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/.test(v);
+        //     },
+        //     message: (props) => `${props.value} is not a valid ingredient image URL`,
+        //   },
     },
     amount: {
         type: Number,
