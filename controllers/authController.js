@@ -13,7 +13,7 @@ const register = async (req, res) => {
 
     res
         .status(StatusCodes.CREATED)
-        .json({ user: { name: user.name }, token })
+        .json({ user: { firstName: user.firstName, lastName: user.lastName, username: user.username }, token })
 
 }
 
