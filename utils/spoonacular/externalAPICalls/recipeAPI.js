@@ -40,13 +40,13 @@ const searchRecipesByIngredientsAPI = async (queryObject) => {
     let opts = {
         'ingredients': queryObject.ingredients,
         'limitLicense': true,
-        //'tags' : String(queryObject.intolerances.replace(',',' ')),
-        //'tags' : queryObject.intolerances,
         'ranking': 1,
-        'number': 10,
-        'ignorePantry': true
+        'number': 5,
+        'ignorePantry': false,
+        'intolerances': queryObject.intolerances 
     };
 
+    console.log(opts)
 
     //let opts = createSearchOptions(queryObject, 'recipes_random')
 
@@ -57,8 +57,8 @@ const searchRecipesByIngredientsAPI = async (queryObject) => {
     const options = {
         method: 'GET',
         headers: requestHeaders,
-        url: 'https://api.spoonacular.com/recipes/random?number=1&tags=vegetarian,dessert',
-        //params: opts,
+        url: 'https://api.spoonacular.com/recipes/findByIngredients',
+        params: opts,
     };
 
     const searchResults = axios.request(options).then(function (response) {
