@@ -21,8 +21,15 @@ const updateIntolerances = async (req, res) => {
 const getUser = async (req, res) => {
     const user = await User.findById(req.user.userId)
     console.log(user)
-    res.send("Ok")
-    //res.status(StatusCodes.OK).json({ user })
+
+    const userResponse = {
+        intolerances: user.intolerances,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username
+    }
+    //res.send("Ok")
+    res.status(StatusCodes.OK).json({ userResponse })
 }
 
 
