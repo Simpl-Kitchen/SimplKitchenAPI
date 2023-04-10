@@ -26,7 +26,8 @@ const getUser = async (req, res) => {
         intolerances: user.intolerances,
         firstName: user.firstName,
         lastName: user.lastName,
-        username: user.username
+        username: user.username,
+        email: user.email,
     }
     //res.send("Ok")
     res.status(StatusCodes.OK).json({ userResponse })
