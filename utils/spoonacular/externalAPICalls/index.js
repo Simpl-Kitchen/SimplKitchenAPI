@@ -19,11 +19,13 @@ const {
 } = require('./groceryProductAPI.js')
 
 const {
-    searchRecipesAPI
+    searchRecipesAPI,
+    getRandomRecipeAPI
 } = require('./recipeAPI.js')
 
 module.exports = {
     searchRecipesAPI,
+    getRandomRecipeAPI,
     searchIngredientsAPI,
     ingredientInformationAPICall,
     searchGroceryProductsAPICall,

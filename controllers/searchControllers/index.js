@@ -11,6 +11,7 @@ const {
 
 const {
     searchRecipes,
+    generateRecipes
 } = require('./recipeSearchController')
 
 module.exports = {
@@ -20,5 +21,6 @@ module.exports = {
     searchGroceryProductInformation,
     searchGroceryProductByUPC,
     searchRecipes,
+    generateRecipes,
 }
 

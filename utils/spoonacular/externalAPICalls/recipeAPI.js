@@ -25,6 +25,7 @@ const searchRecipesAPI = async (queryObject) => {
 
 
     const searchResults = axios.request(options).then(function (response) {
+        //console.log(options)
         return response.data
     }).catch(function (error) {
         console.error(error);
@@ -33,4 +34,40 @@ const searchRecipesAPI = async (queryObject) => {
     return searchResults
 }
 
-module.exports = { searchRecipesAPI }
+const getRandomRecipeAPI = async (queryObject) => {
+    console.log("Whats good")
+    //console.log(queryObject.intolerances.replace(/,/g, ', '))
+    let opts = {
+        'limitLicense': 'true',
+        //'tags' : String(queryObject.intolerances.replace(',',' ')),
+        //'tags' : queryObject.intolerances,
+        'intolerances': queryObject.intolerances,
+        'number': 10
+    };
+
+
+    //let opts = createSearchOptions(queryObject, 'recipes_random')
+
+    let requestHeaders = {
+        'x-api-key': process.env.SPOONACULAR_API_KEY
+    }
+
+    const options = {
+        method: 'GET',
+        headers: requestHeaders,
+        url: 'https://api.spoonacular.com/recipes/random?number=1&tags=vegetarian,dessert',
+        //params: opts,
+    };
+
+    const searchResults = axios.request(options).then(function (response) {
+        console.log(options)
+        return response.data
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    return searchResults
+
+}
+
+module.exports = { searchRecipesAPI, getRandomRecipeAPI }
