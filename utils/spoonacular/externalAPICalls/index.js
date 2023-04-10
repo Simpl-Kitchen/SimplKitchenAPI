@@ -20,12 +20,12 @@ const {
 
 const {
     searchRecipesAPI,
-    getRandomRecipeAPI
+    searchRecipesByIngredientsAPI 
 } = require('./recipeAPI.js')
 
 module.exports = {
     searchRecipesAPI,
-    getRandomRecipeAPI,
+    searchRecipesByIngredientsAPI ,
     searchIngredientsAPI,
     ingredientInformationAPICall,
     searchGroceryProductsAPICall,

@@ -14,11 +14,6 @@ const getUserIngredients = async (userId) => {
     let result = Ingredient.find(queryObject)
     const ingredients = await result
     const ingredientNames = ingredients.map((ingredient) => ingredient.ingredientName);
-
-    //console.log(ingredientNames);
-    for (let i = 0; i < ingredientNames.length; i++) {
-        ingredientNames[i] = ingredientNames[i].replace(',', ' ');
-      }
       
     
     return ingredientNames.toString();

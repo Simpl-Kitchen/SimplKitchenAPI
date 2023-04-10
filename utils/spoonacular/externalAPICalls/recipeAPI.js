@@ -34,15 +34,17 @@ const searchRecipesAPI = async (queryObject) => {
     return searchResults
 }
 
-const getRandomRecipeAPI = async (queryObject) => {
+const searchRecipesByIngredientsAPI = async (queryObject) => {
     console.log("Whats good")
     //console.log(queryObject.intolerances.replace(/,/g, ', '))
     let opts = {
-        'limitLicense': 'true',
+        'ingredients': queryObject.ingredients,
+        'limitLicense': true,
         //'tags' : String(queryObject.intolerances.replace(',',' ')),
         //'tags' : queryObject.intolerances,
-        'intolerances': queryObject.intolerances,
-        'number': 10
+        'ranking': 1,
+        'number': 10,
+        'ignorePantry': true
     };
 
 
@@ -70,4 +72,4 @@ const getRandomRecipeAPI = async (queryObject) => {
 
 }
 
-module.exports = { searchRecipesAPI, getRandomRecipeAPI }
+module.exports = { searchRecipesAPI, searchRecipesByIngredientsAPI }
