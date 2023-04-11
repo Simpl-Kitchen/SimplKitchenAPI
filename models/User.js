@@ -6,11 +6,24 @@ const jwt = require('jsonwebtoken')
 const { allowedIntolerances } = require('../utils/spoonacular/allowedFilterOptions.js')
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
-    required: [true, 'Please provide name'],
+    required: [true, 'Please provide a first name'],
     maxlength: 50,
     minlength: 3,
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Please a last name'],
+    maxlength: 50,
+    minlength: 3,
+  },
+  username: {
+    type: String,
+    required: [true, 'Please provide a username'],
+    maxlength: 50,
+    minlength: 3,
+    unique: true,
   },
   email: {
     type: String,

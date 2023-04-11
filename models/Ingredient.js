@@ -25,7 +25,8 @@ const IngredientSchema = new mongoose.Schema({
     },
     amount: {
         type: Number,
-        default: 1
+        default: 1,
+        min: [0, 'Amount must be a positive number']
     },
     createdBy: {
         type: mongoose.Types.ObjectId,

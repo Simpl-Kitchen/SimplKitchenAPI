@@ -14,5 +14,6 @@ router.get('/grocery/product/upc/:upc', searchController.searchGroceryProductByU
 
 // Recipe search
 router.get('/recipes', searchController.searchRecipes)
+router.get('/recipes/random', searchController.generateRecipes)
 
 module.exports = router

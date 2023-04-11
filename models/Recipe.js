@@ -1,106 +1,50 @@
 const mongoose = require('mongoose')
 
-
-//This schema is from the documentation: https://developer.edamam.com/edamam-docs-recipe-api
-//Update for better implemenetation later 
 const RecipeSchema = new mongoose.Schema({
-        from: 0,
-        to: 0,
-        count: 0,
-        _links: {
-          self: {
-            href: "string",
-            title: "string"
-          },
-          next: {
-            href: "string",
-            title: "string"
-          }
-        },
-        hits: [
-          {
-            recipe: {
-              uri: "string",
-              label: "string",
-              image: "string",
-              images: {
-                THUMBNAIL: {
-                  url: "string",
-                  width: 0,
-                  height: 0
-                },
-                SMALL: {
-                  url: "string",
-                  width: 0,
-                  height: 0
-                },
-                REGULAR: {
-                  url: "string",
-                  width: 0,
-                  height: 0
-                },
-                LARGE: {
-                  url: "string",
-                  width: 0,
-                  height: 0
-                }
-              },
-              source: "string",
-              url: "string",
-              shareAs: "string",
-              yield: 0,
-              dietLabels: ["string"],
-              healthLabels: ["string"],
-              cautions: ["string"],
-              ingredientLines: ["string"],
-              ingredients: [
-                {
-                  text: "string",
-                  quantity: 0,
-                  measure: "string",
-                  food: "string",
-                  weight: 0,
-                  foodId: "string"
-                }
-              ],
-              calories: 0,
-              glycemicIndex: 0,
-              totalCO2Emissions: 0,
-              co2EmissionsClass: "string",
-              totalWeight: 0,
-              cuisineType: ["string"],
-              mealType: ["string"],
-              dishType: ["string"],
-              instructions: ["string"],
-              tags: ["string"],
-              externalId: "string",
-              totalNutrients: {},
-              totalDaily: {},
-              digest: [
-                {
-                  label: "string",
-                  tag: "string",
-                  schemaOrgTag: "string",
-                  total: 0,
-                  hasRDI: false,
-                  daily: 0,
-                  unit: "string",
-                  sub: {}
-                }
-              ]
-            },
-            _links: {
-              self: {
-                href: "string",
-                title: "string"
-              },
-              next: {
-                href: "string",
-                title: "string"
-              }
-            }
-          }
-        ]
-    })
+    recipeID: {
+        type: String,
+        required: [true, 'please provide the ingredient Id'],
+    },
+    recipeTitle: {
+        type: String,
+        required: [true, 'please provide the ingredient name']
+    },
+    image: {
+        type: String,
+        required: [true, 'please provide the url for ingredient picture'],
+    },
+    imageType: { 
+        type: String, 
+        required: true 
+    },
+    nutrition: {
+        nutrients: [{
+          name: { type: String, required: true },
+          amount: { type: Number, required: true },
+          unit: { type: String, required: true }
+        }]
+        
+
+        
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provide a user']
+    }
+},
+    { timestamps: true },
+    { strict: false },
+) // May need to change strict settings. Leaving as false for ease of testing. 
+
+RecipeSchema.methods.incrementAmount = async function () {
+    this.amount += 1;
+    await this.save();
+}
+
+RecipeSchema.methods.decrementAmount = async function () {
+    this.amount -= 1;
+    await this.save();
+}
 
 module.exports = mongoose.model('Recipe', RecipeSchema)

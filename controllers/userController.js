@@ -18,6 +18,20 @@ const updateIntolerances = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ user })
 }
+const getUser = async (req, res) => {
+    const user = await User.findById(req.user.userId)
+    //console.log(user)
+
+    const userResponse = {
+        intolerances: user.intolerances,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+    }
+    //res.send("Ok")
+    res.status(StatusCodes.OK).json({ userResponse })
+}
 
 
-module.exports = { updateIntolerances }
+module.exports = { updateIntolerances, getUser }
