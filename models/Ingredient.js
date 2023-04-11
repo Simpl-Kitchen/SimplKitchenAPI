@@ -12,10 +12,10 @@ const IngredientSchema = new mongoose.Schema({
     pictureURL: {
         type: String,
         required: [true, 'please provide the url for ingredient picture'],
-        match: [
-            /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/,
-            'not a valid ingredient image URL'
-        ],
+        // match: [
+        //     /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/,
+        //     'not a valid ingredient image URL'
+        // ],
         // validate: {
         //     validator: function (v) {
         //       return /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/.test(v);
