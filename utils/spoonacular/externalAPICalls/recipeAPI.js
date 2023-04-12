@@ -36,12 +36,13 @@ const searchRecipesAPI = async (queryObject) => {
 
 const searchRecipesByIngredientsAPI = async (queryObject) => {
     console.log("Whats good")
+    console.log(queryObject.number)
     //console.log(queryObject.intolerances.replace(/,/g, ', '))
     let opts = {
         'ingredients': queryObject.ingredients,
         'limitLicense': true,
         'ranking': 1,
-        'number': 5,
+        'number': !queryObject.number? 5: queryObject.number,
         'ignorePantry': false,
         'intolerances': queryObject.intolerances 
     };

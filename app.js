@@ -33,6 +33,7 @@ const authRouter = require('./routes/authRouter')
 const pantryRouter = require('./routes/pantryRouter')
 const userRouter = require('./routes/userRouter')
 const searchRouter = require('./routes/searchRouter')
+const generateRouter = require('./routes/generateRouter')
 
 // error handling middleware imports
 const notFoundMiddleware = require('./middleware/not-found');
@@ -47,6 +48,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/pantry', authenticateUser, pantryRouter)
 app.use('/api/v1/user/', authenticateUser, userRouter)
 app.use('/api/v1/search', authenticateUser, searchRouter)
+app.use('/api/v1/generate', authenticateUser, generateRouter)
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 

@@ -42,8 +42,11 @@ const generateRecipes = async (req, res) => {
 
     queryObject.intolerances = intolerances
     queryObject.ingredients = ingredients
+    queryObject.number = 4
 
     const recipeData = await externalAPICalls.searchRecipesByIngredientsAPI(queryObject)
+
+    
 
     res.status(StatusCodes.OK).json({ recipeData })
 
