@@ -9,6 +9,8 @@ const { BadRequestError, NotFoundError } = require('../errors')
 const generateNewQueue = async (req, res) => {
     console.log("Hello")
 
+    await RecipeQueue.deleteMany({ createdBy: req.user.userId })
+
     // Set up variables. Destructure req.query and req.user
     // const { search } = req.query
     const { userId } = req.user
