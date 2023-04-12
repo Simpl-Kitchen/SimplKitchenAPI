@@ -33,7 +33,7 @@ const generateNewQueue = async (req, res) => {
     }));
     
 
-    res.status(StatusCodes.OK).json({ recipeData })
+    res.status(StatusCodes.OK).json({ msg: "Queue generated" })
 
     //res.send("Ok")
 
