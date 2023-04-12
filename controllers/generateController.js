@@ -22,7 +22,7 @@ const generateNewQueue = async (req, res) => {
 
     queryObject.intolerances = intolerances
     queryObject.ingredients = ingredients
-    queryObject.number = 1
+    queryObject.number = 2
 
     const recipeData = await externalAPICalls.searchRecipesByIngredientsAPI(queryObject)
 
