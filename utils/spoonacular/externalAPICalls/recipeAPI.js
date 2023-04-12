@@ -36,17 +36,20 @@ const searchRecipesAPI = async (queryObject) => {
 
 const searchRecipesByIngredientsAPI = async (queryObject) => {
     console.log("Whats good")
+    console.log(queryObject.number)
+    console.log(queryObject.random)
     //console.log(queryObject.intolerances.replace(/,/g, ', '))
     let opts = {
         'ingredients': queryObject.ingredients,
         'limitLicense': true,
         'ranking': 1,
-        'number': 5,
+        'number': !queryObject.number? 5: queryObject.number,
         'ignorePantry': false,
-        'intolerances': queryObject.intolerances 
+        'intolerances': queryObject.intolerances,
+        'random': !queryObject.random? false: true
     };
 
-    console.log(opts)
+    //console.log(opts)
 
     //let opts = createSearchOptions(queryObject, 'recipes_random')
 
@@ -62,7 +65,7 @@ const searchRecipesByIngredientsAPI = async (queryObject) => {
     };
 
     const searchResults = axios.request(options).then(function (response) {
-        console.log(options)
+        //console.log(options)
         return response.data
     }).catch(function (error) {
         console.error(error);
