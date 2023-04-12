@@ -22,7 +22,8 @@ const generateNewQueue = async (req, res) => {
 
     queryObject.intolerances = intolerances
     queryObject.ingredients = ingredients
-    queryObject.number = 2
+    queryObject.number = 20
+    queryObject.random = true
 
     const recipeData = await externalAPICalls.searchRecipesByIngredientsAPI(queryObject)
 
@@ -38,6 +39,19 @@ const generateNewQueue = async (req, res) => {
 
 
 }
+const getQueue = async (req, res) => {
+    queryObject = {
+        createdBy: req.user.userId
+    }
+    //let result = RecipeQueue.find(queryObject)
+    let result = RecipeQueue.find(queryObject).sort({ createdAt: 1 }); // Add .sort({ createdAt: 1 }) here
+    const recipes = await result
+
+    res.status(StatusCodes.OK).json({ recipes })
+    // console.log("Hello from getQueue")
+    // res.send("Ok")
+
+}
 const removeFromQueue = async (req, res) => {
     console.log("Hello from removeFromQueue")
     res.send("Ok")
@@ -50,5 +64,6 @@ const addToQueue = async (req, res) => {
 module.exports = {
     generateNewQueue,
     removeFromQueue,
-    addToQueue
+    addToQueue,
+    getQueue
 }
