@@ -6,20 +6,22 @@ const externalAPICalls = require('../spoonacular/externalAPICalls')
 const fillQueue = async (queryObject) => {
     
     console.log("Hello from fill Queue")
-    
+
+    // If there is no queryObject.number use the count of records belonging to the user
     if (!queryObject.number){
 
         //console.log(queryObject)
         const count = await RecipeQueue.countDocuments({createdBy: queryObject.userId})
         console.log("Inside if statement, count == ", count)
-        queryObject.number = count
+        queryObject.number = 20 - count
     }
     
     console.log("queryObject.number == ", queryObject.number)
     
-
+    // Get new recipes
     const recipeData = await externalAPICalls.searchRecipesByIngredientsAPI(queryObject)
 
+    // 
     await Promise.all(recipeData.map(async (recipe) => {
         // recipe.createdBy = queryObject.userId
         // await RecipeQueue.create(recipe);
