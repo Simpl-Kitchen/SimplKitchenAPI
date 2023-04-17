@@ -53,6 +53,8 @@ const getQueue = async (req, res) => {
 
 }
 const removeFromQueue = async (req, res) => {
+
+    
     console.log("Hello from removeFromQueue")
     res.send("Ok")
 }

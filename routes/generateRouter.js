@@ -3,7 +3,9 @@ const router = express.Router()
 
 const generateController = require('../controllers/generateController')
 
-router.get('/recipes', generateController.generateNewQueue)
-router.get('/recipes/queue', generateController.getQueue)
+router.get('/', generateController.getQueue)
+router.get('/new', generateController.generateNewQueue)
+router.patch('/remove', generateController.removeFromQueue)
+router.patch('/add', generateController.addToQueue)
 
 module.exports = router
