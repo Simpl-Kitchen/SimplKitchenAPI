@@ -5,7 +5,7 @@ const generateController = require('../controllers/generateController')
 
 router.get('/', generateController.getQueue)
 router.get('/new', generateController.generateNewQueue)
-router.patch('/remove', generateController.removeFromQueue)
-router.patch('/add', generateController.addToQueue)
+router.patch('/remove/:id', generateController.removeFromQueue)
+//router.patch('/add', generateController.addToQueue)
 
 module.exports = router
