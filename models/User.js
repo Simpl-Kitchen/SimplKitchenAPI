@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 //const allowedIntolerances = ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'];
-const { allowedIntolerances } = require('../utils/spoonacular/allowedFilterOptions.js')
+const { allowedIntolerances, allowedDiets } = require('../utils/spoonacular/allowedFilterOptions.js')
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -58,6 +58,24 @@ const UserSchema = new mongoose.Schema({
       },
     ],
   },
+  diets: {
+    type: [String],
+    validate: [
+      {
+        validator: function (array) {
+          return array.every(value => allowedDiets.includes(value));
+        },
+        message: 'One or more diets are not supported',
+      },
+      {
+        validator: function (array) {
+          const uniqueArray = [...new Set(array)];
+          return array.length === uniqueArray.length;
+        },
+        message: 'Duplicate diets are not allowed',
+      },
+    ],
+  }
 })
 
 UserSchema.pre('save', async function () {
