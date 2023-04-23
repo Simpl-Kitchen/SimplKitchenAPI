@@ -2,7 +2,7 @@ const User = require('../models/User')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
-const updateIntolerances = async (req, res) => {
+const updateUser = async (req, res) => {
 
     const {
         user: { userId },
@@ -35,4 +35,4 @@ const getUser = async (req, res) => {
 }
 
 
-module.exports = { updateIntolerances, getUser }
+module.exports = { updateUser, getUser }
