@@ -24,6 +24,7 @@ const getUser = async (req, res) => {
 
     const userResponse = {
         intolerances: user.intolerances,
+        diets: user.diets,
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,
