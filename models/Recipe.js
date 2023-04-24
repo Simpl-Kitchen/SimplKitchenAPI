@@ -17,15 +17,17 @@ const RecipeSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-    nutrition: {
-        nutrients: [{
-          name: { type: String, required: true },
-          amount: { type: Number, required: true },
-          unit: { type: String, required: true }
-        }]
-        
-
-        
+    usedIngredients: {
+        type: [Number],
+        required: [true, 'please provide the used ingredient Ids'],
+    },
+    missedIngredients: {
+        type: [Number],
+        required: [true, 'please provide the missed ingredient Ids'],
+    },
+    unusedIngredients: {
+        type: [Number],
+        required: [true, 'please provide the unused ingredient Ids'],
     },
     createdBy: {
         type: mongoose.Types.ObjectId,
