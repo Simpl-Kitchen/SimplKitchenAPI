@@ -1,6 +1,7 @@
 // Controller
 
 const User = require('../models/User')
+const ShoppingList = require('../models/ShoppingList')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
@@ -10,6 +11,10 @@ const register = async (req, res) => {
     const user = await User.create({ ...req.body })
     console.log(user);
     const token = user.createJWT()
+
+    // Create a shopping list for the user when they register
+    const shoppingList = await ShoppingList.create({ createdBy: user._id })
+    await shoppingList.save()
 
     res
         .status(StatusCodes.CREATED)
