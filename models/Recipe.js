@@ -1,5 +1,22 @@
 const mongoose = require('mongoose')
 
+const IngredientSchema = new mongoose.Schema({
+    ingredientID: Number,
+    ingredientName: String,
+    amount: {
+        type: Number,
+        required: [true, 'please provide the amount of the ingredient']
+    },
+    unit: {
+        type: String,
+        required: [true, 'please provide the unit of measurement']
+    },
+    image: String,
+})
+
+
+
+
 const RecipeSchema = new mongoose.Schema({
     recipeID: {
         type: String,
@@ -18,16 +35,16 @@ const RecipeSchema = new mongoose.Schema({
         required: true 
     },
     usedIngredients: {
-        type: [Number],
-        required: [true, 'please provide the used ingredient Ids'],
+        type: [IngredientSchema],
+        required: [true, 'please provide the used ingredients'],
     },
     missedIngredients: {
-        type: [Number],
-        required: [true, 'please provide the missed ingredient Ids'],
+        type: [IngredientSchema],
+        required: [true, 'please provide the missed ingredients'],
     },
     unusedIngredients: {
-        type: [Number],
-        required: [true, 'please provide the unused ingredient Ids'],
+        type: [IngredientSchema],
+        required: [true, 'please provide the unused ingredients'],
     },
     createdBy: {
         type: mongoose.Types.ObjectId,

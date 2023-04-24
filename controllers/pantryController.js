@@ -153,11 +153,12 @@ const getRecipe = async (req, res) => {
 
 const addRecipe = async (req, res) => {
     req.recipe.createdBy = req.user.userId
-    console.log(req.recipe)
+    //console.log(req.recipe)
 
     const recipe = await Recipe.create(req.recipe);
     res.status(StatusCodes.CREATED).json({ recipe });
 
+    //res.send("Adding Recipe")
 
 }
 
