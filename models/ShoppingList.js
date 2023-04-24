@@ -17,9 +17,11 @@ const estimatedCostSchema = new mongoose.Schema({
 });
 
 const ShoppingListSchema = new mongoose.Schema({
-    ingredient: [ingredientSchema],
+    ingredients: [ingredientSchema],
     createdBy: {
         type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provide a user'],
     },
     cost: Number,        
     
@@ -28,6 +30,7 @@ const ShoppingListSchema = new mongoose.Schema({
 ShoppingListSchema.methods.getTotalCost = function() {
     let totalCost = 0;
     
+
     this.ingredients.forEach(ingredient => {
         totalCost += ingredient.estimatedCost.value;
     });
