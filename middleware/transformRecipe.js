@@ -54,7 +54,7 @@ const transform = async (req, res, next) => {
     recipeTotalCost += cost.totalCost;
 
     // Delay 1 second (1000 ms) before processing the next ingredient
-    await delay(1000);
+    await delay(400);
   }
 
   recipe.cost = recipeTotalCost
@@ -74,6 +74,7 @@ const transform = async (req, res, next) => {
     usedIngredients: usedIngredients,
     missedIngredients: missedIngredients,
     unusedIngredients: unusedIngredients,
+    totalCost: recipeTotalCost
 
 
   }

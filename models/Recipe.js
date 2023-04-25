@@ -67,6 +67,9 @@ const RecipeSchema = new mongoose.Schema({
         type: [IngredientSchema],
         required: [true, 'please provide the unused ingredients'],
     },
+    totalCost: {
+        type: [Number]
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
