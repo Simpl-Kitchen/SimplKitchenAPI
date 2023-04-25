@@ -5,8 +5,8 @@ const transform = async (req, res, next) => {
 
     const usedIngredients = recipe.usedIngredients.map(item => {
         return {
-          id: item.id,
-          name: item.name,
+          ingredientID: item.id,
+          ingredientName: item.name,
           amount: item.amount,
           unit: item.unit === '' ? "whole" : item.unit,
           image: item.image
@@ -14,21 +14,21 @@ const transform = async (req, res, next) => {
       });
     const missedIngredients = recipe.missedIngredients.map(item => {
         return {
-          id: item.id,
-          name: item.name,
-          amount: item.amount,
-          unit: item.unit === '' ? "whole" : item.unit,
-          image: item.image
-        };
+            ingredientID: item.id,
+            ingredientName: item.name,
+            amount: item.amount,
+            unit: item.unit === '' ? "whole" : item.unit,
+            image: item.image
+          };
       });
     const unusedIngredients = recipe.unusedIngredients.map(item => {
         return {
-          ingredientID: item.id,
-          ingredientName: item.name,
-          amount: item.amount,
-          unit: item.unit === '' ? "whole" : item.unit,
-          image: item.image
-        };
+            ingredientID: item.id,
+            ingredientName: item.name,
+            amount: item.amount,
+            unit: item.unit === '' ? "whole" : item.unit,
+            image: item.image
+          };
       });
 
     //console.log(usedIngredients)
