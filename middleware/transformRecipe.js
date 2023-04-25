@@ -1,4 +1,4 @@
-const { calculateIngredientCost } = require('../utils/helpers/')
+const { calculateIngredientCost } = require('../utils/helpers/cost')
 
 const transform = async (req, res, next) => {
   const recipe = req.body
