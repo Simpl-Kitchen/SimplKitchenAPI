@@ -1,34 +1,34 @@
 const { calculateIngredientCost } = require('../utils/helpers/cost')
 
 const transform = async (req, res, next) => {
-  const recipe = req.body
+  let recipe = req.body
   //console.log(JSON.stringify(recipe))
   //const usedIngredients = recipe.usedIngredients
 
-  const usedIngredients = recipe.usedIngredients.map(item => {
+  let usedIngredients = recipe.usedIngredients.map(item => {
     return {
       ingredientID: item.id,
       ingredientName: item.name,
       amount: item.amount,
-      unit: item.unit === '' ? "whole" : item.unit,
+      unit: item.unit === '' || item.unit === null || item.unit === undefined ? "whole" : item.unit,
       image: item.image
     };
   });
-  const missedIngredients = recipe.missedIngredients.map(item => {
+  let missedIngredients = recipe.missedIngredients.map(item => {
     return {
       ingredientID: item.id,
       ingredientName: item.name,
       amount: item.amount,
-      unit: item.unit === '' ? "whole" : item.unit,
+      unit: item.unit === '' || item.unit === null || item.unit === undefined ? "whole" : item.unit,
       image: item.image
     };
   });
-  const unusedIngredients = recipe.unusedIngredients.map(item => {
+  let unusedIngredients = recipe.unusedIngredients.map(item => {
     return {
       ingredientID: item.id,
       ingredientName: item.name,
       amount: item.amount,
-      unit: item.unit === '' ? "whole" : item.unit,
+      unit: item.unit === '' || item.unit === null || item.unit === undefined ? "whole" : item.unit,
       image: item.image
     };
   });
@@ -37,16 +37,33 @@ const transform = async (req, res, next) => {
 
 
 
-  // for each missedIngredient calculate cost 
+  // Set a delay so I dont go over api limit
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  let recipeTotalCost = 0
+  // For each missedIngredient, calculate the cost
+  for (const ingredient of missedIngredients) {
+    // For each ingredient in the recipe, get its cost
+    const cost = await calculateIngredientCost(ingredient);
 
-  //console.log(usedIngredients)
-  //console.log(missedIngredients)
-  console.log(unusedIngredients)
+    console.log("Cost :: ", cost);
 
-  // const usedIngredientIds = usedIngredients.map(ingredient => ingredient.id);
-  // const missedIngredientIds = missedIngredients.map(ingredient => ingredient.id);
-  // const unusedIngredientIds = unusedIngredients.map(ingredient => ingredient.id);
+    // Assign the cost to the current ingredient
+    ingredient.cost = cost;
 
+    // Add the ingredient's total cost to the recipeTotalCost
+    recipeTotalCost += cost.totalCost;
+
+    // Delay 1 second (1000 ms) before processing the next ingredient
+    await delay(1000);
+  }
+
+  recipe.cost = recipeTotalCost
+
+  // console.log(usedIngredients)
+  // console.log(missedIngredients)
+  // console.log(unusedIngredients)
+
+  console.log(missedIngredients)
 
 
   req.recipe = {

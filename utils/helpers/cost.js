@@ -38,6 +38,10 @@ const { ingredientInformationAPICall } = require('../spoonacular/externalAPICall
 
 const calculateIngredientCost = async (ingredient) => {
 
+    // console.log("Ingredient ID ::", ingredient.ingredientID)
+    // console.log("Ingredient name::", ingredient.ingredientName)
+    // console.log("Amount in Recipe::", ingredient.amount, ingredient.unit)
+    // console.log("--------------------")
     // First calculate amount in grams
     let requestHeaders = {
         'x-api-key': process.env.SPOONACULAR_API_KEY
@@ -58,16 +62,21 @@ const calculateIngredientCost = async (ingredient) => {
         params: opts,
     };
 
-    const amountConversion = axios.request(options).then(function (response) {
+    const amountConversion = await axios.request(options).then(function (response) {
         return response.data
     }).catch(function (error) {
         console.error(error);
     });
 
+    //console.log(amountConversion)
     const amountInGrams = amountConversion.targetAmount
+    console.log("Amount In Grams ::", amountInGrams)
 
     // Call ingredient information API to get weight per serving in grams and estimated cost
-    const ingredientInformation = await ingredientInformationAPICall(ingredient.ingredientID)
+    queryObject = {}
+    queryObject.id = ingredient.ingredientID
+    const ingredientInformation = await ingredientInformationAPICall(queryObject)
+
 
     // set them to their own variables
     const weightPerServing = ingredientInformation.nutrition.weightPerServing.amount
