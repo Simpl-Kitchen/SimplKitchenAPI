@@ -1,8 +1,14 @@
 const mongoose = require('mongoose')
 
 const IngredientSchema = new mongoose.Schema({
-    ingredientID: Number,
-    ingredientName: String,
+    ingredientID: {
+        type: Number,
+        required: [true, 'please provide the ingredient Id'],
+    },
+    ingredientName: {
+        type: String,
+        required: [true, 'please provide the ingredient name']
+    },
     amount: {
         type: Number,
         required: [true, 'please provide the amount of the ingredient']
