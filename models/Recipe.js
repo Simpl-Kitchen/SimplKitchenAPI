@@ -1,5 +1,43 @@
 const mongoose = require('mongoose')
 
+const CostSchema = new mongoose.Schema({
+    costPerGram: {
+        type: Number,
+        //required: [true, 'please provide the cost per gram']
+    },
+    totalCost: {
+        type: Number,
+        //required: [true, 'please provide the total cost']
+    }
+});
+
+const IngredientSchema = new mongoose.Schema({
+    ingredientID: {
+        type: Number,
+        required: [true, 'please provide the ingredient Id'],
+    },
+    ingredientName: {
+        type: String,
+        required: [true, 'please provide the ingredient name']
+    },
+    amount: {
+        type: Number,
+        required: [true, 'please provide the amount of the ingredient']
+    },
+    unit: {
+        type: String,
+        required: [true, 'please provide the unit of measurement']
+    },
+    cost: {
+        type: CostSchema,
+        //required: [true, 'please provide the cost information']
+    },
+    image: String,
+})
+
+
+
+
 const RecipeSchema = new mongoose.Schema({
     recipeID: {
         type: String,
@@ -13,19 +51,24 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please provide the url for ingredient picture'],
     },
-    imageType: { 
-        type: String, 
-        required: true 
+    imageType: {
+        type: String,
+        required: true
     },
-    nutrition: {
-        nutrients: [{
-          name: { type: String, required: true },
-          amount: { type: Number, required: true },
-          unit: { type: String, required: true }
-        }]
-        
-
-        
+    usedIngredients: {
+        type: [IngredientSchema],
+        required: [true, 'please provide the used ingredients'],
+    },
+    missedIngredients: {
+        type: [IngredientSchema],
+        required: [true, 'please provide the missed ingredients'],
+    },
+    unusedIngredients: {
+        type: [IngredientSchema],
+        required: [true, 'please provide the unused ingredients'],
+    },
+    totalCost: {
+        type: [Number]
     },
     createdBy: {
         type: mongoose.Types.ObjectId,

@@ -24,6 +24,7 @@ const searchIngredientsAPI = async (queryObject) => {
         });
     }).catch((error) => {
         console.error(error);
+        console.log("IN THIS ONE")
     });
 
     const searchResults = await promise

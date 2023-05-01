@@ -152,26 +152,14 @@ const getRecipe = async (req, res) => {
 }
 
 const addRecipe = async (req, res) => {
-    //console.log(req.body)
-    //console.log(req.user)
-    req.body.createdBy = req.user.userId
+    req.recipe.createdBy = req.user.userId
+    //console.log(req.recipe)
 
-    let recipe = await Recipe.findOne({
-        recipeID: req.body.recipeID,
-        createdBy: req.user.userId
-    })
+    const recipe = await Recipe.create(req.recipe);
+    res.status(StatusCodes.CREATED).json({ recipe });
 
-    // If ingredient is not in the user's pantry, add it
-    if (!recipe) {
-        recipe = await Recipe.create(req.body)
-        res.status(StatusCodes.CREATED).json({ recipe })
+    //res.send("Adding Recipe")
 
-    }
-    // If ingredient is in the user's pantry, update amount.
-    else {
-        await recipe.incrementAmount();
-        res.status(StatusCodes.OK).json({ recipe });
-    }
 }
 
 const updateRecipe = async (req, res) => {
