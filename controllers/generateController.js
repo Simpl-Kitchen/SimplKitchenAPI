@@ -48,7 +48,7 @@ const getQueue = async (req, res) => {
     const count = await RecipeQueue.countDocuments({createdBy: req.user.userId})
     console.log("Inside if statement, count == ", count)
 
-    res.status(StatusCodes.OK).json({ recipes })
+    res.status(StatusCodes.OK).json({ queue: recipes })
 
 }
 const removeFromQueue = async (req, res) => {
