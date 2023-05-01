@@ -23,6 +23,9 @@ const IngredientSchema = new mongoose.Schema({
         //     message: (props) => `${props.value} is not a valid ingredient image URL`,
         //   },
     },
+    unit: {
+        type: String,
+    },
     amount: {
         type: Number,
         default: 1,
