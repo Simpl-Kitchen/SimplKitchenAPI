@@ -6,7 +6,6 @@ const {calculateIngredientCost} = require('../helpers/cost')
 
 const fillQueue = async (queryObject) => {
     
-    //console.log("Hello from fill Queue")
 
     // If there is no queryObject.number use the count of records belonging to the user
     if (!queryObject.number){
@@ -15,6 +14,7 @@ const fillQueue = async (queryObject) => {
         const count = await RecipeQueue.countDocuments({createdBy: queryObject.userId})
         console.log("Inside if statement, count == ", count)
         //queryObject.number = 20 - count
+        // Max is 5
         queryObject.number = 5 - count
     }
     
@@ -30,12 +30,13 @@ const fillQueue = async (queryObject) => {
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     // 
     await Promise.all(recipeData.map(async (recipe) => {
-        // recipe.createdBy = queryObject.userId
+        //recipe.createdBy = queryObject.userId
         // await RecipeQueue.create(recipe);
         
         //recipe.createdBy = queryObject.userId;
 
         // Check if the recipe already exists in the RecipeQueue
+        // const existingRecipe = await RecipeQueue.findOne({ id: recipe.id }, {createdBy: queryObject.userId});
         const existingRecipe = await RecipeQueue.findOne({ id: recipe.id });
 
         // If it doesn't exist, create a new document
@@ -51,20 +52,6 @@ const fillQueue = async (queryObject) => {
             queueRecipe.missedIngredientCount = recipe.missedIngredientCount;
             
             queueRecipe.missedIngredients = [];
-            // queueRecipe.missedIngredients = await Promise.all(recipe.missedIngredients.map(async ingredient => {
-            //     const cost = await calculateIngredientCost(ingredient);
-            //     console.log("cost == ", cost)
-            //     console.log("Missed Ingredient")
-            //     await delay(800);
-            //     return {
-            //         id: ingredient.id,
-            //         amount: ingredient.amount,
-            //         unit: ingredient.unit,
-            //         originalName: ingredient.originalName,
-            //         image: ingredient.image,
-            //         cost: cost
-            //     };
-            // }));
             for (const ingredient of recipe.missedIngredients) {
                 const cost = await calculateIngredientCost(ingredient);
                 console.log("cost == ", cost)
@@ -74,38 +61,12 @@ const fillQueue = async (queryObject) => {
                     id: ingredient.id,
                     amount: ingredient.amount,
                     unit: ingredient.unit,
-                    //originalName: ingredient.name,
                     originalName: ingredient.originalName,
                     image: ingredient.image,
                     cost: cost
                 });
-                //await delay(1000);
             }
-            // queueRecipe.missedIngredients = await Promise.all(recipe.missedIngredients.map(async ingredient => {
-            //     const cost = await calculateIngredientCost(ingredient);
-            //     await delay(800);
-            //     return {
-            //         id: ingredient.id,
-            //         amount: ingredient.amount,
-            //         unit: ingredient.unit,
-            //         originalName: ingredient.originalName,
-            //         image: ingredient.image,
-            //         cost: cost
-            //     };
-            // }));
 
-            // queueRecipe.usedIngredients = await Promise.all(recipe.usedIngredients.map(async ingredient => {
-            //     const cost = await calculateIngredientCost(ingredient);
-            //     await delay(800);
-            //     return {
-            //         id: ingredient.id,
-            //         amount: ingredient.amount,
-            //         unit: ingredient.unit,
-            //         originalName: ingredient.originalName,
-            //         image: ingredient.image,
-            //         cost: cost
-            //     };
-            // }))
             queueRecipe.usedIngredients = [];
             for (const ingredient of recipe.usedIngredients) {
                 const cost = await calculateIngredientCost(ingredient);
@@ -122,19 +83,6 @@ const fillQueue = async (queryObject) => {
                 });
             
             }
-            // queueRecipe.usedIngredients = await Promise.all(recipe.usedIngredients.map(async ingredient => {
-            //     const cost = await calculateIngredientCost(ingredient);
-            //     await delay(800);
-            //     return {
-            //         id: ingredient.id,
-            //         amount: ingredient.amount,
-            //         unit: ingredient.unit,
-            //         originalName: ingredient.originalName,
-            //         image: ingredient.image,
-            //         cost: cost
-            //     };
-            // }));
-
 
             queueRecipe.createdBy = queryObject.userId;
 
