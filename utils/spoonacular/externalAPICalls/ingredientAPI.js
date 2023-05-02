@@ -6,6 +6,7 @@ const api = connectSpoonacularApi(process.env.SPOONACULAR_API_KEY)
 const { createSearchOptions } = require('../createSearchOptions')
 // Spoonacular error handling
 const SpoonacularError = require('../../../errors/spoonacular');
+const axios = require('axios')
 
 // Call to Spoonacular Ingredient Search endpoint
 const searchIngredientsAPI = async (queryObject) => {
@@ -32,29 +33,76 @@ const searchIngredientsAPI = async (queryObject) => {
 }
 
 // Call to Spoonacular Get Ingredient Information endpoint
+// const ingredientInformationAPICall = async (queryObject) => {
+//     let id = queryObject.id // Number | The item's id.
+
+//     let opts = {
+//         'amount': !queryObject.amount ? 1 : queryObject.amount, // Number | The amount of this ingredient.
+//         //'unit': "grams" // String | The unit for the given amount.
+//     };
+
+//     let promise = new Promise((resolve, reject) => {
+//         api.getIngredientInformation(id, opts, function (error, data, response) {
+//             if (error) {
+//                 //reject(error);
+//                 reject(new SpoonacularError(error.message, error.status));
+//             } else {
+//                 resolve(data);
+//             }
+//         });
+//     }).catch((error) => {
+//         console.error(error);
+//     });
+
+//     const searchResults = await promise
+//     return searchResults
+// }
 const ingredientInformationAPICall = async (queryObject) => {
+    
     let id = queryObject.id // Number | The item's id.
 
     let opts = {
         'amount': !queryObject.amount ? 1 : queryObject.amount, // Number | The amount of this ingredient.
-        //'unit': "grams" // String | The unit for the given amount.
+        'unit': queryObject.unit // String | The unit for the given amount.
     };
 
-    let promise = new Promise((resolve, reject) => {
-        api.getIngredientInformation(id, opts, function (error, data, response) {
-            if (error) {
-                //reject(error);
-                reject(new SpoonacularError(error.message, error.status));
-            } else {
-                resolve(data);
-            }
-        });
-    }).catch((error) => {
-        console.error(error);
-    });
+    let requestHeaders = {
+        'x-api-key': process.env.SPOONACULAR_API_KEY
+    }
 
-    const searchResults = await promise
+    const options = {
+        method: 'GET',
+        headers: requestHeaders,
+        url: `https://api.spoonacular.com/food/ingredients/${id}/information`,
+        params: opts,
+    };
+
+    const searchResults = await axios.request(options).then(function (response) {
+        return response.data
+    }).catch(function (error) {
+        console.log("ERROR")
+        console.error(error);
+        //console.error(error.response.data); // Log the error data from the API
+    });
+    //console.log(searchResults)
     return searchResults
+
+
+    // let promise = new Promise((resolve, reject) => {
+    //     api.getIngredientInformation(id, opts, function (error, data, response) {
+    //         if (error) {
+    //             //reject(error);
+    //             reject(new SpoonacularError(error.message, error.status));
+    //         } else {
+    //             resolve(data);
+    //         }
+    //     });
+    // }).catch((error) => {
+    //     console.error(error);
+    // });
+
+    // const searchResults = await promise
+    // return searchResults
 }
 
 module.exports = { searchIngredientsAPI, ingredientInformationAPICall }

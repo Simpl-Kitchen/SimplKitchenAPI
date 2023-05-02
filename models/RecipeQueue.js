@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 const CostSchema = new mongoose.Schema({
-  costPerGram: {
+  value: {
       type: Number,
       //required: [true, 'please provide the cost per gram']
   },
-  totalCost: {
-      type: Number,
+  unit: {
+      type: String,
       //required: [true, 'please provide the total cost']
   }
 });
@@ -28,7 +28,7 @@ const recipeSchema = new mongoose.Schema({
     id: {
       type: Number,
       required: true,
-      unique: true,
+      //unique: true,
     },
     title: {
       type: String,
@@ -40,6 +40,9 @@ const recipeSchema = new mongoose.Schema({
     missedIngredientCount: Number,
     missedIngredients: [ingredientSchema],
     usedIngredients: [ingredientSchema],
+    totalCost: {
+      type: CostSchema,
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User',

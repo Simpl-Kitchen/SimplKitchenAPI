@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 const CostSchema = new mongoose.Schema({
-    costPerGram: {
+    value: {
         type: Number,
         //required: [true, 'please provide the cost per gram']
     },
-    totalCost: {
-        type: Number,
+    unit: {
+        type: String,
         //required: [true, 'please provide the total cost']
     }
 });
