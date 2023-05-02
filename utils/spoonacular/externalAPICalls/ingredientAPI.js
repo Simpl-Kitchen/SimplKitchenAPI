@@ -63,7 +63,7 @@ const ingredientInformationAPICall = async (queryObject) => {
 
     let opts = {
         'amount': !queryObject.amount ? 1 : queryObject.amount, // Number | The amount of this ingredient.
-        'unit': !queryObject.unit // String | The unit for the given amount.
+        'unit': queryObject.unit // String | The unit for the given amount.
     };
 
     let requestHeaders = {

@@ -19,7 +19,7 @@ const fillQueue = async (queryObject) => {
     }
     
     // for test
-    queryObject.number = 1
+    //queryObject.number = 1
 
     console.log("queryObject.number == ", queryObject.number)
     
