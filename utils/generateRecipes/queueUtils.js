@@ -19,15 +19,15 @@ const fillQueue = async (queryObject) => {
     }
     
     // for test
-    // queryObject.number = 1
+    //queryObject.number = 1
 
     console.log("queryObject.number == ", queryObject.number)
     
     // Get new recipes
     const recipeData = await externalAPICalls.searchRecipesByIngredientsAPI(queryObject)
-    //console.log(recipeData[0].missedIngredients)
+    console.log(recipeData[0].missedIngredients)
     
-    //const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     // 
     await Promise.all(recipeData.map(async (recipe) => {
         // recipe.createdBy = queryObject.userId
@@ -51,9 +51,25 @@ const fillQueue = async (queryObject) => {
             queueRecipe.missedIngredientCount = recipe.missedIngredientCount;
             
             queueRecipe.missedIngredients = [];
+            // queueRecipe.missedIngredients = await Promise.all(recipe.missedIngredients.map(async ingredient => {
+            //     const cost = await calculateIngredientCost(ingredient);
+            //     console.log("cost == ", cost)
+            //     console.log("Missed Ingredient")
+            //     await delay(800);
+            //     return {
+            //         id: ingredient.id,
+            //         amount: ingredient.amount,
+            //         unit: ingredient.unit,
+            //         originalName: ingredient.originalName,
+            //         image: ingredient.image,
+            //         cost: cost
+            //     };
+            // }));
             for (const ingredient of recipe.missedIngredients) {
-                // const cost = await calculateIngredientCost(ingredient);
-                // await delay(100);
+                const cost = await calculateIngredientCost(ingredient);
+                console.log("cost == ", cost)
+                console.log("Missed Ingredient")
+                await delay(800);
                 queueRecipe.missedIngredients.push({
                     id: ingredient.id,
                     amount: ingredient.amount,
@@ -61,7 +77,7 @@ const fillQueue = async (queryObject) => {
                     //originalName: ingredient.name,
                     originalName: ingredient.originalName,
                     image: ingredient.image,
-                    //cost: cost
+                    cost: cost
                 });
                 //await delay(1000);
             }
@@ -78,17 +94,31 @@ const fillQueue = async (queryObject) => {
             //     };
             // }));
 
+            // queueRecipe.usedIngredients = await Promise.all(recipe.usedIngredients.map(async ingredient => {
+            //     const cost = await calculateIngredientCost(ingredient);
+            //     await delay(800);
+            //     return {
+            //         id: ingredient.id,
+            //         amount: ingredient.amount,
+            //         unit: ingredient.unit,
+            //         originalName: ingredient.originalName,
+            //         image: ingredient.image,
+            //         cost: cost
+            //     };
+            // }))
             queueRecipe.usedIngredients = [];
             for (const ingredient of recipe.usedIngredients) {
-                // const cost = await calculateIngredientCost(ingredient);
-                // await delay(1000);
+                const cost = await calculateIngredientCost(ingredient);
+                console.log("cost == ", cost)
+                console.log("Used Ingredient")
+                await delay(800);
                 queueRecipe.usedIngredients.push({
                     id: ingredient.id,
                     amount: ingredient.amount,
                     unit: ingredient.unit,
                     originalName: ingredient.originalName,
                     image: ingredient.image,
-                    //cost: cost
+                    cost: cost
                 });
             
             }
