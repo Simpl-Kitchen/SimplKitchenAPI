@@ -28,7 +28,7 @@ const recipeSchema = new mongoose.Schema({
     id: {
       type: Number,
       required: true,
-      unique: true,
+      //unique: true,
     },
     title: {
       type: String,
@@ -40,6 +40,9 @@ const recipeSchema = new mongoose.Schema({
     missedIngredientCount: Number,
     missedIngredients: [ingredientSchema],
     usedIngredients: [ingredientSchema],
+    totalCost: {
+      type: CostSchema,
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User',

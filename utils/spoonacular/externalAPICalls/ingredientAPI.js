@@ -80,7 +80,9 @@ const ingredientInformationAPICall = async (queryObject) => {
     const searchResults = await axios.request(options).then(function (response) {
         return response.data
     }).catch(function (error) {
+        console.log("ERROR")
         console.error(error);
+        //console.error(error.response.data); // Log the error data from the API
     });
     //console.log(searchResults)
     return searchResults
