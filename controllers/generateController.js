@@ -25,7 +25,8 @@ const generateNewQueue = async (req, res) => {
     // set up queryObject
     queryObject.intolerances = intolerances
     queryObject.ingredients = ingredients
-    queryObject.number = 20
+    //queryObject.number = 20
+    queryObject.number = 5
     queryObject.random = true
     queryObject.userId = req.user.userId
 
