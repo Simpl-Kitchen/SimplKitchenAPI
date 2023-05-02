@@ -56,9 +56,9 @@ const fillQueue = async (queryObject) => {
             for (const ingredient of recipe.missedIngredients) {
                 const cost = await calculateIngredientCost(ingredient);
                 totalCost = totalCost + cost.value;
-                console.log("cost == ", cost)
-                console.log("Total Cost == ", totalCost)
-                console.log("Missed Ingredient")
+                // console.log("cost == ", cost)
+                // console.log("Total Cost == ", totalCost)
+                // console.log("Missed Ingredient")
                 //await delay(800);
                 queueRecipe.missedIngredients.push({
                     id: ingredient.id,
@@ -74,9 +74,9 @@ const fillQueue = async (queryObject) => {
             for (const ingredient of recipe.usedIngredients) {
                 const cost = await calculateIngredientCost(ingredient);
                 totalCost = totalCost + cost.value;
-                console.log("cost == ", cost)
-                console.log("Total Cost == ", totalCost)
-                console.log("Used Ingredient")
+                // console.log("cost == ", cost)
+                // console.log("Total Cost == ", totalCost)
+                // console.log("Used Ingredient")
                 //await delay(800);
                 queueRecipe.usedIngredients.push({
                     id: ingredient.id,
@@ -96,7 +96,7 @@ const fillQueue = async (queryObject) => {
             //queueRecipe.totalCost = totalCost;
             queueRecipe.createdBy = queryObject.userId;
 
-            console.log("Final Total cost :: ", queueRecipe.totalCost.value)
+            // console.log("Final Total cost :: ", queueRecipe.totalCost.value)
             // console.log(queueRecipe)
             // console.log
             await RecipeQueue.create(queueRecipe);

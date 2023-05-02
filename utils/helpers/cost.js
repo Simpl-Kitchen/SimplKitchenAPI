@@ -11,8 +11,8 @@ const calculateIngredientCost = async (ingredient) => {
     // Call ingredientInformationAPICall
     const results = await ingredientInformationAPICall(queryObject)
 
-    console.log("Ingredient == ", ingredient.originalName)
-    console.log("Estimated Cost == ", results.estimatedCost.value)
+    // console.log("Ingredient == ", ingredient.originalName)
+    // console.log("Estimated Cost == ", results.estimatedCost.value)
 
     // Extract cost from results
     const cost = results.estimatedCost
