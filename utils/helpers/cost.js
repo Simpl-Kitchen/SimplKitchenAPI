@@ -2,6 +2,8 @@ const axios = require('axios');
 //const { ingredientInformationAPICall } = require('../spoonacular/externalAPICalls')
 const { ingredientInformationAPICall } = require('../spoonacular/externalAPICalls')
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 const calculateIngredientCost = async (ingredient) => {
 
     // First calculate amount in grams
@@ -32,9 +34,18 @@ const calculateIngredientCost = async (ingredient) => {
     }).catch(function (error) {
         console.error(error.message);
     });
+    await delay(100)
 
     // Now we have the amount of the ingredient in grams
-    const amountInGrams = amountConversion.targetAmount
+    let amountInGrams;
+    
+    if (!amountConversion.targetAmount){
+        amountInGrams = 0
+    }
+    else {
+        
+        amountInGrams = amountConversion.targetAmount
+    }
 
     // Debuging stuff
     console.log("Ingredient name :: ", ingredient.originalName) 
@@ -46,10 +57,19 @@ const calculateIngredientCost = async (ingredient) => {
     queryObject.id = ingredient.id
     const ingredientInformation = await ingredientInformationAPICall(queryObject)
 
-
     // set them to their own variables
-    const weightPerServing = ingredientInformation.nutrition.weightPerServing.amount
-    const estimatedCost = ingredientInformation.estimatedCost.value
+    let weightPerServing;
+    let estimatedCost;
+
+    if (!ingredientInformation.nutrition.weightPerServing.amount) {
+        weightPerServing = 0
+        estimatedCost = 0
+    }
+    else {
+
+        weightPerServing = ingredientInformation.nutrition.weightPerServing.amount
+        estimatedCost = ingredientInformation.estimatedCost.value
+    }
 
 
     // Calculate cost per gram and the total cost (in cents)
@@ -57,7 +77,7 @@ const calculateIngredientCost = async (ingredient) => {
     let totalCost;
 
     // Some of the ingredient don't come with weight information so I had to set those to 0
-    if (!weightPerServing){
+    if (weightPerServing == 0){
         costPerGram = 0
         totalCost = 0
     }
