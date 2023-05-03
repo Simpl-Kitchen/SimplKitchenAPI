@@ -102,11 +102,26 @@ const deleteIngredient = async (req, res) => {
 }
 //CRUD functionality for Recipe API and DB
 const getAllRecipes = async (req, res) => {
+    const { search, status, jobType, sort } = req.query;
+
     queryObject = {
         createdBy: req.user.userId
     }
     let result = Recipe.find(queryObject)
     const recipes = await result
+
+    if (sort === 'latest') {
+        recipes = recipes.sort('-createdAt');
+      }
+      if (sort === 'oldest') {
+        recipes = recipes.sort('createdAt');
+      }
+      if (sort === 'a-z') {
+        recipes = recipes.sort('position');
+      }
+      if (sort === 'z-a') {
+        recipes = recipes.sort('-position');
+      }
 
     res.status(StatusCodes.OK).json({ recipes })
 }
