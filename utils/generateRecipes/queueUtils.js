@@ -1,7 +1,7 @@
 const RecipeQueue = require('../../models/RecipeQueue')
 const userHelpers = require('../helpers')
 const externalAPICalls = require('../spoonacular/externalAPICalls')
-const {calculateIngredientCost} = require('../helpers/cost')
+const {calculateIngredientCost, calculateRecipeCost} = require('../helpers/cost')
 
 
 const fillQueue = async (queryObject) => {
@@ -21,11 +21,11 @@ const fillQueue = async (queryObject) => {
     // for test
     //queryObject.number = 1
 
-    console.log("queryObject.number == ", queryObject.number)
+    //console.log("queryObject.number == ", queryObject.number)
     
     // Get new recipes
     const recipeData = await externalAPICalls.searchRecipesByIngredientsAPI(queryObject)
-    console.log(recipeData[0].missedIngredients)
+    //console.log(recipeData[0].missedIngredients)
     
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     // 
@@ -43,7 +43,7 @@ const fillQueue = async (queryObject) => {
         // If it doesn't exist, create a new document
         if (!existingRecipe) {
 
-            let totalCost = 0;
+            //let totalCost = 0;
             let queueRecipe = {};
             
             queueRecipe.id = recipe.id;
@@ -54,8 +54,8 @@ const fillQueue = async (queryObject) => {
             
             queueRecipe.missedIngredients = [];
             for (const ingredient of recipe.missedIngredients) {
-                const cost = await calculateIngredientCost(ingredient);
-                totalCost = totalCost + cost.value;
+                // const cost = await calculateIngredientCost(ingredient);
+                // totalCost = totalCost + cost.value;
                 // console.log("cost == ", cost)
                 // console.log("Total Cost == ", totalCost)
                 // console.log("Missed Ingredient")
@@ -66,14 +66,14 @@ const fillQueue = async (queryObject) => {
                     unit: ingredient.unit,
                     originalName: ingredient.originalName,
                     image: ingredient.image,
-                    cost: cost
+                    //cost: cost
                 });
             }
 
             queueRecipe.usedIngredients = [];
             for (const ingredient of recipe.usedIngredients) {
-                const cost = await calculateIngredientCost(ingredient);
-                totalCost = totalCost + cost.value;
+                // const cost = await calculateIngredientCost(ingredient);
+                // totalCost = totalCost + cost.value;
                 // console.log("cost == ", cost)
                 // console.log("Total Cost == ", totalCost)
                 // console.log("Used Ingredient")
@@ -84,16 +84,24 @@ const fillQueue = async (queryObject) => {
                     unit: ingredient.unit,
                     originalName: ingredient.originalName,
                     image: ingredient.image,
-                    cost: cost
+                    //cost: cost
                 });
             
             }
 
             //console.log("totalCost == ", totalCost)
-            queueRecipe.totalCost = {};
-            queueRecipe.totalCost.value = totalCost;
-            queueRecipe.totalCost.unit = "US Cents";
+            // queueRecipe.totalCost = {};
+            // queueRecipe.totalCost.value = totalCost;
+            // queueRecipe.totalCost.unit = "US Cents";
             //queueRecipe.totalCost = totalCost;
+
+
+            const costPerServing = await calculateRecipeCost(recipe);
+
+
+
+
+            queueRecipe.cost = costPerServing;
             queueRecipe.createdBy = queryObject.userId;
 
             // console.log("Final Total cost :: ", queueRecipe.totalCost.value)

@@ -8,6 +8,9 @@ const CostSchema = new mongoose.Schema({
   unit: {
       type: String,
       //required: [true, 'please provide the total cost']
+  },
+  servings: {
+      type: Number,
   }
 });
 
@@ -40,7 +43,7 @@ const recipeSchema = new mongoose.Schema({
     missedIngredientCount: Number,
     missedIngredients: [ingredientSchema],
     usedIngredients: [ingredientSchema],
-    totalCost: {
+    cost: {
       type: CostSchema,
     },
     createdBy: {
