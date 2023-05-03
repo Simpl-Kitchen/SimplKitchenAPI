@@ -102,11 +102,28 @@ const deleteIngredient = async (req, res) => {
 }
 //CRUD functionality for Recipe API and DB
 const getAllRecipes = async (req, res) => {
+    const { search, status, jobType, sort } = req.query;
+
     queryObject = {
         createdBy: req.user.userId
     }
     let result = Recipe.find(queryObject)
-    const recipes = await result
+    //let recipes = await result
+
+    if (sort === 'latest') {
+        result = result.sort('-createdAt');
+      }
+      if (sort === 'oldest') {
+        result = result.sort('createdAt');
+      }
+      if (sort === 'a-z') {
+        result = result.sort('position');
+      }
+      if (sort === 'z-a') {
+        result = result.sort('-position');
+      }
+
+      const recipes = await result;
 
     res.status(StatusCodes.OK).json({ recipes })
 }
@@ -118,9 +135,9 @@ const getRecipe = async (req, res) => {
     } = req
 
     const recipe = await Recipe.findOne({
-        //_id: recipeID,
-        recipeID: recipeID,
-        createdBy: userId,
+        _id: recipeID,
+        // recipeID: recipeID,
+        // createdBy: userId,
     })
     // fail safe for no recipe ID 
     if (!recipe) {
@@ -145,8 +162,9 @@ const deleteRecipe = async (req, res) => {
     } = req
 
     let recipe = await Recipe.findOne({
-        recipeID: req.params.id,
-        createdBy: req.user.userId
+        // recipeID: req.params.id,
+        // createdBy: req.user.userId
+        _id: recipeID,
     })
     // fail safe for none-existant recipe ID
     if (!recipe) {
