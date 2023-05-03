@@ -145,8 +145,9 @@ const deleteRecipe = async (req, res) => {
     } = req
 
     let recipe = await Recipe.findOne({
-        recipeID: req.params.id,
-        createdBy: req.user.userId
+        // recipeID: req.params.id,
+        // createdBy: req.user.userId
+        _id: recipeID,
     })
     // fail safe for none-existant recipe ID
     if (!recipe) {
