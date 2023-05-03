@@ -4,7 +4,7 @@ const calculateIngredientCost = async (ingredient) => {
 
     // Construct query object for ingredientInformationAPICall
     queryObject = {}
-    queryObject.id = ingredient.id
+    queryObject.id = ingredient.ingredientID
     queryObject.amount = ingredient.amount
     queryObject.unit = !ingredient.unit ? "" : ingredient.unit
 

@@ -26,7 +26,8 @@ const IngredientSchema = new mongoose.Schema({
     },
     unit: {
         type: String,
-        required: [true, 'please provide the unit of measurement']
+        //required: [true, 'please provide the unit of measurement']
+        defualt: ''
     },
     cost: {
         type: CostSchema,
@@ -41,34 +42,36 @@ const IngredientSchema = new mongoose.Schema({
 const RecipeSchema = new mongoose.Schema({
     recipeID: {
         type: String,
-        required: [true, 'please provide the ingredient Id'],
+        required: [true, 'please provide the recipe Id'],
     },
     recipeTitle: {
         type: String,
-        required: [true, 'please provide the ingredient name']
+        required: [true, 'please provide the Recipe title']
     },
     image: {
         type: String,
-        required: [true, 'please provide the url for ingredient picture'],
+        required: [true, 'please provide the url for recipe picture'],
     },
-    imageType: {
-        type: String,
-        required: true
+    // imageType: {
+    //     type: String,
+    //     required: true
+    // },
+    usedIngredientCount: Number,
+    missedIngredientCount: Number,
+    missedIngredients: {
+        type: [IngredientSchema],
+        required: [true, 'please provide the missed ingredients'],
     },
     usedIngredients: {
         type: [IngredientSchema],
         required: [true, 'please provide the used ingredients'],
     },
-    missedIngredients: {
-        type: [IngredientSchema],
-        required: [true, 'please provide the missed ingredients'],
-    },
-    unusedIngredients: {
-        type: [IngredientSchema],
-        required: [true, 'please provide the unused ingredients'],
-    },
+    // unusedIngredients: {
+    //     type: [IngredientSchema],
+    //     required: [true, 'please provide the unused ingredients'],
+    // },
     totalCost: {
-        type: [Number]
+        type: CostSchema,
     },
     createdBy: {
         type: mongoose.Types.ObjectId,
