@@ -1,11 +1,3 @@
-// const {
-//     searchRecipesAPI,
-//     searchIngredientsAPI,
-//     ingredientInformationAPICall,
-//     searchGroceryProductsAPICall,
-//     groceryProductInformationAPICall,
-//     searchByUpcAPICall
-// } = require('./spoonacularAPICalls')
 
 const {
     searchIngredientsAPI,

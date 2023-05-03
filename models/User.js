@@ -1,10 +1,10 @@
+// Exports 
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-//const allowedIntolerances = ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'];
 const { allowedIntolerances, allowedDiets } = require('../utils/spoonacular/allowedFilterOptions.js')
-
+// User Schema
 const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -77,7 +77,7 @@ const UserSchema = new mongoose.Schema({
     ],
   }
 })
-
+// Encryption of user password using 
 UserSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
@@ -92,10 +92,10 @@ UserSchema.methods.createJWT = function () {
     }
   )
 }
-
+//Password validation methods
 UserSchema.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password)
   return isMatch
 }
-
+// Exporting the model
 module.exports = mongoose.model('User', UserSchema)

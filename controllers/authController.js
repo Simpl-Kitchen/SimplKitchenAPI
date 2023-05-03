@@ -1,5 +1,4 @@
-// Controller
-
+// imports 
 const User = require('../models/User')
 const ShoppingList = require('../models/ShoppingList')
 const { StatusCodes } = require('http-status-codes')
@@ -26,6 +25,7 @@ const login = async (req, res) => {
 
     // Check to make sure structure of the request is correct. Requires an email and a password.
     const { email, password } = req.body
+    // If no email or password provided throw an error
     if (!email || !password) {
         throw new BadRequestError('Please provide email and pasword')
     }
@@ -48,7 +48,7 @@ const login = async (req, res) => {
     res.status(StatusCodes.OK).json({ user: { username: user.username }, token })
 
 }
-
+// Exports 
 module.exports = {
     register,
     login
