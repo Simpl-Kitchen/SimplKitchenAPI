@@ -1,7 +1,8 @@
+// Exports
 const User = require('../models/User')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
-
+// User CRUD functions 
 const updateUser = async (req, res) => {
 
     const {
@@ -14,13 +15,10 @@ const updateUser = async (req, res) => {
         { new: true, runValidators: true }
     )
 
-    // Add error handling
-
     res.status(StatusCodes.OK).json({ user })
 }
 const getUser = async (req, res) => {
     const user = await User.findById(req.user.userId)
-    //console.log(user)
 
     const userResponse = {
         intolerances: user.intolerances,
@@ -30,9 +28,8 @@ const getUser = async (req, res) => {
         username: user.username,
         email: user.email,
     }
-    //res.send("Ok")
     res.status(StatusCodes.OK).json({ userResponse })
 }
 
-
+// Exports 
 module.exports = { updateUser, getUser }

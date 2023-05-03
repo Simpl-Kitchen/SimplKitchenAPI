@@ -4,7 +4,7 @@ const userHelpers = require('../../utils/helpers')
 
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../../errors')
-
+// Search functionality 
 const searchGroceryProducts = async (req, res) => {
     
     // Set up variables. Destructure req.query and req.user
@@ -40,7 +40,7 @@ const searchGroceryProductInformation = async (req, res) => {
     const queryObject = {}
 
     queryObject.id = productId
-
+    // If ID is not in correct format 
     if (isNaN(queryObject.id)) {
 
         throw new BadRequestError("ID parameter is not a number")
@@ -87,7 +87,7 @@ const searchGroceryProductByUPC = async (req, res) => {
     // Return data to frontend
     res.status(StatusCodes.OK).json({ productData })
 }
-
+// Exports 
 module.exports = {
     searchGroceryProducts,
     searchGroceryProductInformation,

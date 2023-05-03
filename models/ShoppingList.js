@@ -1,11 +1,12 @@
+// Imports 
 const mongoose = require('mongoose')
-
+// Cost Schema 
 const estimatedCostSchema = new mongoose.Schema({
     value: Number,
     unit: String
   }); 
 
-
+// Ingredient Schema 
   const ingredientSchema = new mongoose.Schema({
     ingredientID: Number,
     ingredientName: String,
@@ -15,7 +16,7 @@ const estimatedCostSchema = new mongoose.Schema({
     aisle: String,
     image: String,
 });
-
+// Shopping List Schema
 const ShoppingListSchema = new mongoose.Schema({
     ingredients: [ingredientSchema],
     createdBy: {
@@ -26,7 +27,7 @@ const ShoppingListSchema = new mongoose.Schema({
     cost: Number,        
     
 })
-
+// Shopping List Model
 ShoppingListSchema.methods.getTotalCost = function() {
     let totalCost = 0;
     
@@ -37,11 +38,11 @@ ShoppingListSchema.methods.getTotalCost = function() {
 
     return totalCost;
 };
-
+// Shopping List Schema
 ShoppingListSchema.pre('save', function(next) {
     this.cost = this.getTotalCost();
     next();
 })
-
+// Exports
 const ShoppingList = mongoose.model('ShoppingList', ShoppingListSchema);
 module.exports = ShoppingList;

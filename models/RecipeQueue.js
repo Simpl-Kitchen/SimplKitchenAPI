@@ -1,19 +1,18 @@
+// Imports 
 const mongoose = require('mongoose')
-
+// Cost Schema
 const CostSchema = new mongoose.Schema({
   value: {
       type: Number,
-      //required: [true, 'please provide the cost per gram']
   },
   unit: {
       type: String,
-      //required: [true, 'please provide the total cost']
   },
   servings: {
       type: Number,
   }
 });
-
+// Ingredient Schema 
 const ingredientSchema = new mongoose.Schema({
     id: Number,
     amount: Number,
@@ -22,16 +21,14 @@ const ingredientSchema = new mongoose.Schema({
     image: String,
     cost: {
       type: CostSchema,
-      //required: [true, 'please provide the cost information']
   },
   });
 
-
+// Recipe Schema
 const recipeSchema = new mongoose.Schema({
     id: {
       type: Number,
       required: true,
-      //unique: true,
     },
     title: {
       type: String,
@@ -56,5 +53,5 @@ const recipeSchema = new mongoose.Schema({
     { strict: false },
   );
 
-
+// Exports
   module.exports = mongoose.model('RecipeQueue', recipeSchema);

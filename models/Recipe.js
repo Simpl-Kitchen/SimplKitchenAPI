@@ -1,3 +1,4 @@
+// Imports
 const mongoose = require('mongoose')
 
 const CostSchema = new mongoose.Schema({
@@ -10,7 +11,7 @@ const CostSchema = new mongoose.Schema({
         //required: [true, 'please provide the total cost']
     }
 });
-
+// Ingredient Schema
 const IngredientSchema = new mongoose.Schema({
     ingredientID: {
         type: Number,
@@ -78,7 +79,8 @@ const RecipeSchema = new mongoose.Schema({
 },
     { timestamps: true },
     { strict: false },
-) // May need to change strict settings. Leaving as false for ease of testing. 
+) 
+// May need to change strict settings. Leaving as false for ease of testing. 
 
 RecipeSchema.methods.incrementAmount = async function () {
     this.amount += 1;
@@ -89,5 +91,5 @@ RecipeSchema.methods.decrementAmount = async function () {
     this.amount -= 1;
     await this.save();
 }
-
+// Exports 
 module.exports = mongoose.model('Recipe', RecipeSchema)

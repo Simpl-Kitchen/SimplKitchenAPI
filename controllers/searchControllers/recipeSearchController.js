@@ -29,7 +29,6 @@ const searchRecipes = async (req, res) => {
     res.status(StatusCodes.OK).json({ recipeData })
 }
 const generateRecipes = async (req, res) => {
-    //console.log("Hello")
 
     // Set up variables. Destructure req.query and req.user
     const { search } = req.query
@@ -54,7 +53,7 @@ const generateRecipes = async (req, res) => {
 }
 
 
-
+// Exports 
 module.exports = {
     searchRecipes,
     generateRecipes
