@@ -74,5 +74,34 @@ const searchRecipesByIngredientsAPI = async (queryObject) => {
     return searchResults
 
 }
+const searchRecipeInformationAPI = async (queryObject) => {
 
-module.exports = { searchRecipesAPI, searchRecipesByIngredientsAPI }
+    const id = queryObject.id // Number | The item's id.
+    let requestHeaders = {
+        'x-api-key': process.env.SPOONACULAR_API_KEY
+    }
+
+    console.log(id)
+
+    const options = {
+        method: 'GET',
+        headers: requestHeaders,
+        url: `https://api.spoonacular.com/recipes/${id}/information`,
+        //params: opts,
+    };
+
+    const searchResults = axios.request(options).then(function (response) {
+        //console.log(options)
+        return response.data
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+    return searchResults
+}
+
+module.exports = { 
+    searchRecipesAPI, 
+    searchRecipesByIngredientsAPI, 
+    searchRecipeInformationAPI 
+}

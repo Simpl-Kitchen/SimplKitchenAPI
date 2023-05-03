@@ -32,31 +32,6 @@ const searchIngredientsAPI = async (queryObject) => {
     return searchResults
 }
 
-// Call to Spoonacular Get Ingredient Information endpoint
-// const ingredientInformationAPICall = async (queryObject) => {
-//     let id = queryObject.id // Number | The item's id.
-
-//     let opts = {
-//         'amount': !queryObject.amount ? 1 : queryObject.amount, // Number | The amount of this ingredient.
-//         //'unit': "grams" // String | The unit for the given amount.
-//     };
-
-//     let promise = new Promise((resolve, reject) => {
-//         api.getIngredientInformation(id, opts, function (error, data, response) {
-//             if (error) {
-//                 //reject(error);
-//                 reject(new SpoonacularError(error.message, error.status));
-//             } else {
-//                 resolve(data);
-//             }
-//         });
-//     }).catch((error) => {
-//         console.error(error);
-//     });
-
-//     const searchResults = await promise
-//     return searchResults
-// }
 const ingredientInformationAPICall = async (queryObject) => {
     
     let id = queryObject.id // Number | The item's id.
@@ -87,22 +62,6 @@ const ingredientInformationAPICall = async (queryObject) => {
     //console.log(searchResults)
     return searchResults
 
-
-    // let promise = new Promise((resolve, reject) => {
-    //     api.getIngredientInformation(id, opts, function (error, data, response) {
-    //         if (error) {
-    //             //reject(error);
-    //             reject(new SpoonacularError(error.message, error.status));
-    //         } else {
-    //             resolve(data);
-    //         }
-    //     });
-    // }).catch((error) => {
-    //     console.error(error);
-    // });
-
-    // const searchResults = await promise
-    // return searchResults
 }
 
 module.exports = { searchIngredientsAPI, ingredientInformationAPICall }
