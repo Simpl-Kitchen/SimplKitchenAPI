@@ -108,20 +108,22 @@ const getAllRecipes = async (req, res) => {
         createdBy: req.user.userId
     }
     let result = Recipe.find(queryObject)
-    const recipes = await result
+    //let recipes = await result
 
     if (sort === 'latest') {
-        recipes = recipes.sort('-createdAt');
+        result = result.sort('-createdAt');
       }
       if (sort === 'oldest') {
-        recipes = recipes.sort('createdAt');
+        result = result.sort('createdAt');
       }
       if (sort === 'a-z') {
-        recipes = recipes.sort('position');
+        result = result.sort('position');
       }
       if (sort === 'z-a') {
-        recipes = recipes.sort('-position');
+        result = result.sort('-position');
       }
+
+      const recipes = await result;
 
     res.status(StatusCodes.OK).json({ recipes })
 }
