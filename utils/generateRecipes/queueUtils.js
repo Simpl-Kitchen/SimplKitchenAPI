@@ -1,3 +1,4 @@
+//Imports 
 const RecipeQueue = require('../../models/RecipeQueue')
 const userHelpers = require('../helpers')
 const externalAPICalls = require('../spoonacular/externalAPICalls')
@@ -23,7 +24,6 @@ const fillQueue = async (queryObject) => {
     for (const recipe of recipeData) {  
 
         // Check if the recipe already exists in the RecipeQueue
-        // const existingRecipe = await RecipeQueue.findOne({ id: recipe.id }, {createdBy: queryObject.userId});
         const existingRecipe = await RecipeQueue.findOne({ id: recipe.id });
 
         // If it doesn't exist, create a new document
