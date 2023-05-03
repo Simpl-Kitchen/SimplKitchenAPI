@@ -162,6 +162,8 @@ const deleteRecipe = async (req, res) => {
         res.status(StatusCodes.OK).send()
     }
 }
+const updateRecipe = async (req, res) => {
+}
 //Exports 
 module.exports = {
     getAllIngredients,
