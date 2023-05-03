@@ -118,9 +118,9 @@ const getRecipe = async (req, res) => {
     } = req
 
     const recipe = await Recipe.findOne({
-        //_id: recipeID,
-        recipeID: recipeID,
-        createdBy: userId,
+        _id: recipeID,
+        // recipeID: recipeID,
+        // createdBy: userId,
     })
     // fail safe for no recipe ID 
     if (!recipe) {
