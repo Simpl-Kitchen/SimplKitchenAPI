@@ -3,9 +3,7 @@ const axios = require("axios");
 // Search options utility for converting query object to Spoonacular API options
 const { createSearchOptions } = require('../createSearchOptions')
 
-// Spoonacular error handling
-// const SpoonacularError = require('../../../errors/spoonacular');
-
+// Search grocery function 
 const searchGroceryProductsAPICall = async (queryObject) => {
 
     const opts = createSearchOptions(queryObject, 'groceryProducts')
@@ -26,7 +24,6 @@ const searchGroceryProductsAPICall = async (queryObject) => {
     }).catch(function (error) {
         console.error(error);
     });
-    //console.log("Hello ")
     return searchResults
 }
 
@@ -50,7 +47,6 @@ const groceryProductInformationAPICall = async (queryObject) => {
     }).catch(function (error) {
         console.error(error);
     });
-    //console.log("Hello ")
     return searchResults
 
 }
@@ -72,10 +68,9 @@ const searchByUpcAPICall = async (queryObject) => {
     }).catch(function (error) {
         console.error(error);
     });
-    //console.log("Hello ")
     return searchResults
 }
-
+// Exports 
 module.exports = {
     searchGroceryProductsAPICall,
     groceryProductInformationAPICall,

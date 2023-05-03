@@ -1,3 +1,4 @@
+//Import depedencies
 const Ingredient = require('../models/Ingredient')
 const Recipe = require('../models/Recipe')
 const { StatusCodes } = require('http-status-codes')
@@ -5,7 +6,7 @@ const { BadRequestError, NotFoundError } = require('../errors')
 const { GetRecipeEquipmentByID200Response } = require('spoonacular_api_simplkitchen')
 
 //CRUD functionality for ingredients API and DB 
-
+//Abstracted by the Ingredient model
 const getAllIngredients = async (req, res) => {
     queryObject = {
         createdBy: req.user.userId
@@ -25,6 +26,7 @@ const getIngredient = async (req, res) => {
         _id: ingredientId,
         createdBy: userId,
     })
+    //if ingredient is not in the user's pantry, add it
     if (!ingredient) {
         throw new NotFoundError(`No ingredient with ${ingredientId}`)
 
@@ -32,8 +34,6 @@ const getIngredient = async (req, res) => {
     res.status(StatusCodes.OK).json({ ingredient })
 }
 const addIngredient = async (req, res) => {
-    //console.log(req.body)
-    //console.log(req.user)
     req.body.createdBy = req.user.userId
 
     let ingredient = await Ingredient.findOne({
@@ -59,21 +59,11 @@ const updateIngredient = async (req, res) => {
         user: { userId },
         params: { id: ingredientId }
     } = req
-
+    //fail safe for empty fields
     if (amount === '') {
         throw new BadRequestError('Amount field cannot be empty')
     }
-    // const ingredient = await Ingredient.findByIdAndUpdate(
-    //     { _id: ingredientId, createdBy: userId },
-    //     req.body,
-    //     { new: true, runValidators: true }
-    // )
     console.log(req.params.id)
-    // const ingredient = await Ingredient.findByIdAndUpdate(
-    //     { ingredientId: req.params.id, createdBy: req.user.userId },
-    //     req.body,
-    //     { new: true, runValidators: true }
-    // )
 
     const ingredient = await Ingredient.findOneAndUpdate(
         { ingredientId: req.params.id, createdBy: req.user.userId },
@@ -84,7 +74,6 @@ const updateIngredient = async (req, res) => {
         throw new NotFoundError(`No ingredient with id ${ingredientId}`)
     }
     res.status(StatusCodes.OK).json({ ingredient })
-    //res.send("Update Ingredient")
 }
 const deleteIngredient = async (req, res) => {
     const {
@@ -96,33 +85,22 @@ const deleteIngredient = async (req, res) => {
         ingredientId: req.params.id,
         createdBy: req.user.userId
     })
-
-    // const ingredient = await Ingredient.findByIdAndRemove({
-    //     _id: ingredientId,
-    //     createdBy: userId,
-    // })
-    //const ingredient = await Ingredient.findById(ingredientId);
-    // const ingredient = await Ingredient.findOne({
-    //     ingredientId: ingredientId,
-    //     createdBy: userId
-    // })
-
+    // fail safe for none-existant ID 
     if (!ingredient) {
         throw new NotFoundError(`No ingredient with id ${ingredientId}`)
     }
-
+    //More than 1 ingredient
     if (ingredient.amount > 1) {
         await ingredient.decrementAmount();
         res.status(StatusCodes.OK).json({ ingredient });
     }
+    //Default case, remove 1 ingredient
     else {
         await ingredient.remove();
         res.status(StatusCodes.OK).send()
     }
-    //res.send("Delete Ingredient")
 }
 //CRUD functionality for Recipe API and DB
-
 const getAllRecipes = async (req, res) => {
     queryObject = {
         createdBy: req.user.userId
@@ -144,6 +122,7 @@ const getRecipe = async (req, res) => {
         recipeID: recipeID,
         createdBy: userId,
     })
+    // fail safe for no recipe ID 
     if (!recipe) {
         throw new NotFoundError(`No recipe with ${recipeID}`)
 
@@ -153,17 +132,10 @@ const getRecipe = async (req, res) => {
 
 const addRecipe = async (req, res) => {
     req.recipe.createdBy = req.user.userId
-    //console.log(req.recipe)
 
     const recipe = await Recipe.create(req.recipe);
     res.status(StatusCodes.CREATED).json({ recipe });
 
-    //res.send("Adding Recipe")
-
-}
-
-const updateRecipe = async (req, res) => {
-    //needs done 
 }
 
 const deleteRecipe = async (req, res) => {
@@ -172,18 +144,15 @@ const deleteRecipe = async (req, res) => {
         params: { id: recipeID }
     } = req
 
-    // console.log(req.params.id)
-    // console.log("Hello")
-
     let recipe = await Recipe.findOne({
         recipeID: req.params.id,
         createdBy: req.user.userId
     })
-
+    // fail safe for none-existant recipe ID
     if (!recipe) {
         throw new NotFoundError(`No ingredient with id ${recipeID}`)
     }
-
+    // check for if recipe amount is greater than 1
     if (recipe.amount > 1) {
         await recipe.decrementAmount();
         res.status(StatusCodes.OK).json({ recipe });
@@ -192,17 +161,14 @@ const deleteRecipe = async (req, res) => {
         await recipe.remove();
         res.status(StatusCodes.OK).send()
     }
-    //res.send("Delete Ingredient")
 }
-
+//Exports 
 module.exports = {
-    //ingredients exports
     getAllIngredients,
     getIngredient,
     addIngredient,
     updateIngredient,
     deleteIngredient,
-    //recipe exports
     getAllRecipes,
     getRecipe,
     addRecipe,

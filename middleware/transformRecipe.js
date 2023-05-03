@@ -3,8 +3,6 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const transform = async (req, res, next) => {
   let recipe = req.body
-  //console.log(JSON.stringify(recipe))
-  //const usedIngredients = recipe.usedIngredients
 
   let usedIngredients = recipe.usedIngredients.map(item => {
     return {

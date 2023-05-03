@@ -11,8 +11,6 @@ const calculateIngredientCost = async (ingredient) => {
     // Call ingredientInformationAPICall
     const results = await ingredientInformationAPICall(queryObject)
 
-    // console.log("Ingredient == ", ingredient.originalName)
-    // console.log("Estimated Cost == ", results.estimatedCost.value)
 
     // Extract cost from results
     const cost = results.estimatedCost
@@ -28,11 +26,6 @@ const calculateRecipeCost = async (recipe) => {
     costPerServing.value = results.pricePerServing
     costPerServing.unit = "US Cents"
     costPerServing.servings = results.servings
-
-    // console.log("Cost Per Serving == ", costPerServing.cost)
-    // console.log("Servings == ", costPerServing.servings)
-    // console.log("Units == ", costPerServing.units)
-
     return costPerServing
     
 

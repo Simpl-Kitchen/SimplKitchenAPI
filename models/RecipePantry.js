@@ -1,6 +1,7 @@
+// Imports 
 const mongoose = require('mongoose')
 
-
+// Ingredient Schema 
 const ingredientSchema = new mongoose.Schema({
     id: Number,
     amount: Number,
@@ -15,7 +16,7 @@ const ingredientSchema = new mongoose.Schema({
     image: String,
   });
 
-
+// Pantry Schema
 const recipePantrySchema = new mongoose.Schema({
     id: {
       type: Number,
@@ -44,5 +45,5 @@ const recipePantrySchema = new mongoose.Schema({
     { strict: false },
   );
 
-
+// Exports
   module.exports = mongoose.model('RecipeQueue', recipePantrySchema);

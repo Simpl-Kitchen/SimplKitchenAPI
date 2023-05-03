@@ -1,5 +1,6 @@
+// Imports
 const mongoose = require('mongoose')
-
+//Pantry schema 
 const PantryIngredientSchema = new mongoose.Schema({
     ingredientReference: {
         type: mongoose.Types.ObjectId,
@@ -27,7 +28,8 @@ const PantryIngredientSchema = new mongoose.Schema({
 },
     { timestamps: true },
     { strict: false },
-) // May need to change strict settings. Leaving as false for ease of testing. 
+) 
+// May need to change strict settings. Leaving as false for ease of testing. 
 
 
 module.exports = mongoose.model('PantryIngredient', PantryIngredientSchema)

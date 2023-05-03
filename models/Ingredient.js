@@ -1,5 +1,6 @@
+// Imports 
 const mongoose = require('mongoose')
-
+// Ingredient Schema
 const IngredientSchema = new mongoose.Schema({
     ingredientId: {
         type: String,
@@ -12,16 +13,6 @@ const IngredientSchema = new mongoose.Schema({
     pictureURL: {
         type: String,
         required: [true, 'please provide the url for ingredient picture'],
-        // match: [
-        //     /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/,
-        //     'not a valid ingredient image URL'
-        // ],
-        // validate: {
-        //     validator: function (v) {
-        //       return /^https:\/\/spoonacular\.com\/cdn\/ingredients_\d{1,4}x\d{1,4}\/[a-zA-Z0-9_\-]+\.jpg$/.test(v);
-        //     },
-        //     message: (props) => `${props.value} is not a valid ingredient image URL`,
-        //   },
     },
     unit: {
         type: String,
@@ -50,5 +41,5 @@ IngredientSchema.methods.decrementAmount = async function () {
     this.amount -= 1;
     await this.save();
 }
-
+// Exports 
 module.exports = mongoose.model('Ingredient', IngredientSchema)

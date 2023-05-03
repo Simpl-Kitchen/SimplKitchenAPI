@@ -11,8 +11,6 @@ const axios = require('axios')
 // Call to Spoonacular Ingredient Search endpoint
 const searchIngredientsAPI = async (queryObject) => {
 
-    //console.log(queryObject.intolerances)
-
     let opts = createSearchOptions(queryObject, 'ingredients')
 
     let promise = new Promise((resolve, reject) => {
@@ -57,9 +55,7 @@ const ingredientInformationAPICall = async (queryObject) => {
     }).catch(function (error) {
         console.log("ERROR")
         console.error(error);
-        //console.error(error.response.data); // Log the error data from the API
     });
-    //console.log(searchResults)
     return searchResults
 
 }

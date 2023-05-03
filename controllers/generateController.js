@@ -1,10 +1,8 @@
+// Imports 
 const externalAPICalls = require('../utils/spoonacular/externalAPICalls')
 const userHelpers = require('../utils/helpers')
-
 const {fillQueue} = require('../utils/generateRecipes/queueUtils')
-
 const RecipeQueue = require("../models/RecipeQueue")
-
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
@@ -14,11 +12,9 @@ const generateNewQueue = async (req, res) => {
     await RecipeQueue.deleteMany({ createdBy: req.user.userId })
 
     // Set up variables. Destructure req.query and req.user
-    // const { search } = req.query
     const { userId } = req.user
-    //const queryObject = {}
     
-    // // Get user intolerances and ingredients in the user's pantry
+    // Get user intolerances and ingredients in the user's pantry
     const intolerances = await userHelpers.getUserIntolerances(userId)
     const ingredients = await userHelpers.getUserIngredients(userId)
 
@@ -89,7 +85,7 @@ const removeFromQueue = async (req, res) => {
     res.status(StatusCodes.OK).send("Deleted")
 
 }
-
+// Exports 
 module.exports = {
     generateNewQueue,
     removeFromQueue,
