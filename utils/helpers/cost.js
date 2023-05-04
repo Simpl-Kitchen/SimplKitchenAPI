@@ -16,24 +16,44 @@ const calculateIngredientCost = async (ingredient) => {
     const cost = results.estimatedCost
     return cost
 }
-const calculateRecipeCost = async (recipe) => {
+const populateRecipe = async (recipe) => {
     let queryObject = {}
     let costPerServing = {}
+    let addedInformation = {}
     queryObject.id = recipe.id
 
     const results = await searchRecipeInformationAPI(queryObject)
 
+
+    // recipe.costPerServing.value = results.pricePerServing
+    // recipe.costPerServing.unit = "US Cents"
+    // recipe.costPerServing.servings = results.servings
     costPerServing.value = results.pricePerServing
     costPerServing.unit = "US Cents"
     costPerServing.servings = results.servings
-    return costPerServing
-    
 
+    recipe.cost = costPerServing
 
+    if (results.instructions){
+        //addedInformation.instructions = results.instructions
+        recipe.instructions = results.instructions
+    }
+    else if (results.summary) {
+        //addedInformation.instructions = results.summary
+        recipe.instructions = results.summary
+    }
+    else {
+        //addedInformation.instructions = "No instructions available"
+        recipe.instruction = "No instructions available"
+    }
+    //addedInformation.instructions = results.instructions
+    //return costPerServing
+    //return addedInformation
+    return recipe
 
 }
 
 module.exports = {
     calculateIngredientCost,
-    calculateRecipeCost
+    populateRecipe,
 }
