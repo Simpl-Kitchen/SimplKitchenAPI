@@ -17,6 +17,7 @@ const ingredientSchema = new mongoose.Schema({
     id: Number,
     amount: Number,
     unit: String,
+    name: String,
     originalName: String,
     image: String,
     cost: {
