@@ -108,7 +108,6 @@ const getAllRecipes = async (req, res) => {
         createdBy: req.user.userId
     }
     let result = Recipe.find(queryObject)
-    //let recipes = await result
 
     if (sort === 'latest') {
         result = result.sort('-createdAt');
@@ -136,8 +135,6 @@ const getRecipe = async (req, res) => {
 
     const recipe = await Recipe.findOne({
         _id: recipeID,
-        // recipeID: recipeID,
-        // createdBy: userId,
     })
     // fail safe for no recipe ID 
     if (!recipe) {
@@ -162,8 +159,6 @@ const deleteRecipe = async (req, res) => {
     } = req
 
     let recipe = await Recipe.findOne({
-        // recipeID: req.params.id,
-        // createdBy: req.user.userId
         _id: recipeID,
     })
     // fail safe for none-existant recipe ID

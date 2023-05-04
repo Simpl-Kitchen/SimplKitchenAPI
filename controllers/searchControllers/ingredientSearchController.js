@@ -1,6 +1,8 @@
+// Import spoonacular dependencies
 const externalAPICalls = require('../../utils/spoonacular/externalAPICalls')
 const userHelpers = require('../../utils/helpers')
 
+// Import error dependencies
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../../errors')
 
@@ -63,7 +65,7 @@ const searchIngredientInformation = async (req, res) => {
     res.status(StatusCodes.OK).json({ ingredientData })
 
 }
-
+// Exports 
 module.exports = {
     searchIngredients,
     searchIngredientInformation

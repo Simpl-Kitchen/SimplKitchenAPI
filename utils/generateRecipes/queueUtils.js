@@ -2,7 +2,7 @@
 const RecipeQueue = require('../../models/RecipeQueue')
 const userHelpers = require('../helpers')
 const externalAPICalls = require('../spoonacular/externalAPICalls')
-const {calculateIngredientCost, calculateRecipeCost} = require('../helpers/cost')
+const {calculateIngredientCost, populateRecipe} = require('../helpers/cost')
 
 
 const fillQueue = async (queryObject) => {
@@ -12,7 +12,7 @@ const fillQueue = async (queryObject) => {
     if (!queryObject.number){
 
         const count = await RecipeQueue.countDocuments({createdBy: queryObject.userId})
-        console.log("Inside if statement, count == ", count)
+        //console.log("Inside if statement, count == ", count)
         // Max is 5
         queryObject.number = 5 - count
     }
@@ -62,12 +62,15 @@ const fillQueue = async (queryObject) => {
             }
 
 
-            const costPerServing = await calculateRecipeCost(recipe);
+            //const costPerServing = await calculateRecipeCost(recipe);
+            //const newInformation = await populateRecipe(recipe);
+
+            queueRecipe = await populateRecipe(queueRecipe);
 
 
 
-
-            queueRecipe.cost = costPerServing;
+            // queueRecipe.instructions = newInformation.instructions;
+            // queueRecipe.cost = newInformation.costPerServing;
             queueRecipe.createdBy = queryObject.userId;
             await RecipeQueue.create(queueRecipe);
         }

@@ -77,6 +77,10 @@ const RecipeSchema = new mongoose.Schema({
     totalCost: {
         type: CostSchema,
     },
+    instructions: {
+        type: String,
+        required: [true, 'please provide the instructions'],
+    },
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: 'User',

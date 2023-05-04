@@ -23,7 +23,7 @@ const getUserIngredients = async (userId) => {
     return ingredientNames.toString();
     //console.log(ingredients.name)
 }
-
+// Exporst 
 module.exports = {
     getUserIntolerances,
     getUserIngredients,
