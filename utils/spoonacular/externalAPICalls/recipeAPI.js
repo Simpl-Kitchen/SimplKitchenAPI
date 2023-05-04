@@ -68,7 +68,7 @@ const searchRecipeInformationAPI = async (queryObject) => {
         'x-api-key': process.env.SPOONACULAR_API_KEY
     }
 
-    console.log(id)
+    //console.log(id)
 
     const options = {
         method: 'GET',
