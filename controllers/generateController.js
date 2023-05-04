@@ -1,4 +1,4 @@
-// Imports 
+// Imports Dependencies
 const externalAPICalls = require('../utils/spoonacular/externalAPICalls')
 const userHelpers = require('../utils/helpers')
 const {fillQueue} = require('../utils/generateRecipes/queueUtils')
@@ -33,6 +33,7 @@ const generateNewQueue = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: "Queue generated" })
 
 }
+
 const getQueue = async (req, res) => {
     queryObject = {
         createdBy: req.user.userId

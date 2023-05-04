@@ -9,6 +9,7 @@ const transform = async (req, res, next) => {
       ingredientID: item.id,
       ingredientName: item.originalName,
       amount: item.amount,
+      //Tests 
       //unit: item.unit === '' || item.unit === null || item.unit === undefined ? '' : item.unit,
       unit: !item.unit ? "" : item.unit,
       image: item.image
@@ -19,6 +20,7 @@ const transform = async (req, res, next) => {
       ingredientID: item.id,
       ingredientName: item.originalName,
       amount: item.amount,
+      //Tests
       //unit: item.unit === '' || item.unit === null || item.unit === undefined ? "whole" : item.unit,
       unit: !item.unit ? "" : item.unit,
       image: item.image

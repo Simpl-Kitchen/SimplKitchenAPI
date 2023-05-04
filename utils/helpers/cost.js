@@ -1,3 +1,4 @@
+// Import spoonacular dependencies
 const { ingredientInformationAPICall, searchRecipeInformationAPI} = require('../spoonacular/externalAPICalls')
 
 const calculateIngredientCost = async (ingredient) => {
@@ -52,7 +53,7 @@ const populateRecipe = async (recipe) => {
     return recipe
 
 }
-
+// Exports 
 module.exports = {
     calculateIngredientCost,
     populateRecipe,
