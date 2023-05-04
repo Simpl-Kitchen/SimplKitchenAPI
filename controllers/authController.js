@@ -1,4 +1,4 @@
-// imports 
+// Import Dependencies  
 const User = require('../models/User')
 const ShoppingList = require('../models/ShoppingList')
 const { StatusCodes } = require('http-status-codes')
