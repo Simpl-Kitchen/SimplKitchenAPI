@@ -41,6 +41,7 @@ const recipeSchema = new mongoose.Schema({
     missedIngredientCount: Number,
     missedIngredients: [ingredientSchema],
     usedIngredients: [ingredientSchema],
+    instructions: String,
     cost: {
       type: CostSchema,
     },
