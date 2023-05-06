@@ -42,7 +42,8 @@ const transform = async (req, res, next) => {
     image: recipe.image,
     usedIngredients: usedIngredients,
     missedIngredients: missedIngredients,
-    totalCost: recipe.cost
+    totalCost: recipe.cost,
+    instructions: recipe.instructions,
 
 
   }
